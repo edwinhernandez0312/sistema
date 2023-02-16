@@ -39,17 +39,17 @@ include 'php/funciones.php';
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">¡Crear Cuenta!</h1>
                             </div>
-                            <form class="user needs-validation" novalidate method="POST" onsubmit="verificarPasswords(); return false">
+                            <form class="user needs-validation" novalidate method="POST" onsubmit="validar_datos(); verificarPasswords(); return false" >
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" name="nombre" class="form-control form-control-user" id="exampleFirstName" placeholder="Nombres" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚ]+" title="Letras. Tamaño mínimo: 3. Tamaño máximo: 250">
+                                        <input type="text" name="nombre" class="form-control form-control-user" id="nombre" placeholder="Nombres" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚ]+" title="Letras. Tamaño mínimo: 3. Tamaño máximo: 250">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="text" name="apellidos" class="form-control form-control-user" id="exampleLastName" placeholder="Apellidos" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚ]+" title="Letras. Tamaño mínimo: 3. Tamaño máximo: 250">
+                                        <input type="text" name="apellidos" class="form-control form-control-user" id="apellidos" placeholder="Apellidos" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚ]+" title="Letras. Tamaño mínimo: 3. Tamaño máximo: 250">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" name="correo" class="form-control form-control-user" id="exampleInputEmail" placeholder="Correo Electronico" minlength="3" maxlength="250" required pattern="[a-zA-Z0-9!#$%&'*_+-]([\.]?[a-zA-Z0-9!#$%&'*_+-])+@[a-zA-Z0-9]([^@&%$\/()=?¿!.,:;]|\d)+[a-zA-Z0-9][\.][a-zA-Z]{2,4}([\.][a-zA-Z]{2})?">
+                                    <input type="email" name="correo" class="form-control form-control-user" id="correo" placeholder="Correo Electronico" minlength="3" maxlength="250" required pattern="[a-zA-Z0-9!#$%&'*_+-]([\.]?[a-zA-Z0-9!#$%&'*_+-])+@[a-zA-Z0-9]([^@&%$\/()=?¿!.,:;]|\d)+[a-zA-Z0-9][\.][a-zA-Z]{2,4}([\.][a-zA-Z]{2})?">
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
@@ -57,6 +57,11 @@ include 'php/funciones.php';
                                     </div>
                                     <div class="col-sm-6">
                                         <input type="password" name="contraseña2" class="form-control form-control-user" id="pass2" placeholder="Repetir Contraseña" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚ]\[0-9]" title="Tamaño mínimo: 3. Tamaño máximo: 250">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div id="inco" class="alert alert-danger ocultar" role="alert">
+                                        ¡Campos No Validos! Verifique La Información¡¡¡
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -87,7 +92,7 @@ include 'php/funciones.php';
         </div>
 
     </div>
-    <script type="text/javascript" src="js/registro.js"></script>
+    <!-- <script type="text/javascript" src="js/registro.js"></script> -->
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -125,8 +130,30 @@ include 'php/funciones.php';
 if (isset($_POST['registro'])) {
     $nombre = trim($_POST['nombre']);
     $apellidos = trim($_POST['apellidos']);
-    $apellidos = trim($_POST['apellidos']);
     $correo = trim($_POST['correo']);
     $contraseña1 = trim($_POST['contraseña1']);
+    $contraseña2 = trim($_POST['contraseña2']);
+    if (validar_datos($nombre, $apellidos, $correo, $contraseña1, $contraseña2)) {
+?>
+        <div class="alert alert-danger d-flex justify-content-center" id="inc" role="alert">
+            !Campos Imcompletos¡
+        </div>
+<?php
+    }else{
+        if(!validar_correo($correo)){
+            ?>
+        <div class="alert alert-danger d-flex justify-content-center" id="inc" role="alert">
+            !Correo No Valido!
+        </div>
+<?php
+        }
+        if(!validar_contraseña($contraseña1,$contraseña2)){
+            ?>
+            <div class="alert alert-danger d-flex justify-content-center" id="inc" role="alert">
+                !Contraseñas No Son Iguales!
+            </div>
+    <?php
+        }
+    }
 }
 ?>
