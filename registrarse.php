@@ -39,13 +39,13 @@ include 'php/funciones.php';
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">¡Crear Cuenta!</h1>
                             </div>
-                            <form class="user needs-validation" novalidate method="POST" onsubmit="validar_datos(); verificarPasswords(); return false" >
+                            <form class="user needs-validation" novalidate method="POST" onsubmit="validar_datos(); return false" >
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" name="nombre" class="form-control form-control-user" id="nombre" placeholder="Nombres" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚ]+" title="Letras. Tamaño mínimo: 3. Tamaño máximo: 250">
+                                        <input type="text" name="nombre" class="form-control form-control-user" id="nombre" placeholder="Nombres" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚÑ]+" title="Letras. Tamaño mínimo: 3. Tamaño máximo: 250">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="text" name="apellidos" class="form-control form-control-user" id="apellidos" placeholder="Apellidos" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚ]+" title="Letras. Tamaño mínimo: 3. Tamaño máximo: 250">
+                                        <input type="text" name="apellidos" class="form-control form-control-user" id="apellidos" placeholder="Apellidos" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚÑ]+" title="Letras. Tamaño mínimo: 3. Tamaño máximo: 250">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -53,10 +53,10 @@ include 'php/funciones.php';
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="password" name="contraseña1" class="form-control form-control-user" id="pass1" placeholder="Contraseña" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚ]\[0-9]" title="Tamaño mínimo: 3. Tamaño máximo: 250">
+                                        <input type="password" name="contraseña1" class="form-control form-control-user" id="pass1" placeholder="Contraseña" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚÑ]\[0-9]" title="Tamaño mínimo: 3. Tamaño máximo: 250">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="password" name="contraseña2" class="form-control form-control-user" id="pass2" placeholder="Repetir Contraseña" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚ]\[0-9]" title="Tamaño mínimo: 3. Tamaño máximo: 250">
+                                        <input type="password" name="contraseña2" class="form-control form-control-user" id="pass2" placeholder="Repetir Contraseña" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚÑ]\[0-9]" title="Tamaño mínimo: 3. Tamaño máximo: 250">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -92,7 +92,7 @@ include 'php/funciones.php';
         </div>
 
     </div>
-    <!-- <script type="text/javascript" src="js/registro.js"></script> -->
+    <script type="text/javascript" src="js/registro.js"></script>
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
