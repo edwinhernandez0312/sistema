@@ -1,6 +1,6 @@
 <?php
-include 'php/conexion.php';
-include 'php/funciones.php';
+include ('php/conexion.php');
+include ('php/funciones.php');
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -39,7 +39,7 @@ include 'php/funciones.php';
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">¡Crear Cuenta!</h1>
                             </div>
-                            <form class="user needs-validation" novalidate method="POST" onsubmit="validar_datos(); return false" >
+                            <form class="user needs-validation" novalidate method="POST" onsubmit="validar_datos();" >
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="text" name="nombre" class="form-control form-control-user" id="nombre" placeholder="Nombres" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚÑ]+" title="Letras. Tamaño mínimo: 3. Tamaño máximo: 250">
@@ -67,11 +67,6 @@ include 'php/funciones.php';
                                 <div class="form-group">
                                     <div id="error" class="alert alert-danger ocultar" role="alert">
                                         Las Contraseñas no coinciden, vuelve a intentar !
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div id="ok" class="alert alert-success ocultar" role="alert">
-                                        Las Contraseñas coinciden ! (Procesando formulario ... )
                                     </div>
                                 </div>
                                 <button type="submit" name="registro" id="enviar" class="btn btn-primary btn-user btn-block">
@@ -133,26 +128,61 @@ if (isset($_POST['registro'])) {
     $correo = trim($_POST['correo']);
     $contraseña1 = trim($_POST['contraseña1']);
     $contraseña2 = trim($_POST['contraseña2']);
+    // variable para saber si hay errores
+    $error=0;
     if (validar_datos($nombre, $apellidos, $correo, $contraseña1, $contraseña2)) {
+        $error++;
 ?>
-        <div class="alert alert-danger d-flex justify-content-center" id="inc" role="alert">
-            !Campos Imcompletos¡
+        <div class="alert alert-danger d-flex justify-content-center"  role="alert">
+            !Campos Imcompletos O Datos Incorrectos¡
         </div>
 <?php
     }else{
         if(!validar_correo($correo)){
+            $error++;
             ?>
-        <div class="alert alert-danger d-flex justify-content-center" id="inc" role="alert">
+        <div class="alert alert-danger d-flex justify-content-center"  role="alert">
             !Correo No Valido!
         </div>
 <?php
         }
         if(!validar_contraseña($contraseña1,$contraseña2)){
+            $error++;
             ?>
-            <div class="alert alert-danger d-flex justify-content-center" id="inc" role="alert">
+            <div class="alert alert-danger d-flex justify-content-center"  role="alert">
                 !Contraseñas No Son Iguales!
             </div>
     <?php
+        }
+        if(usuario_existe($nombre)){
+            $error++;
+            ?>
+            <div class="alert alert-danger d-flex justify-content-center"  role="alert">
+                !Usuario Ya Existe!
+            </div>
+    <?php
+        }
+        if(email_existe($correo)){
+            $error++;
+            ?>
+            <div class="alert alert-danger d-flex justify-content-center" role="alert">
+                !Correo Ya Existe!
+            </div>
+    <?php
+        }
+        // se valida si hay errores no se envia
+        if ($error==0){
+            $cifrado=cifrar_contraseña($contraseña1);
+            $token=crear_token();
+            $registro_SQL=$conex->query("INSERT INTO `usuario`(`TIPO_USUARIO`, `NOMBRE_USU`, `APELLIDOS_USU`, `EMAIL_USU`, `PASSWORD_USUARIO`, `TOKEN_USU`) 
+            VALUES ('1','$nombre','$apellidos','$correo','$cifrado','$token')");
+            if($registro_SQL){
+                ?>
+            <div class="alert alert-success d-flex justify-content-center"  role="alert">
+                !Registro Exitoso!
+            </div>
+    <?php
+            }
         }
     }
 }

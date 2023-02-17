@@ -19,6 +19,7 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/registro.css">
 
 </head>
 
@@ -41,23 +42,22 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">¡Bienvenido de nuevo!</h1>
                                     </div>
-                                    <form class="user needs-validation" novalidate method="POST">
+                                    <form class="user needs-validation" novalidate method="POST" onsubmit="validar_campos();">
                                         <div class="form-group">
                                             <input type="email" name="correo" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
+                                                id="email" aria-describedby="emailHelp"
                                                 placeholder="Correo Electronico..." minlength="3" maxlength="250" required pattern="[a-zA-Z0-9!#$%&'*_+-]([\.]?[a-zA-Z0-9!#$%&'*_+-])+@[a-zA-Z0-9]([^@&%$\/()=?¿!.,:;]|\d)+[a-zA-Z0-9][\.][a-zA-Z]{2,4}([\.][a-zA-Z]{2})?">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" name="contraseña" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Contraseña" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚ]\[0-9]"
+                                                id="pass" placeholder="Contraseña" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚ]\[0-9]"
                                             title="Tamaño mínimo: 3. Tamaño máximo: 250">
                                         </div>
                                         <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Recordarme</label>
-                                            </div>
-                                        </div>
+                                    <div id="inco" class="alert alert-danger ocultar" role="alert">
+                                        ¡Campos No Validos! Verifique La Información¡¡¡
+                                    </div>
+                                </div>
                                         <button type="submit" class="btn btn-primary btn-user btn-block">
                                             Iniciar Sesion
                                         </button>
@@ -81,6 +81,7 @@
 
     </div>
 
+    <script type="text/javascript" src="js/registro.js"></script>
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -114,3 +115,6 @@
 </body>
 
 </html>
+<?php
+
+?>
