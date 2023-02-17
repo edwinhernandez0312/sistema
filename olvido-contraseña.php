@@ -58,9 +58,6 @@
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="registrarse.php">Crear Cuenta!</a>
-                                    </div>
-                                    <div class="text-center">
                                         <a class="small" href="login.php">Tengo Una Cuenta? Iniciar Sesion!</a>
                                     </div>
                                 </div>

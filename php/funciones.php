@@ -94,4 +94,12 @@ function crear_token(){
     $token=md5(uniqid(mt_rand(), false));
     return $token;
 }
+
+function validar_login($correo,$pass){
+    if(!validar_correo($correo) || strlen(trim($correo))<1 || strlen(trim($pass))<1){
+        return true;
+    }else{
+        return false;
+    }
+}
 ?>

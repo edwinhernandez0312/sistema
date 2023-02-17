@@ -1,3 +1,64 @@
+<?php
+include ('php/conexion.php');
+include ('php/funciones.php');
+if(isset($_POST['cerrar_sesion'])){
+    session_unset();
+    session_destroy();
+}
+if(isset($_POST['TIPO_USUARIO'])){
+    switch($_SESSION['TIPO_USUARIO']){
+        case 1:
+            header('location: index.php');
+            break;
+
+            default;
+    }
+}
+if(isset($_POST['envio'])){
+    $correo=trim($_POST['correo']);
+    $contraseña=trim($_POST['contraseña']);
+$error=0;
+    if(validar_login($correo,$contraseña)){
+        $error++;
+        ?>
+                <div class="alert alert-danger d-flex justify-content-center"  role="alert">
+                    !Campos Imcompletos O Datos Incorrectos¡
+                </div>
+        <?php
+    }
+    if($error==0){
+        $SQL=$conex->query("SELECT * FROM `usuario` WHERE EMAIL_USU='$correo';");
+        if(mysqli_num_rows($SQL) !=0){
+            while($row=$SQL->fetch_array()){
+                $pass=password_verify($contraseña,$row['PASSWORD_USUARIO']);
+                if($pass){
+                    $tipo=$row['TIPO_USUARIO'];
+                    $_SESSION['TIPO_USUARIO']=$tipo;
+                    switch($_SESSION['TIPO_USUARIO']){
+                        case 1:
+                            header('location: index.php');
+                            break;
+
+                            default:
+                    }
+                }else{
+                    ?>
+                    <div class="alert alert-danger d-flex justify-content-center" role="alert">
+                        !USUARIO O CLAVE INCORRECTOS!
+                    </div>
+        <?php
+                }
+            }
+        } else {
+            ?>
+            <div class="alert alert-danger d-flex justify-content-center" role="alert">
+                !USUARIO O CLAVE INCORRECTOS!
+            </div>
+<?php
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -60,16 +121,13 @@
                                         ¡Campos No Validos! Verifique La Información¡¡¡
                                     </div>
                                 </div>
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                                        <button type="submit" name="envio" id="enviar" class="btn btn-primary btn-user btn-block">
                                             Iniciar Sesion
                                         </button>
                                     </form>
                                     <hr>
                                     <div class="text-center">
                                         <a class="small" href="olvido-contraseña.php">Olvide La Contraseña?</a>
-                                    </div>
-                                    <div class="text-center">
-                                        <a class="small" href="registrarse.php">Crear Cuenta!</a>
                                     </div>
                                 </div>
                             </div>
@@ -117,6 +175,3 @@
 </body>
 
 </html>
-<?php
-
-?>

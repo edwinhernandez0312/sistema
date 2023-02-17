@@ -1,6 +1,14 @@
 <?php
 include ('php/conexion.php');
 include ('php/funciones.php');
+session_start();
+if(!isset($_SESSION['TIPO_USUARIO'])){
+    header('location: login.php');
+} else {
+    if($_SESSION['TIPO_USUARIO'] !=1){
+        header('location: login.php');
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -76,12 +84,6 @@ include ('php/funciones.php');
                                 </button>
                             </form>
                             <hr>
-                            <div class="text-center">
-                                <a class="small" href="olvido-contraseña.php">Olvide La Contraseña?</a>
-                            </div>
-                            <div class="text-center">
-                                <a class="small" href="login.php">Tengo Una Cuenta? Iniciar Sesion!</a>
-                            </div>
                         </div>
                     </div>
                 </div>
