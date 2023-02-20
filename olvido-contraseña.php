@@ -41,16 +41,16 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-2">Olvidaste Tu Contraseña?</h1>
-                                        <p class="mb-4">¡¡Lo entendemos, pasan cosas. ¡Simplemente ingrese su dirección de
-                                            correo electrónico a continuación y le enviaremos un enlace para restablecer
-                                            su contraseña!!</p>
+                                        <h1 class="h4 text-gray-900 mb-2">¿Olvidaste Tu Contraseña?</h1>
+                                        <p class="mb-4">Lo entendemos, pasan cosas. Simplemente ingresa tu dirección de
+                                            correo electrónico y te enviaremos un enlace por para restablecer
+                                            tu contraseña.</p>
                                     </div>
                                     <form class="user needs-validation" novalidate method="POST">
                                         <div class="form-group">
                                             <input type="email" name="correo" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Correo Electronico..." minlength="3" maxlength="250" required pattern="[a-zA-Z0-9!#$%&'*_+-]([\.]?[a-zA-Z0-9!#$%&'*_+-])+@[a-zA-Z0-9]([^@&%$\/()=?¿!.,:;]|\d)+[a-zA-Z0-9][\.][a-zA-Z]{2,4}([\.][a-zA-Z]{2})?">
+                                                placeholder="Correo Electronico" minlength="3" maxlength="250" required pattern="[a-zA-Z0-9!#$%&'*_+-]([\.]?[a-zA-Z0-9!#$%&'*_+-])+@[a-zA-Z0-9]([^@&%$\/()=?¿!.,:;]|\d)+[a-zA-Z0-9][\.][a-zA-Z]{2,4}([\.][a-zA-Z]{2})?">
                                         </div>
                                         <button type="submit" class="btn btn-primary btn-user btn-block">
                                             Recuperar Contraseña
@@ -58,7 +58,7 @@
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="login.php">Tengo Una Cuenta? Iniciar Sesion!</a>
+                                        <a class="small" href="login.php">Sé mi contraseña, iniciar sesion</a>
                                     </div>
                                 </div>
                             </div>
