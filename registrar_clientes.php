@@ -1,2 +1,1 @@
-<?php include "index.php";?>
-<?php echo "hola mundo";?>
+<?php include ("nav.php");?>
