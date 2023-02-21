@@ -32,6 +32,7 @@ if (isset($_POST['envio'])) {
             while ($row = $SQL->fetch_array()) {
                 $pass = password_verify($contraseña, $row['PASSWORD_USUARIO']);
                 if ($pass) {
+                    session_start();
                     $tipo = $row['TIPO_USUARIO'];
                     $_SESSION['TIPO_USUARIO'] = $tipo;
                     switch ($_SESSION['TIPO_USUARIO']) {

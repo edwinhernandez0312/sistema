@@ -2,12 +2,16 @@
 include ('php/conexion.php');
 include ('php/funciones.php');
 session_start();
-if(!isset($_SESSION['TIPO_USUARIO'])){
-    header('location: login.php');
-} else {
-    if($_SESSION['TIPO_USUARIO'] !=1){
-        header('location: login.php');
-    }
+switch($_SESSION['TIPO_USUARIO']){
+    case 1:
+        echo 'administrador';
+        break;
+    case 2:
+        echo 'Archivo';
+        break;
+    default:
+        echo 'hola';
+
 }
 ?>
 <!DOCTYPE html>
