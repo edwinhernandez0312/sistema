@@ -28,3 +28,30 @@ function validar_campos() {
         document.getElementById("inco").classList.remove("mostrar");
     }
 }
+function validar_campo() {
+    let email=document.getElementById("email");
+    if(email.value.trim()<1){
+        document.getElementById("inco").classList.add("mostrar");
+        document.getElementById("enviar").disabled = true;
+        setTimeout(function () {
+            document.getElementById("enviar").disabled = false;
+        }, 3000);
+    }else{
+        document.getElementById("inco").classList.remove("mostrar");
+    }
+}
+function validar_pass() {
+    let pass1=document.getElementById("pass1");
+    let pass2=document.getElementById("pass2");
+    if(pass1.value.trim()<1 || pass2.value.trim()<1){
+        document.getElementById("inco").classList.add("mostrar");
+        document.getElementById("enviar").disabled = true;
+        setTimeout(function () {
+            document.getElementById("enviar").disabled = false;
+        }, 3000);
+    }else{
+        document.getElementById("inco").classList.remove("mostrar");
+    }
+    
+}
+

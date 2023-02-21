@@ -1,50 +1,24 @@
 <?php
 include ('php/conexion.php');
 include ('php/funciones.php');
-if(isset($_POST['enviar'])){
-    $email = $_POST['correo'];
-    if(!validar_correo($email)){
-        ?>
-                <div class="alert alert-danger d-flex justify-content-center"  role="alert">
-                    !Correo Electronico No Valido¡
-                </div>
-        <?php
-    }else{
-    if(email_existe($email)){
-        $user_id=traer_valor('ID_USUARIO','EMAIL_USU',$email);
-        $user_nombre=traer_valor('NOMBRE_USU','EMAIL_USU',$email);
-        
-        $token=crear_token_pass($user_id);
-        $url='http://'.$_SERVER['SERVER_NAME'].
-        '/sistema/cambia_pass.php?user_id='.$user_id.'&token='.$token;
 
-        $asunto="Recuperar Password - Sistema de inmobiliaria";
-        $cuerpo="Hola $user_nombre: <br> <br> Se ha solicitado un cambio de contraseña:
-        <br> <br>
-        para restaurar la contraseña visita la siguiente direccion
-        <a href='$url'> Cambiar contraseña </a>";
-
-        if(enviar_email($email,$asunto,$asunto,$cuerpo)){
-            ?>
-            <div class="alert alert-success d-flex justify-content-center"  role="alert">
-            Se ha enviado el un correo a la direcicon <?php echo $email ?> para restablcer la contraseña
-            </div>  
-    <?php
-        }else{
-            ?>
-            <div class="alert alert-danger d-flex justify-content-center"  role="alert">
-                !Error al enviar el Email¡
-            </div>
-    <?php
-        }
-    }else{
-        ?>
-            <div class="alert alert-danger d-flex justify-content-center"  role="alert">
-                !No existe este correo electronico vinculado en ninguna cuenta¡
-            </div>
-    <?php
-    }
+if(empty($_GET['user_id'])){
+    header('location: login.php');
 }
+if(empty($_GET['token'])){
+    header('location: login.php');
+}
+
+$user_id = $conex->real_escape_string($_GET['user_id']);
+$user_token = $conex->real_escape_string($_GET['token']);
+
+if(!verificar_token_pass($user_id,$user_token)){
+    ?>
+            <div class="alert alert-danger d-flex justify-content-center"  role="alert">
+                !No se pudo verificar la informacion¡
+            </div>
+    <?php
+    exit;
 }
 ?>
 <!DOCTYPE html>
@@ -60,7 +34,7 @@ if(isset($_POST['enviar'])){
     <link rel="shortcut icon" href="img/favicon.png" type="image/png">
 
 
-    <title>Docs CILR - Olvide mi contraseña</title>
+    <title>Docs CILR - Actualizar contraseña</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -87,34 +61,32 @@ if(isset($_POST['enviar'])){
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-password-image"></div>
+                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-2">Olvidaste Tu Contraseña?</h1>
-                                        <p class="mb-4">¡¡Lo entendemos, pasan cosas. ¡Simplemente ingrese su dirección de
-                                            correo electrónico a continuación y le enviaremos un enlace para restablecer
-                                            su contraseña!!</p>
+                                        <h1 class="h4 text-gray-900 mb-4">¡Actualizar Contraseña!</h1>
                                     </div>
-                                    <form class="user needs-validation" novalidate method="POST" onsubmit="validar_campo();">
+                                    <form class="user needs-validation" novalidate method="POST" onsubmit="validar_pass();">
                                         <div class="form-group">
-                                            <input type="email" name="correo" class="form-control form-control-user"
-                                                id="email" aria-describedby="emailHelp"
-                                                placeholder="Correo Electronico..." minlength="3" maxlength="250" required pattern="[a-zA-Z0-9!#$%&'*_+-]([\.]?[a-zA-Z0-9!#$%&'*_+-])+@[a-zA-Z0-9]([^@&%$\/()=?¿!.,:;]|\d)+[a-zA-Z0-9][\.][a-zA-Z]{2,4}([\.][a-zA-Z]{2})?">
+                                            <input type="password" name="contraseña1" class="form-control form-control-user"
+                                                id="pass1" placeholder="Contraseña" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚ]\[0-9]"
+                                            title="Tamaño mínimo: 3. Tamaño máximo: 250">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" name="contraseña2" class="form-control form-control-user"
+                                                id="pass2" placeholder="Contraseña" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚ]\[0-9]"
+                                            title="Tamaño mínimo: 3. Tamaño máximo: 250">
                                         </div>
                                         <div class="form-group">
                                     <div id="inco" class="alert alert-danger ocultar" role="alert">
                                         ¡Campos No Validos! Verifique La Información¡¡¡
                                     </div>
                                 </div>
-                                        <button type="submit" id="enviar" name="enviar" class="btn btn-primary btn-user btn-block">
-                                            Recuperar Contraseña
+                                        <button type="submit" name="envio" id="enviar" class="btn btn-primary btn-user btn-block">
+                                            Guardar Cambios
                                         </button>
                                     </form>
-                                    <hr>
-                                    <div class="text-center">
-                                        <a class="small" href="login.php">Tengo Una Cuenta? Iniciar Sesion!</a>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -127,8 +99,8 @@ if(isset($_POST['enviar'])){
 
     </div>
 
-    <!-- Bootstrap core JavaScript-->
     <script type="text/javascript" src="js/registro.js"></script>
+    <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 

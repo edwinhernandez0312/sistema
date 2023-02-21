@@ -1,23 +1,60 @@
 <?php
-include ('php/conexion.php');
+include('php/conexion.php');
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require 'vendor/autoload.php';
+
+function enviar_email($correo, $titulo, $titulo2, $cuerpo,)
+{
+    $email = new PHPMailer(true);
+    try {
+        // $email->SMTPDebug=SMTP::DEBUG_SERVER;
+        $email->isSMTP();
+        $email->Host = 'smtp.gmail.com.';
+        $email->SMTPAuth = true;
+        $email->Username = 'sistemas.laurarivera@gmail.com';
+        $email->Password = 'fnbrytzzwwqhrcml';
+        $email->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $email->Port = 587;
+
+        $email->setFrom('sistemas.laurarivera@gmail.com', $titulo);
+        $email->addAddress($correo, $titulo);
+
+
+        $email->isHTML(true);
+        $email->Subject = $titulo2;
+        $email->Body = $cuerpo;
+        $email->send();
+        return true;
+    } catch (Exception $e) {
+        echo "Mensaje" . $email->ErrorInfo;
+        return false;
+    }
+}
 $conex;
 // validar campos que no esten vacios
-function validar_datos($nombre, $apellidos,$correo,$pass1,$pass2){
-if(strlen(trim($nombre))<1 || strlen(trim($apellidos))<1 || strlen(trim($correo))<1 || strlen(trim($pass1))<1 || strlen(trim($pass2))<1
-|| !validar_texto($nombre) || !validar_texto($apellidos)){
-    //devolver true si estan vacios
-    return true;
-} else {
-    //devolver false si no estan vacios
-    return false;
-}
+function validar_datos($nombre, $apellidos, $correo, $pass1, $pass2)
+{
+    if (
+        strlen(trim($nombre)) < 1 || strlen(trim($apellidos)) < 1 || strlen(trim($correo)) < 1 || strlen(trim($pass1)) < 1 || strlen(trim($pass2)) < 1
+        || !validar_texto($nombre) || !validar_texto($apellidos)
+    ) {
+        //devolver true si estan vacios
+        return true;
+    } else {
+        //devolver false si no estan vacios
+        return false;
+    }
 }
 function validar_texto($text)
 {
     $pattern = "/^[a-zA-Z\sñáéíóúÁÉÍÓÚÑ]+$/";
-    if(preg_match($pattern, trim($text))){
+    if (preg_match($pattern, trim($text))) {
         return true;
-    }else{
+    } else {
         return false;
     }
 }
@@ -25,81 +62,131 @@ function validar_texto($text)
 function validar_numero($text)
 {
     $pattern = "/^[0-9\-]+$/";
-    if (preg_match($pattern, trim($text))){
+    if (preg_match($pattern, trim($text))) {
         return true;
-    }else{
+    } else {
         return false;
     }
 }
 
-function validar_correo($correo){
-    if(filter_var($correo, FILTER_VALIDATE_EMAIL)){
+function validar_correo($correo)
+{
+    if (filter_var($correo, FILTER_VALIDATE_EMAIL)) {
         return true;
-    }else{
+    } else {
         return false;
     }
 }
 // validar que las 2 contraseñas sean iguales
-function validar_contraseña($pass1,$pass2){
+function validar_contraseña($pass1, $pass2)
+{
     // si no son iguales enviar else
-    if(strcmp($pass1,$pass2)!==0){
+    if (strcmp($pass1, $pass2) !== 0) {
         return false;
-    }else{
+    } else {
         // si son iguales enviar true
         return true;
     }
 }
-function minMax($min,$max,$valor){
-if(strlen(trim($valor))<$min){
-    return true;
-}elseif(strlen(trim($valor))>$max){
-    return true;
-}else{
-    return false;
-}
-}
-
-function usuario_existe($usuario){
-    global $conex;
-    $consulta = $conex->query("SELECT ID_USUARIO FROM `usuario` WHERE NOMBRE_USU='$usuario';");
-    $num=mysqli_num_rows($consulta);
-    $consulta->close();
-
-    if($num>0){
+function minMax($min, $max, $valor)
+{
+    if (strlen(trim($valor)) < $min) {
         return true;
-}else{
-    return false;
-}
-}
-
-function email_existe($correo){
-    global $conex;
-    $consulta = $conex->query("SELECT ID_USUARIO FROM `usuario` WHERE EMAIL_USU='$correo';");
-    $num=mysqli_num_rows($consulta);
-    $consulta->close();
-
-    if($num>0){
+    } elseif (strlen(trim($valor)) > $max) {
         return true;
-}else{
-    return false;
-}
-}
-
-function cifrar_contraseña($contraseña){
-$hast=password_hash($contraseña, PASSWORD_DEFAULT);
-return $hast;
-}
-
-function crear_token(){
-    $token=md5(uniqid(mt_rand(), false));
-    return $token;
-}
-
-function validar_login($correo,$pass){
-    if(!validar_correo($correo) || strlen(trim($correo))<1 || strlen(trim($pass))<1){
-        return true;
-    }else{
+    } else {
         return false;
     }
 }
-?>
+// para validar si el usuario existe en la base de datos
+function usuario_existe($usuario)
+{
+    global $conex;
+    $consulta = $conex->query("SELECT ID_USUARIO FROM `usuario` WHERE NOMBRE_USU='$usuario';");
+    $num = mysqli_num_rows($consulta);
+    $consulta->close();
+
+    if ($num > 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+// para validar si el correo existe en la base de datos
+function email_existe($correo)
+{
+    global $conex;
+    $consulta = $conex->query("SELECT ID_USUARIO FROM `usuario` WHERE EMAIL_USU='$correo';");
+    $num = mysqli_num_rows($consulta);
+    $consulta->close();
+
+    if ($num > 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+// funcion para cifrar la contraseña
+function cifrar_contraseña($contraseña)
+{
+    $hast = password_hash($contraseña, PASSWORD_DEFAULT);
+    return $hast;
+}
+// funcion para crear un token
+function crear_token()
+{
+    $token = md5(uniqid(mt_rand(), false));
+    return $token;
+}
+// funcion para validar que las contraseñas se han iguales
+function validar_login($correo, $pass)
+{
+    if (!validar_correo($correo) || strlen(trim($correo)) < 1 || strlen(trim($pass)) < 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+// funcion para hacer una busqueda en la tabla usuairos 
+function traer_valor($campo, $campo_condicion, $valor)
+{
+    global $conex;
+    $consulta = $conex->query("SELECT $campo FROM `usuario` WHERE $campo_condicion ='$valor';");
+    $num = mysqli_num_rows($consulta);
+
+    if ($num > 0) {
+        while ($row = $consulta->fetch_array()) {
+            return $row[$campo];
+        }
+    } else {
+        return false;
+    }
+}
+// funciion para crear token de restabelcer contraseña
+function crear_token_pass($user_id)
+{
+    global $conex;
+    $token = crear_token();
+    $consulta = $conex->query("UPDATE `usuario` SET `TOKEN_PASS`='$token',`PASSWORD_REQ`=1 WHERE ID_USUARIO= '$user_id';");
+
+    return $token;
+}
+// verificar datos en la base de datos para el cambio de contraseña
+function verificar_token_pass($user_id,$user_token) {
+    global $conex;
+    $consulta=$conex->query("SELECT PASSWORD_REQ FROM `usuario` WHERE ID_USUARIO='$user_id' AND TOKEN_PASS='$user_token' AND PASSWORD_REQ=1;");
+    $num=mysqli_num_rows($consulta);
+
+    if($num>0) {
+        while($row=$consulta->fetch_array()){
+            $passReq=$row['PASSWORD_REQ'];
+        }
+        if($passReq==1){
+            return true;
+        }else{
+            return false;
+        }
+}else{
+    return false;
+}
+}
