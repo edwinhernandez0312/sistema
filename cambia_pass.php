@@ -1,24 +1,55 @@
 <?php
-include ('php/conexion.php');
-include ('php/funciones.php');
-
-if(empty($_GET['user_id'])){
+include('php/conexion.php');
+include('php/funciones.php');
+if (empty($_GET['user_id'])) {
     header('location: login.php');
 }
-if(empty($_GET['token'])){
+if (empty($_GET['token'])) {
     header('location: login.php');
 }
-
+$errores=array();
+$completados=array();
 $user_id = $conex->real_escape_string($_GET['user_id']);
 $user_token = $conex->real_escape_string($_GET['token']);
-
-if(!verificar_token_pass($user_id,$user_token)){
-    ?>
-            <div class="alert alert-danger d-flex justify-content-center"  role="alert">
-                !No se pudo verificar la informacion¡
-            </div>
+$error = 0;
+if (!verificar_token_pass($user_id, $user_token)) {
+    $error++;
+?>
+    <div class="alert alert-danger d-flex justify-content-center" role="alert">
+        !No se pudo verificar la informacion¡
+    </div>
     <?php
     exit;
+}
+if (isset($_POST['envio'])) {
+    $pass1 = trim($_POST['contraseña1']);
+    $pass2 = trim($_POST['contraseña2']);
+
+    if (pass_vacias($pass1, $pass2)) {
+        $error++;
+    ?>
+        <div class="alert alert-danger d-flex justify-content-center" role="alert">
+            !Campos vacios¡
+        </div>
+    <?php
+    }
+    if (!validar_contraseña($pass1, $pass2)) {
+        $error++;
+    ?>
+        <div class="alert alert-danger d-flex justify-content-center" role="alert">
+            !Contraseña no coinciden¡
+        </div>
+<?php
+    }
+
+    if ($error == 0) {
+        $pass_cifrada = cifrar_contraseña($pass1);
+        if (actualizar_pass($pass_cifrada, $user_id, $user_token)) {
+            $completados[]="La contraseña se ha actualizado exitosamente";
+        } else {
+            $errores[]="La contraseña no se ha podido actualizar";
+        }
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -38,9 +69,7 @@ if(!verificar_token_pass($user_id,$user_token)){
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -69,24 +98,22 @@ if(!verificar_token_pass($user_id,$user_token)){
                                     </div>
                                     <form class="user needs-validation" novalidate method="POST" onsubmit="validar_pass();">
                                         <div class="form-group">
-                                            <input type="password" name="contraseña1" class="form-control form-control-user"
-                                                id="pass1" placeholder="Contraseña" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚ]\[0-9]"
-                                            title="Tamaño mínimo: 3. Tamaño máximo: 250">
+                                            <input type="password" name="contraseña1" class="form-control form-control-user" id="pass1" placeholder="Contraseña" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚ]\[0-9]" title="Tamaño mínimo: 3. Tamaño máximo: 250">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" name="contraseña2" class="form-control form-control-user"
-                                                id="pass2" placeholder="Contraseña" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚ]\[0-9]"
-                                            title="Tamaño mínimo: 3. Tamaño máximo: 250">
+                                            <input type="password" name="contraseña2" class="form-control form-control-user" id="pass2" placeholder="Contraseña" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚ]\[0-9]" title="Tamaño mínimo: 3. Tamaño máximo: 250">
                                         </div>
                                         <div class="form-group">
-                                    <div id="inco" class="alert alert-danger ocultar" role="alert">
-                                        ¡Campos No Validos! Verifique La Información¡¡¡
-                                    </div>
-                                </div>
+                                            <div id="inco" class="alert alert-danger ocultar" role="alert">
+                                                ¡Campos No Validos! Verifique La Información¡¡¡
+                                            </div>
+                                        </div>
                                         <button type="submit" name="envio" id="enviar" class="btn btn-primary btn-user btn-block">
                                             Guardar Cambios
                                         </button>
                                     </form>
+                                    <?php echo mostrar_errores($errores) ;?>
+                                    <?php echo mostrar_bienes($completados) ;?>
                                 </div>
                             </div>
                         </div>

@@ -190,3 +190,48 @@ function verificar_token_pass($user_id,$user_token) {
     return false;
 }
 }
+// verificar que las contraseñas no esten vacias 
+function pass_vacias($pass1,$pass2){
+    if(strlen(trim($pass1))<1 || strlen(trim($pass2))<1){
+        return true;
+    }else{
+        return false;
+    }
+}
+// actualizar contraseña
+function actualizar_pass($pass1,$user_id,$user_token){
+    global $conex;
+    $consulta=$conex->query("UPDATE `usuario` SET `PASSWORD_USUARIO`='$pass1',`TOKEN_PASS`='',`PASSWORD_REQ`=0  WHERE ID_USUARIO='$user_id' AND TOKEN_PASS='$user_token';");
+    if($consulta){
+        return true;
+    }else{
+        return false;
+    }
+}
+// mostrar errores 
+function mostrar_errores($errores){
+    if(count($errores)>0){
+        echo "<div class='alert alert-danger' role='alert'>
+        <a href='#' onclick=\" showHide ('error');\">X</a>
+        <ul>";
+        foreach($errores as $error){
+            echo "<li>".$error."</li>";
+        }
+        echo "</ul>";
+        echo "</div>";
+}
+}
+// mostrar texto de completado correctamente
+function mostrar_bienes($bienes){
+    if(count($bienes)>0){
+        echo "<div class='alert alert-success' role='alert'>
+        <a href='#' onclick=\" showHide ('error');\">X</a>
+        <ul>";
+        foreach($bienes as $bien){
+            echo "<li>".$bien."</li>";
+        }
+        echo "</ul>";
+        echo "</div>";
+}
+}
+?>
