@@ -1,58 +1,58 @@
 <?php
-include ('php/conexion.php');
-include ('php/funciones.php');
-if(isset($_POST['cerrar_sesion'])){
+include('php/conexion.php');
+include('php/funciones.php');
+if (isset($_POST['cerrar_sesion'])) {
     session_unset();
     session_destroy();
 }
-if(isset($_POST['TIPO_USUARIO'])){
-    switch($_SESSION['TIPO_USUARIO']){
+if (isset($_POST['TIPO_USUARIO'])) {
+    switch ($_SESSION['TIPO_USUARIO']) {
         case 1:
             header('location: index.php');
             break;
 
-            default;
+        default;
     }
 }
-if(isset($_POST['envio'])){
-    $correo=trim($_POST['correo']);
-    $contraseña=trim($_POST['contraseña']);
-$error=0;
-    if(validar_login($correo,$contraseña)){
+if (isset($_POST['envio'])) {
+    $correo = trim($_POST['correo']);
+    $contraseña = trim($_POST['contraseña']);
+    $error = 0;
+    if (validar_login($correo, $contraseña)) {
         $error++;
-        ?>
-                <div class="alert alert-danger d-flex justify-content-center"  role="alert">
-                    !Campos Imcompletos O Datos Incorrectos¡
-                </div>
+?>
+        <div class="alert alert-danger d-flex justify-content-center" role="alert">
+            !Campos Imcompletos O Datos Incorrectos¡
+        </div>
         <?php
     }
-    if($error==0){
-        $SQL=$conex->query("SELECT * FROM `usuario` WHERE EMAIL_USU='$correo';");
-        if(mysqli_num_rows($SQL) !=0){
-            while($row=$SQL->fetch_array()){
-                $pass=password_verify($contraseña,$row['PASSWORD_USUARIO']);
-                if($pass){
-                    $tipo=$row['TIPO_USUARIO'];
-                    $_SESSION['TIPO_USUARIO']=$tipo;
-                    switch($_SESSION['TIPO_USUARIO']){
+    if ($error == 0) {
+        $SQL = $conex->query("SELECT * FROM `usuario` WHERE EMAIL_USU='$correo';");
+        if (mysqli_num_rows($SQL) != 0) {
+            while ($row = $SQL->fetch_array()) {
+                $pass = password_verify($contraseña, $row['PASSWORD_USUARIO']);
+                if ($pass) {
+                    $tipo = $row['TIPO_USUARIO'];
+                    $_SESSION['TIPO_USUARIO'] = $tipo;
+                    switch ($_SESSION['TIPO_USUARIO']) {
                         case 1:
                             header('location: index.php');
                             break;
 
-                            default:
+                        default:
                     }
-                }else{
-                    ?>
+                } else {
+        ?>
                     <div class="alert alert-danger d-flex justify-content-center" role="alert">
-                        !USUARIO O CLAVE INCORRECTOS!
+                        Verifique la informacion, datos incorrectos.
                     </div>
-        <?php
+            <?php
                 }
             }
         } else {
             ?>
             <div class="alert alert-danger d-flex justify-content-center" role="alert">
-                !USUARIO O CLAVE INCORRECTOS!
+                Verifique la informacion, datos incorrectos.
             </div>
 <?php
         }
@@ -70,15 +70,13 @@ $error=0;
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="shortcut icon" href="img/favicon.png" type="image/png">
-
+    <title>Docs CILR - Iniciar Sesion</title>
 
     <title>Docs CILR</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -103,31 +101,27 @@ $error=0;
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">¡Bienvenido de nuevo!</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Bienvenido</h1>
                                     </div>
                                     <form class="user needs-validation" novalidate method="POST" onsubmit="validar_campos();">
                                         <div class="form-group">
-                                            <input type="email" name="correo" class="form-control form-control-user"
-                                                id="email" aria-describedby="emailHelp"
-                                                placeholder="Correo Electronico..." minlength="3" maxlength="250" required pattern="[a-zA-Z0-9!#$%&'*_+-]([\.]?[a-zA-Z0-9!#$%&'*_+-])+@[a-zA-Z0-9]([^@&%$\/()=?¿!.,:;]|\d)+[a-zA-Z0-9][\.][a-zA-Z]{2,4}([\.][a-zA-Z]{2})?">
+                                            <input type="email" name="correo" class="form-control form-control-user" id="email" aria-describedby="emailHelp" placeholder="Correo Electronico" minlength="3" maxlength="250" required pattern="[a-zA-Z0-9!#$%&'*_+-]([\.]?[a-zA-Z0-9!#$%&'*_+-])+@[a-zA-Z0-9]([^@&%$\/()=?¿!.,:;]|\d)+[a-zA-Z0-9][\.][a-zA-Z]{2,4}([\.][a-zA-Z]{2})?">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" name="contraseña" class="form-control form-control-user"
-                                                id="pass" placeholder="Contraseña" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚ]\[0-9]"
-                                            title="Tamaño mínimo: 3. Tamaño máximo: 250">
+                                            <input type="password" name="contraseña" class="form-control form-control-user" id="pass" placeholder="Contraseña" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚ]\[0-9]" title="Tamaño mínimo: 3. Tamaño máximo: 250">
                                         </div>
                                         <div class="form-group">
-                                    <div id="inco" class="alert alert-danger ocultar" role="alert">
-                                        ¡Campos No Validos! Verifique La Información¡¡¡
-                                    </div>
-                                </div>
+                                            <div id="inco" class="alert alert-danger ocultar" role="alert">
+                                                Campos No Validos, Verifique La Información.
+                                            </div>
+                                        </div>
                                         <button type="submit" name="envio" id="enviar" class="btn btn-primary btn-user btn-block">
                                             Iniciar Sesion
                                         </button>
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="olvido-contraseña.php">Olvide La Contraseña?</a>
+                                        <a class="small" href="olvido-contraseña.php">Olvide mi contraseña</a>
                                     </div>
                                 </div>
                             </div>
