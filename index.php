@@ -1,11 +1,11 @@
 <?php
-include ('php/conexion.php');
-include ('php/funciones.php');
+include('php/conexion.php');
+include('php/funciones.php');
 session_start();
 if (!isset($_SESSION['TIPO_USUARIO'])) {
     header('Location: login.php');
     exit();
-  }
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
