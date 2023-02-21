@@ -34,8 +34,11 @@ if (isset($_POST['envio'])) {
                 if ($pass) {
                     session_start();
                     $tipo = $row['TIPO_USUARIO'];
-                    $_SESSION['NOMBRE_USU']=$row['NOMBRE_USU'];
+                    $_SESSION['ID_USUARIO']=$row['ID_USUARIO'];
                     $_SESSION['TIPO_USUARIO'] = $tipo;
+                    $_SESSION['NOMBRE_USU']=$row['NOMBRE_USU'];
+                    $_SESSION['APELLIDOS_USU']=$row['APELLIDOS_USU'];
+                    $_SESSION['EMAIL_USU']=$row['EMAIL_USU'];
                     switch ($_SESSION['TIPO_USUARIO']) {
                         case 1:
                             header('location: index.php');

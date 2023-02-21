@@ -1,22 +1,8 @@
 <?php
 include('php/conexion.php');
-$nombre=$_SESSION['NOMBRE_USU'];
+$nombre = $_SESSION['NOMBRE_USU'];
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<link rel="shortcut icon" href="img/favicon.png" type="image/png">
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="">
-<title>Docs CILR - Dashboard</title>
-<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-<link href="css/sb-admin-2.min.css" rel="stylesheet">
-
-<body id="page-top">
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -95,18 +81,31 @@ $nombre=$_SESSION['NOMBRE_USU'];
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Legajos</h6>
-                        <a class="collapse-item" href="login.html">Nuevo Legajo</a>
+                        <?php
+                        if ($_SESSION['TIPO_USUARIO'] == 1 || $_SESSION['TIPO_USUARIO'] == 2) {
+                        ?>
+                            <a class="collapse-item" href="login.html">Nuevo Legajo</a>
+                        <?php
+                        }
+                        ?>
                         <a class="collapse-item" href="register.html">Ver Legajos</a>
                     </div>
                 </div>
             </li>
 
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-users-cog"></i>
-                    <span>Usuarios</span></a>
-            </li>
+            <?php
+            if ($_SESSION['TIPO_USUARIO'] == 1) {
+            ?>
+                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="charts.html">
+                        <i class="fas fa-fw fa-users-cog"></i>
+                        <span>Usuarios</span></a>
+                </li>
+            <?php
+            }
+            ?>
+
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -115,13 +114,6 @@ $nombre=$_SESSION['NOMBRE_USU'];
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
-
-            <!-- Sidebar Message -->
-            <!-- <div class="sidebar-card d-none d-lg-flex">
-                <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="...">
-                <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
-                <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
-            </div> -->
 
         </ul>
         <!-- End of Sidebar -->
@@ -157,12 +149,12 @@ $nombre=$_SESSION['NOMBRE_USU'];
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $nombre;?></span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $nombre; ?></span>
                                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="perfil.php">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Perfil
                                 </a>
@@ -214,10 +206,10 @@ $nombre=$_SESSION['NOMBRE_USU'];
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Si deseas cerrar sesion darle clic en salir.</div>
+                <div class="modal-body">¿Estas seguro que deseas cerrar sesion?</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                    <a class="btn btn-primary" href="salir.php">Salir</a>
+                    <a class="btn btn-primary" href="salir.php">Cerrar sesion</a>
                 </div>
             </div>
         </div>
@@ -239,7 +231,3 @@ $nombre=$_SESSION['NOMBRE_USU'];
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-
-</body>
-
-</html>
