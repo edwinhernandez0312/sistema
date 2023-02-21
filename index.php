@@ -26,11 +26,44 @@ if (!isset($_SESSION['TIPO_USUARIO'])) {
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Escucha el evento "click" en los enlaces de navegación
+            $('nav a[href!=""]').click(function(event) {
+                event.preventDefault(); // Previne el comportamiento por defecto del enlace
+
+                // Obtiene la URL del enlace
+                var url = $(this).attr('href');
+
+                // Envía una petición AJAX al servidor
+                $.get(url, function(data) {
+                    // Actualiza el contenido de la vista principal con la respuesta del servidor
+                    $('#main').html(data);
+                });
+            });
+        });
+    </script>
 
 </head>
 
 <body>
     <?php include 'nav.php' ?>
 </body>
+<!-- Bootstrap core JavaScript-->
+<script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
 </html>

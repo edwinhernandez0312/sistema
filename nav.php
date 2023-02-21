@@ -148,18 +148,18 @@ $nombre = $_SESSION['NOMBRE_USU'];
 
         <!-- Nav Item - User Information -->
         <li class="nav-item dropdown no-arrow">
-            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $nombre; ?></span>
                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="perfil.php">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     Perfil
                 </a>
                 <!-- <div class="dropdown-divider"></div> -->
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                <a class="dropdown-item" href="" data-toggle="modal" data-target="#logoutModal">
                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                     Cerrar sesion
                 </a>
@@ -170,37 +170,13 @@ $nombre = $_SESSION['NOMBRE_USU'];
 
 </nav>
 <!-- End of Topbar -->
+<main id="main">
 
+</main>
 
 </div>
 <!-- End of Main Content -->
-            <div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">User Information</h6>
-    </div>
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md-6">
-                <dl class="row">
-                    <dt class="col-sm-3">ID:</dt>
-                    <dd class="col-sm-9"><?php echo $_SESSION['ID_USUARIO']; ?></dd>
-
-                    <dt class="col-sm-3">User Type:</dt>
-                    <dd class="col-sm-9"><?php echo $_SESSION['TIPO_USUARIO']; ?></dd>
-
-                    <dt class="col-sm-3">Name:</dt>
-                    <dd class="col-sm-9"><?php echo $_SESSION['NOMBRE_USU']; ?></dd>
-
-                    <dt class="col-sm-3">Last Name:</dt>
-                    <dd class="col-sm-9"><?php echo $_SESSION['APELLIDOS_USU']; ?></dd>
-
-                    <dt class="col-sm-3">Email:</dt>
-                    <dd class="col-sm-9"><?php echo $_SESSION['EMAIL_USU']; ?></dd>
-                </dl>
-            </div>
-        </div>
-    </div>
-</div>
+    
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
@@ -242,19 +218,3 @@ $nombre = $_SESSION['NOMBRE_USU'];
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
