@@ -13,14 +13,14 @@ function enviar_email($correo, $titulo, $titulo2, $cuerpo,)
     try {
         // $email->SMTPDebug=SMTP::DEBUG_SERVER;
         $email->isSMTP();
-        $email->Host = 'smtp.gmail.com.';
+        $email->Host = 'smtp.office365.com';
         $email->SMTPAuth = true;
-        $email->Username = 'sistemas.laurarivera@gmail.com';
-        $email->Password = 'fnbrytzzwwqhrcml';
+        $email->Username = 'sistemas.laurarivera@outlook.com';
+        $email->Password = '900985803_CILR';
         $email->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $email->Port = 587;
 
-        $email->setFrom('sistemas.laurarivera@gmail.com', $titulo);
+        $email->setFrom('sistemas.laurarivera@outlook.com', $titulo);
         $email->addAddress($correo, $titulo);
 
 
