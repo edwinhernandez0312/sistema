@@ -2,17 +2,10 @@
 include ('php/conexion.php');
 include ('php/funciones.php');
 session_start();
-switch($_SESSION['TIPO_USUARIO']){
-    case 1:
-        echo 'administrador';
-        break;
-    case 2:
-        echo 'Archivo';
-        break;
-    default:
-        echo 'hola';
-
-}
+if (!isset($_SESSION['TIPO_USUARIO'])) {
+    header('Location: login.php');
+    exit();
+  }
 ?>
 <!DOCTYPE html>
 <html lang="es">
