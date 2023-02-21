@@ -34,6 +34,7 @@ if (isset($_POST['envio'])) {
                 if ($pass) {
                     session_start();
                     $tipo = $row['TIPO_USUARIO'];
+                    $_SESSION['NOMBRE_USU']=$row['NOMBRE_USU'];
                     $_SESSION['TIPO_USUARIO'] = $tipo;
                     switch ($_SESSION['TIPO_USUARIO']) {
                         case 1:
