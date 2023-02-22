@@ -8,7 +8,8 @@ if (!isset($_SESSION['TIPO_USUARIO'])) {
     exit();
 }
 $tipo = nombre_tipo($_SESSION['TIPO_USUARIO']);
-
+$id= $_SESSION['ID_USUARIO'];
+echo $id;
 ?>
 
 <div class="card shadow mb-4">
@@ -96,14 +97,15 @@ $tipo = nombre_tipo($_SESSION['TIPO_USUARIO']);
                         <input type="text" class="form-control" id="usuario_modificacion" name="usuario_modificacion" value="<?php echo $_SESSION['NOMBRE_USU']; ?>" readonly>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Registrar</button>
+                <button type="submit" name="enviar" class="btn btn-primary">Registrar</button>
         </form>
+
     </div>
 </div>
 
 <?php
 // Si se ha enviado el formulario
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if (isset($_POST['enviar'])) {
     // Recoger los datos del formulario
     $cedula = $_POST['cedula'];
     $fecha_expedicion = $_POST['fecha_expedicion'];
@@ -126,83 +128,83 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Validar los datos
     $errores = array();
 
-    if (empty($cedula)) {
-        $errores[] = 'La cédula es obligatoria.';
-    } elseif (!is_numeric($cedula)) {
-        $errores[] = 'La cédula debe ser un número.';
-    }
+    // if (empty($cedula)) {
+    //     $errores[] = 'La cédula es obligatoria.';
+    // } elseif (!is_numeric($cedula)) {
+    //     $errores[] = 'La cédula debe ser un número.';
+    // }
 
     // Validar y procesar la fecha de expedición
-    $fecha_expedicion_obj = DateTime::createFromFormat('Y-m-d', $fecha_expedicion);
-    if (!$fecha_expedicion_obj) {
-        $errores[] = 'La fecha de expedición no es válida.';
-    }
+    // $fecha_expedicion_obj = DateTime::createFromFormat('Y-m-d', $fecha_expedicion);
+    // if (!$fecha_expedicion_obj) {
+    //     $errores[] = 'La fecha de expedición no es válida.';
+    // }
 
-    if (empty($nombres)) {
-        $errores[] = 'Los nombres son obligatorios.';
-    }
+    // if (empty($nombres)) {
+    //     $errores[] = 'Los nombres son obligatorios.';
+    // }
 
-    if (empty($apellidos)) {
-        $errores[] = 'Los apellidos son obligatorios.';
-    }
+    // if (empty($apellidos)) {
+    //     $errores[] = 'Los apellidos son obligatorios.';
+    // }
 
     // Validar y procesar la fecha de nacimiento
-    $fecha_nacimiento_obj = DateTime::createFromFormat('Y-m-d', $fecha_nacimiento);
-    if (!$fecha_nacimiento_obj) {
-        $errores[] = 'La fecha de nacimiento no es válida.';
-    }
+    // $fecha_nacimiento_obj = DateTime::createFromFormat('Y-m-d', $fecha_nacimiento);
+    // if (!$fecha_nacimiento_obj) {
+    //     $errores[] = 'La fecha de nacimiento no es válida.';
+    // }
 
-    if (empty($telefono)) {
-        $errores[] = 'El teléfono es obligatorio.';
-    } elseif (!is_numeric($telefono)) {
-        $errores[] = 'El teléfono debe ser un número.';
-    }
+    // if (empty($telefono)) {
+    //     $errores[] = 'El teléfono es obligatorio.';
+    // } elseif (!is_numeric($telefono)) {
+    //     $errores[] = 'El teléfono debe ser un número.';
+    // }
 
-    if (empty($direccion)) {
-        $errores[] = 'La dirección es obligatoria.';
-    }
+    // if (empty($direccion)) {
+    //     $errores[] = 'La dirección es obligatoria.';
+    // }
 
-    if (empty($email)) {
-        $errores[] = 'El correo electrónico es obligatorio.';
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errores[] = 'El correo electrónico no es válido.';
-    }
+    // if (empty($email)) {
+    //     $errores[] = 'El correo electrónico es obligatorio.';
+    // } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    //     $errores[] = 'El correo electrónico no es válido.';
+    // }
 
-    if (empty($estado_civil)) {
-        $errores[] = 'El estado civil es obligatorio.';
-    }
+    // if (empty($estado_civil)) {
+    //     $errores[] = 'El estado civil es obligatorio.';
+    // }
 
-    if (empty($nombres_ref1)) {
-        $errores[] = 'Los nombres de la primera referencia son obligatorios.';
-    }
+    // if (empty($nombres_ref1)) {
+    //     $errores[] = 'Los nombres de la primera referencia son obligatorios.';
+    // }
 
-    if (empty($telefono_ref1)) {
-        $errores[] = 'El teléfono de la primera referencia es obligatorio.';
-    } elseif (!is_numeric($telefono_ref1)) {
-        $errores[] = 'El teléfono de la primera referencia debe ser un número.';
-    }
+    // if (empty($telefono_ref1)) {
+    //     $errores[] = 'El teléfono de la primera referencia es obligatorio.';
+    // } elseif (!is_numeric($telefono_ref1)) {
+    //     $errores[] = 'El teléfono de la primera referencia debe ser un número.';
+    // }
 
-    if (empty($nombres_ref2)) {
-        $errores[] = 'Los nombres de la segunda referencia son obligatorios.';
-    }
-    if (empty($telefono_ref2)) {
-        $errores[] = 'El teléfono de la segunda referencia es obligatorio.';
-    } elseif (!is_numeric($telefono_ref2)) {
-        $errores[] = 'El teléfono de la segunda referencia debe ser un número.';
-    }
-
-    // Si no hay errores, se procede a registrar el cliente
-    if (empty($errores)) {
-        // Verificar conexión
-        if (!$conex) {
-            die('Error de conexión: ' . mysqli_connect_error());
-        }
+    // if (empty($nombres_ref2)) {
+    //     $errores[] = 'Los nombres de la segunda referencia son obligatorios.';
+    // }
+    // if (empty($telefono_ref2)) {
+    //     $errores[] = 'El teléfono de la segunda referencia es obligatorio.';
+    // } elseif (!is_numeric($telefono_ref2)) {
+    //     $errores[] = 'El teléfono de la segunda referencia debe ser un número.';
+    // if(!validar_numero($cedula)){
+    //     $errores[]="Cedula incorrecta";
+    // }
+    // if (empty($errores)) {
+    //     // Verificar conexión
+    //     if (!$conex) {
+    //         die('Error de conexión: ' . mysqli_connect_error());
+    //     }
 
         // Crear la sentencia SQL para insertar los datos del cliente
-        $sql = "INSERT INTO clientes (nombres, apellidos, telefono, correo, direccion, nombres_ref1, telefono_ref1, nombres_ref2, telefono_ref2) VALUES ('$nombres', '$apellidos', '$telefono', '$correo', '$direccion', '$nombres_ref1', '$telefono_ref1', '$nombres_ref2', '$telefono_ref2')";
+        $sql =$conex->query("INSERT INTO `cliente`(`CEDULA`, `FECHA_EXPEDICION`, `NOMBRES`, `APELLIDOS`, `FECHA_NACIMIENTO_CLIENTE`, `TELEFONO`, `DIRECCION`, `EMAIL`, `ESTADO_CIVIL`, `NOMBRES_REF1`, `TELEFONO_REF1`, `NOMBRES_REF2`, `TELEFONO_REF2`,  `USUARIO_REGISTRO_CLIENTE`,`USUARIO_MODIFICACION_CLIENTE`) VALUES ('$cedula', '$fecha_expedicion', '$nombres','$apellidos','$fecha_nacimiento','$telefono', '$direccion', '$email', '$estado_civil',  '$nombres_ref1', '$telefono_ref1', '$nombres_ref2', '$telefono_ref2','$id','$id')");
 
         // Ejecutar la sentencia SQL
-        if (mysqli_query($conex, $sql)) {
+        if ($sql) {
             // Si la inserción fue exitosa, mostrar un mensaje al usuario
             echo 'El cliente se registró correctamente.';
         } else {
@@ -211,8 +213,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         // Redireccionar al cliente a una página de confirmación de registro exitoso
-        header('Location: index.php');
-        exit;
+        // header('Location: index.php');
+        // exit;
     }
-}
+
+    // Si no hay errores, se procede a registrar el cliente
+    
+
 ?>
