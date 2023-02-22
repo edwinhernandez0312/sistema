@@ -43,7 +43,7 @@ $nombre = $_SESSION['NOMBRE_USU'];
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Clientes:</h6>
-                        <a class="collapse-item" href="buttons.html">Agregar Clientes</a>
+                        <a class="collapse-item" href="registrar_clientes.php">Agregar Clientes</a>
                         <a class="collapse-item" href="cards.html">Ver Clientes</a>
                     </div>
                 </div>
