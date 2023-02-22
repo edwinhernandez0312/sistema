@@ -49,11 +49,12 @@ $tipo = nombre_tipo($_SESSION['TIPO_USUARIO']);
             </div>
             <div class="form-group">
                 <label for="estado_civil">Estado Civil:</label>
-                <select class="form-control" id="estado_civil" name="estado_civil">
-                    <option value="soltero">Soltero</option>
-                    <option value="casado">Casado</option>
-                    <option value="divorciado">Divorciado</option>
-                    <option value="viudo">Viudo</option>
+                <select class="form-control" id="estado_civil" name="estado_civil" required>
+                    <option value="">Selecciona una opción</option>
+                    <option value="Soltero/a">Soltero/a</option>
+                    <option value="Casado/a">Casado/a</option>
+                    <option value="Divorciado/a">Divorciado/a</option>
+                    <option value="Viudo/a">Viudo/a</option>
                 </select>
             </div>
             <div class="form-group">
@@ -67,6 +68,10 @@ $tipo = nombre_tipo($_SESSION['TIPO_USUARIO']);
             <div class="form-group">
                 <label for="nombres_ref2">Nombres Referencia 2:</label>
                 <input type="text" class="form-control" id="nombres_ref2" name="nombres_ref2" required>
+            </div>
+            <div class="form-group">
+                <label for="telefono_ref2">Teléfono Referencia 2:</label>
+                <input type="tel" class="form-control" id="telefono_ref2" name="telefono_ref2" required>
             </div>
             <div class="form-group">
                 <div class="form-row">
@@ -89,15 +94,7 @@ $tipo = nombre_tipo($_SESSION['TIPO_USUARIO']);
                         <input type="text" class="form-control" id="usuario_modificacion" name="usuario_modificacion" value="<?php echo $_SESSION['NOMBRE_USU']; ?>" readonly>
                     </div>
                 </div>
-<<<<<<< HEAD
-                <div class="form-group col-md-4">
-                    <label for="telefono_ref1">Teléfono
-                    </label>
-                </div>
-            </div>
-=======
                 <button type="submit" class="btn btn-primary">Registrar</button>
->>>>>>> 97702de6244f7649ecca7c1c5d81e0e533eb0b54
         </form>
     </div>
 </div>
