@@ -66,6 +66,14 @@ if (!isset($_SESSION['TIPO_USUARIO'])) {
 
 <body>
     <?php include 'nav.php' ?>
+    <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy;
+                            <a href="https://laurarivera.co">Constructora Inmobiliaria Laura Rivera S.A.S</a> </span>
+                    </div>
+                </div>
+            </footer>
 </body>
 <!-- Bootstrap core JavaScript-->
 <script src="vendor/jquery/jquery.min.js"></script>

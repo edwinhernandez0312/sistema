@@ -3,7 +3,6 @@ include('php/conexion.php');
 $nombre = $_SESSION['NOMBRE_USU'];
 ?>
 
-
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -11,7 +10,7 @@ $nombre = $_SESSION['NOMBRE_USU'];
         <ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" id="page-top" href="index.php">
                 <div><img src="img/icono.png" class="img-fluid" alt="Icono de mi sitio web"></div>
                 <div class="sidebar-brand-text mx-3">CILR</div>
             </a>
@@ -51,7 +50,7 @@ $nombre = $_SESSION['NOMBRE_USU'];
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+                <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-city"></i>
                     <span>Inmuebles</span>
                 </a>
@@ -74,7 +73,7 @@ $nombre = $_SESSION['NOMBRE_USU'];
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+                <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Legajos</span>
                 </a>
@@ -84,11 +83,11 @@ $nombre = $_SESSION['NOMBRE_USU'];
                         <?php
                         if ($_SESSION['TIPO_USUARIO'] == 1 || $_SESSION['TIPO_USUARIO'] == 2) {
                         ?>
-                            <a class="collapse-item" href="login.html">Nuevo Legajo</a>
+                            <a class="collapse-item" href="">Nuevo Legajo</a>
                         <?php
                         }
                         ?>
-                        <a class="collapse-item" href="register.html">Ver Legajos</a>
+                        <a class="collapse-item" href="">Ver Legajos</a>
                     </div>
                 </div>
             </li>
@@ -170,22 +169,15 @@ $nombre = $_SESSION['NOMBRE_USU'];
 
 </nav>
 <!-- End of Topbar -->
-<main id="main">
 
-</main>
 
 </div>
 <!-- End of Main Content -->
-    
+<main id="main">
+
+</main>
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy;
-                            <a href="https://laurarivera.co">Constructora Inmobiliaria Laura Rivera S.A.S</a> </span>
-                    </div>
-                </div>
-            </footer>
+            
             <!-- End of Footer -->
 
         </div>
