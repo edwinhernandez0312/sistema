@@ -47,7 +47,7 @@ if (!isset($_SESSION['TIPO_USUARIO'])) {
     <script>
         $(document).ready(function() {
             // Escucha el evento "click" en los enlaces de navegación
-            $('ul a[href!=""]').click(function(event) {
+            $('div a[href!=""]').click(function(event) {
                 event.preventDefault(); // Previne el comportamiento por defecto del enlace
 
                 // Obtiene la URL del enlace
