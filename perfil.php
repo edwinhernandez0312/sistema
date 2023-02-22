@@ -6,6 +6,7 @@ if (!isset($_SESSION['TIPO_USUARIO'])) {
     header('Location: login.php');
     exit();
 }
+$tipo=nombre_tipo($_SESSION['TIPO_USUARIO']);
 ?>
 
 
@@ -13,23 +14,22 @@ if (!isset($_SESSION['TIPO_USUARIO'])) {
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">User Information</h6>
+    <div class="card-header py-3 row d-flex">
+        <h6 class="m-0 font-weight-bold text-primary">Infomracion de usuario</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Infomracion de usuario</h6>
     </div>
     <div class="card-body">
         <div class="row">
             <div class="col-md-6">
                 <dl class="row">
-                    <dt class="col-sm-3">ID:</dt>
-                    <dd class="col-sm-9"><?php echo $_SESSION['ID_USUARIO']; ?></dd>
 
-                    <dt class="col-sm-3">User Type:</dt>
-                    <dd class="col-sm-9"><?php echo $_SESSION['TIPO_USUARIO']; ?></dd>
+                    <dt class="col-sm-3">Tipo de usuario:</dt>
+                    <dd class="col-sm-9"><?php echo $tipo; ?></dd>
 
-                    <dt class="col-sm-3">Name:</dt>
+                    <dt class="col-sm-3">Nombre:</dt>
                     <dd class="col-sm-9"><?php echo $_SESSION['NOMBRE_USU']; ?></dd>
 
-                    <dt class="col-sm-3">Last Name:</dt>
+                    <dt class="col-sm-3">Apellidos:</dt>
                     <dd class="col-sm-9"><?php echo $_SESSION['APELLIDOS_USU']; ?></dd>
 
                     <dt class="col-sm-3">Email:</dt>

@@ -1,14 +1,12 @@
 <?php
 include ('php/conexion.php');
 include ('php/funciones.php');
+$errores = array();
+$completados = array();
 if(isset($_POST['enviar'])){
     $email = $_POST['correo'];
     if(!validar_correo($email)){
-        ?>
-                <div class="alert alert-danger d-flex justify-content-center"  role="alert">
-                    !Correo Electronico No Valido¡
-                </div>
-        <?php
+        $errores[]="Correo Electronico no valido";
     }else{
     if(email_existe($email)){
         $user_id=traer_valor('ID_USUARIO','EMAIL_USU',$email);
@@ -25,24 +23,12 @@ if(isset($_POST['enviar'])){
         <a href='$url'> Cambiar contraseña </a>";
 
         if(enviar_email($email,$asunto,$asunto,$cuerpo)){
-            ?>
-            <div class="alert alert-success d-flex justify-content-center"  role="alert">
-            Se ha enviado el un correo a la direcicon <?php echo $email ?> para restablcer la contraseña
-            </div>  
-    <?php
+            $completados[]="Se ha enviado un correo a $email para restablecer la contraseña";
         }else{
-            ?>
-            <div class="alert alert-danger d-flex justify-content-center"  role="alert">
-                !Error al enviar el Email¡
-            </div>
-    <?php
+            $errores[]="Error al enviar el Email";
         }
     }else{
-        ?>
-            <div class="alert alert-danger d-flex justify-content-center"  role="alert">
-                !No existe este correo electronico vinculado en ninguna cuenta¡
-            </div>
-    <?php
+        $errores[]="Este correo no esta vinculado a ninguna cuenta";
     }
 }
 }
@@ -112,6 +98,8 @@ if(isset($_POST['enviar'])){
                                         </button>
                                     </form>
                                     <hr>
+                                    <?php echo mostrar_errores($errores) ;?>
+                                    <?php echo mostrar_bienes($completados) ;?>
                                     <div class="text-center">
                                         <a class="small" href="login.php">Tengo Una Cuenta? Iniciar Sesion!</a>
                                     </div>

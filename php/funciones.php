@@ -234,4 +234,20 @@ function mostrar_bienes($bienes){
         echo "</div>";
 }
 }
-?>
+
+// saber que usuario es 
+function nombre_tipo($tipo_usuario){
+switch($tipo_usuario){
+    case 1:
+        return "Administrador";
+        break;
+        case 2:
+            return "Archivo";
+            break;
+            case 3:
+                return "Cordinador comercial";
+                break;
+                case 4:
+                    return "Agente de servicios";
+}
+}

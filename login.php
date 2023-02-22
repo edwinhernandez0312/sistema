@@ -14,17 +14,14 @@ if (isset($_POST['TIPO_USUARIO'])) {
         default;
     }
 }
+$errores=array();
 if (isset($_POST['envio'])) {
     $correo = trim($_POST['correo']);
     $contraseña = trim($_POST['contraseña']);
     $error = 0;
     if (validar_login($correo, $contraseña)) {
         $error++;
-?>
-        <div class="alert alert-danger d-flex justify-content-center" role="alert">
-            !Campos Imcompletos O Datos Incorrectos¡
-        </div>
-        <?php
+        $errores[]="Complete los todos los campos";
     }
     if ($error == 0) {
         $SQL = $conex->query("SELECT * FROM `usuario` WHERE EMAIL_USU='$correo';");
@@ -47,19 +44,11 @@ if (isset($_POST['envio'])) {
                         default:
                     }
                 } else {
-        ?>
-                    <div class="alert alert-danger d-flex justify-content-center" role="alert">
-                        Verifique la informacion, datos incorrectos.
-                    </div>
-            <?php
+                    $errores[]="Contraseña incorrecta";
                 }
             }
         } else {
-            ?>
-            <div class="alert alert-danger d-flex justify-content-center" role="alert">
-                Verifique la informacion, datos incorrectos.
-            </div>
-<?php
+            $errores[]="Datos incorrectos";
         }
     }
 }
@@ -125,6 +114,7 @@ if (isset($_POST['envio'])) {
                                         </button>
                                     </form>
                                     <hr>
+                                    <?php echo mostrar_errores($errores) ;?>
                                     <div class="text-center">
                                         <a class="small" href="olvido-contraseña.php">Olvide mi contraseña</a>
                                     </div>

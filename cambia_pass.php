@@ -14,11 +14,7 @@ $user_token = $conex->real_escape_string($_GET['token']);
 $error = 0;
 if (!verificar_token_pass($user_id, $user_token)) {
     $error++;
-?>
-    <div class="alert alert-danger d-flex justify-content-center" role="alert">
-        !No se pudo verificar la informacion¡
-    </div>
-    <?php
+    header('location: 404.html');
     exit;
 }
 if (isset($_POST['envio'])) {
@@ -27,19 +23,11 @@ if (isset($_POST['envio'])) {
 
     if (pass_vacias($pass1, $pass2)) {
         $error++;
-    ?>
-        <div class="alert alert-danger d-flex justify-content-center" role="alert">
-            !Campos vacios¡
-        </div>
-    <?php
+        $errores[]="Complete todos los campos";
     }
     if (!validar_contraseña($pass1, $pass2)) {
         $error++;
-    ?>
-        <div class="alert alert-danger d-flex justify-content-center" role="alert">
-            !Contraseña no coinciden¡
-        </div>
-<?php
+        $errores[]="Las contraseñas no coinciden";
     }
 
     if ($error == 0) {
@@ -114,6 +102,10 @@ if (isset($_POST['envio'])) {
                                     </form>
                                     <?php echo mostrar_errores($errores) ;?>
                                     <?php echo mostrar_bienes($completados) ;?>
+                                    <hr>
+                                    <div class="text-center">
+                                        <a class="small" href="login.php">Tengo Una Cuenta? Iniciar Sesion!</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
