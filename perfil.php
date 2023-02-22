@@ -10,13 +10,11 @@ $tipo=nombre_tipo($_SESSION['TIPO_USUARIO']);
 ?>
 
 
-
-
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
-    <div class="card-header py-3 row d-flex">
-        <h6 class="m-0 font-weight-bold text-primary">Infomracion de usuario</h6>
-        <h6 class="m-0 font-weight-bold text-primary">Infomracion de usuario</h6>
+    <div class="card-header py-3 row">
+        <h6 class="col-sm-6 m-0 font-weight-bold text-primary">Infomracion de usuario</h6>
+        <h6 class="col-sm-6 d-flex justify-content-end m-0 font-weight-bold text-primary"><span class="fas fa-user-edit"></span></h6>
     </div>
     <div class="card-body">
         <div class="row">
