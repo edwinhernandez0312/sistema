@@ -68,3 +68,9 @@ $tipo = nombre_tipo($_SESSION['TIPO_USUARIO']);
                 </div>
                 <div class="form-group col-md-4">
                     <label for="telefono_ref1">Teléfono
+                    </label>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
