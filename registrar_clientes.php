@@ -9,6 +9,7 @@ if (!isset($_SESSION['TIPO_USUARIO'])) {
 }
 $tipo = nombre_tipo($_SESSION['TIPO_USUARIO']);
 $id = $_SESSION['ID_USUARIO'];
+require_once "vistas/nav.php";
 ?>
 
 <div class="card shadow mb-4">
@@ -219,5 +220,5 @@ if (isset($_POST['enviar'])) {
 
 // Si no hay errores, se procede a registrar el cliente
 
-
+require_once "vistas/footer.php";
 ?>

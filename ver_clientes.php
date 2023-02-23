@@ -6,7 +6,7 @@ session_start();
 
 // Consulta SQL para obtener todos los clientes
 $resultado =$conex->query("SELECT * FROM cliente");
-
+require_once "vistas/nav.php";
 ?>
 <!DOCTYPE html>
 <html>
@@ -69,20 +69,4 @@ $resultado =$conex->query("SELECT * FROM cliente");
     <script src="js/demo/datatables-demo.js"></script>
 </body>
 </html>
-<script>
-        $(document).ready(function() {
-            // Escucha el evento "click" en los enlaces de navegación
-            $('td a[href!=""]').click(function(event) {
-                event.preventDefault(); // Previne el comportamiento por defecto del enlace
-
-                // Obtiene la URL del enlace
-                var url = $(this).attr('href');
-
-                // Envía una petición AJAX al servidor
-                $.get(url, function(data) {
-                    // Actualiza el contenido de la vista principal con la respuesta del servidor
-                    $('#main').html(data);
-                });
-            });
-        });
-    </script>
+    <?php require_once "vistas/footer.php"?>
