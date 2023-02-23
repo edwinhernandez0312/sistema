@@ -51,7 +51,7 @@ function validar_datos($nombre, $apellidos, $correo, $pass1, $pass2)
 }
 function validar_texto($text)
 {
-    $pattern = "/^[a-zA-Z\sñáéíóúÁÉÍÓÚÑ]+$/";
+    $pattern = "/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+[a-zA-ZáéíóúÁÉÍÓÚñÑ\s\/]*$/";
     if (preg_match($pattern, trim($text))) {
         return true;
     } else {
@@ -61,7 +61,7 @@ function validar_texto($text)
 // funcion para validar que la variable solo tenga numero y (-)
 function validar_numero($text)
 {
-    $pattern = "/^[0-9\-]+$/";
+    $pattern = "/^[0-9\()+-]+$/";
     if (preg_match($pattern, trim($text))) {
         return true;
     } else {
@@ -234,5 +234,29 @@ function mostrar_bienes($bienes){
         echo "</div>";
 }
 }
+// validar que las fechas no se han iguales
+function fechasDiferentes($fecha1, $fecha2) {
+    $fecha1_ts = strtotime($fecha1);
+    $fecha2_ts = strtotime($fecha2);
 
+    if (date('Y-m-d', $fecha1_ts) === date('Y-m-d', $fecha2_ts)) {
+        return true;
+    }
+
+    return false;
+}
+// para validar si el usuario existe en la base de datos
+function cedula_existe($cedula)
+{
+    global $conex;
+    $consulta = $conex->query("SELECT CEDULA FROM `cliente` WHERE CEDULA='$cedula';");
+    $num = mysqli_num_rows($consulta);
+    $consulta->close();
+
+    if ($num > 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
