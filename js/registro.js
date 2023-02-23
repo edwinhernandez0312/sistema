@@ -54,4 +54,3 @@ function validar_pass() {
     }
     
 }
-
