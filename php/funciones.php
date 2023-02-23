@@ -61,7 +61,7 @@ function validar_texto($text)
 // funcion para validar que la variable solo tenga numero y (-)
 function validar_numero($text)
 {
-    $pattern = "/^[0-9\()+-]+$/";
+    $pattern = "/^[\d() +\-]*$/";
     if (preg_match($pattern, trim($text))) {
         return true;
     } else {

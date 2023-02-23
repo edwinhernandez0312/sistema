@@ -3,7 +3,7 @@ date_default_timezone_set('America/Bogota');
 include('php/conexion.php');
 include('php/funciones.php');
 session_start();
-
+$usuario_actual=$_SESSION['ID_USUARIO'];
 // Verificar si se envió el id del cliente a editar
 if (isset($_GET['id'])) {
     $id_cliente = $_GET['id'];
@@ -183,7 +183,7 @@ require_once "vistas/nav.php";
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6">
                                     <label for="telefono">Teléfono:</label>
-                                    <input type="text" class="form-control" name="telefono" value="<?php echo $fila['TELEFONO']; ?>" minlength="3" maxlength="250" required pattern="^[0-9()+-]*$" title="Dijite el telefono">
+                                    <input type="text" class="form-control" name="telefono" value="<?php echo $fila['TELEFONO']; ?>" minlength="3" maxlength="250" required pattern="^[0-9()+- ]*$" title="Dijite el telefono">
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6">
                                     <label for="direccion">Dirección:</label>
@@ -296,6 +296,7 @@ require_once "vistas/nav.php";
         $errores = array();
         $completados = array();
         if (isset($_POST['Guardar'])) {
+            $id = $_POST['id_cliente'];
             $cedula = $_POST['cedula'];
             $fecha_expedicion = $_POST['fecha_expedicion'];
             $nombres = $_POST['nombres'];
@@ -328,6 +329,36 @@ require_once "vistas/nav.php";
                 strlen(trim($fecha_modificacion)) >= 1 &&
                 strlen(trim($usuario_modificacion)) >= 1
             ) {
+                if (!validar_numero($cedula) || !validar_numero($telefono) || !validar_numero($telefono_ref1) || !validar_numero($telefono_ref2)) {
+                    $errores[] = "Formato numerico incorrecto";
+                }
+                if (fechasDiferentes($fecha_nacimiento, $fecha_expedicion)) {
+                    $errores[] = "la fecha de naciminiento no puede ser igual a la fecha de expedicion de la cedula";
+                }
+                if (!validar_texto($nombres) || !validar_texto($apellidos) || !validar_texto($estado_civil) || !validar_texto($nombres_ref1) || !validar_texto($nombres_ref2)) {
+                    $errores[] = "Formato de caracteres incorrecto";
+                }
+                if (!validar_correo($email)) {
+                    $errores[] = "Correo no valido";
+                }
+                if($cedula!=$fila['CEDULA']){
+                    if (cedula_existe($cedula)) {
+                        $errores[] = "El usuario con esta cedula ya existe";
+                    }
+                }
+                if (empty($errores)) {
+                    $SQL = $conex->query("UPDATE `cliente` SET `CEDULA`='$cedula',`FECHA_EXPEDICION`='$fecha_expedicion',
+                    `NOMBRES`='$nombres',`APELLIDOS`='$apellidos',`FECHA_NACIMIENTO_CLIENTE`='$fecha_nacimiento',`TELEFONO`='$telefono',
+                    `DIRECCION`='$direccion',`EMAIL`='$email',`ESTADO_CIVIL`='$estado_civil',`NOMBRES_REF1`='$nombres_ref1',`TELEFONO_REF1`='$telefono_ref1',
+                    `NOMBRES_REF2`='$nombres_ref2',`TELEFONO_REF2`='$telefono_ref2',`USUARIO_REGISTRO_CLIENTE`='$Usuario_registro',`FECHA_MODIFICACION`='$fecha_modificacion',`USUARIO_MODIFICACION_CLIENTE`='$usuario_actual' WHERE ID_CLIENTE='$id';");
+                    if ($SQL) {
+                        $completados[] = "Cliente actualizado correctamente";
+                    } else {
+                        $errores[] = "Cliente no se pudo actualizar" . mysqli_error($conex);
+                    }
+                }
+                mostrar_errores($errores);
+                mostrar_bienes($completados);
             }
         }
         require_once "vistas/footer.php" ?>
