@@ -468,7 +468,6 @@ require_once "vistas/nav.php";
     // Redireccionar al cliente a una página de confirmación de registro exitoso
     // header('Location: index.php');
     // exit;
-}
 
 // Si no hay errores, se procede a registrar el cliente
 
