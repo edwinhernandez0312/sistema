@@ -7,8 +7,9 @@ if (!isset($_SESSION['TIPO_USUARIO'])) {
     header('Location: login.php');
     exit();
 }
+$tipo = nombre_tipo($_SESSION['TIPO_USUARIO']);
 $id = $_SESSION['ID_USUARIO'];
-$nombre = $_SESSION['NOMBRE_USU'];
+require_once "vistas/nav.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -200,123 +201,94 @@ $nombre = $_SESSION['NOMBRE_USU'];
         <!-- End of Topbar -->
 
 
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Registrar Cliente</h6>
     </div>
-    <!-- End of Main Content -->
-    <main id="main">
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Registrar Cliente</h6>
-        </div>
-        <div class="card-body">
-            <form method="POST" class="user needs-validation" novalidate id="miFormulario">
-                <div class="form-group">
-                    <label for="cedula">Cédula:</label>
-                    <input type="text" class="form-control" id="cedula" name="cedula" required pattern="^[0-9]*$" title="Dijite la cedula sin espacios solo numeros">
-                </div>
-                <div class="form-group">
-                    <label for="fecha_expedicion">Fecha de Expedición:</label>
-                    <input type="date" class="form-control" id="fecha_expedicion" name="fecha_expedicion" required >
-                </div>
-                <div class="form-group">
-                    <label for="nombres">Nombres:</label>
-                    <input type="text" class="form-control" id="nombres" name="nombres" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚÑ]+">
-                </div>
-                <div class="form-group">
-                    <label for="apellidos">Apellidos:</label>
-                    <input type="text" class="form-control" id="apellidos" name="apellidos" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚÑ]+">
-                </div>
-                <div class="form-group">
-                    <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
-                    <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required>
-                </div>
-                <div class="form-group">
-                    <label for="telefono">Teléfono:</label>
-                    <input type="text" class="form-control" id="telefono" name="telefono" required pattern="^[0-9()+-]*$">
-                </div>
-                <div class="form-group">
-                    <label for="direccion">Dirección:</label>
-                    <input type="text" class="form-control" id="direccion" name="direccion" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" class="form-control" id="email" name="email" minlength="3" maxlength="250" required pattern="[a-zA-Z0-9!#$%&'*_+-]([\.]?[a-zA-Z0-9!#$%&'*_+-])+@[a-zA-Z0-9]([^@&%$\/()=?¿!.,:;]|\d)+[a-zA-Z0-9][\.][a-zA-Z]{2,4}([\.][a-zA-Z]{2})?">
-                </div>
-                <div class="form-group">
-                    <label for="estado_civil">Estado Civil:</label>
-                    <select class="form-control" id="estado_civil" name="estado_civil" required>
-                        <option value="">Selecciona una opción</option>
-                        <option value="Soltero/a">Soltero/a</option>
-                        <option value="Casado/a">Casado/a</option>
-                        <option value="Divorciado/a">Divorciado/a</option>
-                        <option value="Viudo/a">Viudo/a</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="nombres_ref1">Nombres Referencia 1:</label>
-                    <input type="text" class="form-control" id="nombres_ref1" name="nombres_ref1" required>
-                </div>
-                <div class="form-group">
-                    <label for="telefono_ref1">Teléfono Referencia 1:</label>
-                    <input type="tel" class="form-control" id="telefono_ref1" name="telefono_ref1" required>
-                </div>
-                <div class="form-group">
-                    <label for="nombres_ref2">Nombres Referencia 2:</label>
-                    <input type="text" class="form-control" id="nombres_ref2" name="nombres_ref2" required>
-                </div>
-                <div class="form-group">
-                    <label for="telefono_ref2">Teléfono Referencia 2:</label>
-                    <input type="tel" class="form-control" id="telefono_ref2" name="telefono_ref2" required>
-                </div>
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="fecha_registro">Fecha Registro:</label>
-                            <input type="text" class="form-control" id="fecha_registro" name="fecha_registro" value="<?php echo date('Y-m-d H:i:s'); ?>" readonly>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="usuario_registro">Usuario Registro:</label>
-                            <input type="text" class="form-control" id="usuario_registro" name="usuario_registro" value="<?php echo $_SESSION['NOMBRE_USU']; ?>" readonly>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="fecha_modificacion">Fecha Modificación:</label>
-                            <input type="text" class="form-control" id="fecha_modificacion" name="fecha_modificacion" value="<?php echo date('Y-m-d H:i:s'); ?>" readonly>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="usuario_modificacion">Usuario Modificación:</label>
-                            <input type="text" class="form-control" id="usuario_modificacion" name="usuario_modificacion" value="<?php echo $_SESSION['NOMBRE_USU']; ?>" readonly>
-                        </div>
-                    </div>
-                    <button type="submit" name="registro" class="btn btn-primary">Registrar</button>
-            </form>
-            <div id="resultado">
-
+    <div class="card-body">
+        <form method="POST">
+            <div class="form-group">
+                <label for="cedula">Cédula:</label>
+                <input type="text" class="form-control" id="cedula" name="cedula" required>
             </div>
-        </div>
-    </div>
-    </main>
-    <!-- Footer -->
-    <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-            <div class="copyright text-center my-auto">
-                <span>Copyright &copy;
-                    <a href="https://laurarivera.co">Constructora Inmobiliaria Laura Rivera S.A.S</a> </span>
+            <div class="form-group">
+                <label for="fecha_expedicion">Fecha de Expedición:</label>
+                <input type="date" class="form-control" id="fecha_expedicion" name="fecha_expedicion" required>
             </div>
-        </div>
-    </footer>
-    <!-- End of Footer -->
-
-</div>
-<!-- End of Content Wrapper -->
-
-</div>
-<!-- End of Page Wrapper -->
-
-<!-- Scroll to Top Button-->
-<a class="scroll-to-top rounded" href="#page-top">
-<i class="fas fa-angle-up"></i>
-</a>
+            <div class="form-group">
+                <label for="nombres">Nombres:</label>
+                <input type="text" class="form-control" id="nombres" name="nombres" required>
+            </div>
+            <div class="form-group">
+                <label for="apellidos">Apellidos:</label>
+                <input type="text" class="form-control" id="apellidos" name="apellidos" required>
+            </div>
+            <div class="form-group">
+                <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+                <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required>
+            </div>
+            <div class="form-group">
+                <label for="telefono">Teléfono:</label>
+                <input type="tel" class="form-control" id="telefono" name="telefono" required>
+            </div>
+            <div class="form-group">
+                <label for="direccion">Dirección:</label>
+                <input type="text" class="form-control" id="direccion" name="direccion" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="estado_civil">Estado Civil:</label>
+                <select class="form-control" id="estado_civil" name="estado_civil" required>
+                    <option value="">Selecciona una opción</option>
+                    <option value="Soltero/a">Soltero/a</option>
+                    <option value="Casado/a">Casado/a</option>
+                    <option value="Divorciado/a">Divorciado/a</option>
+                    <option value="Viudo/a">Viudo/a</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="nombres_ref1">Nombres Referencia 1:</label>
+                <input type="text" class="form-control" id="nombres_ref1" name="nombres_ref1" required>
+            </div>
+            <div class="form-group">
+                <label for="telefono_ref1">Teléfono Referencia 1:</label>
+                <input type="tel" class="form-control" id="telefono_ref1" name="telefono_ref1" required>
+            </div>
+            <div class="form-group">
+                <label for="nombres_ref2">Nombres Referencia 2:</label>
+                <input type="text" class="form-control" id="nombres_ref2" name="nombres_ref2" required>
+            </div>
+            <div class="form-group">
+                <label for="telefono_ref2">Teléfono Referencia 2:</label>
+                <input type="tel" class="form-control" id="telefono_ref2" name="telefono_ref2" required>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="fecha_registro">Fecha Registro:</label>
+                        <input type="text" class="form-control" id="fecha_registro" name="fecha_registro" value="<?php echo date('Y-m-d H:i:s'); ?>" readonly>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="usuario_registro">Usuario Registro:</label>
+                        <input type="text" class="form-control" id="usuario_registro" name="usuario_registro" value="<?php echo $_SESSION['NOMBRE_USU']; ?>" readonly>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="fecha_modificacion">Fecha Modificación:</label>
+                        <input type="text" class="form-control" id="fecha_modificacion" name="fecha_modificacion" value="<?php echo date('Y-m-d H:i:s'); ?>" readonly>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="usuario_modificacion">Usuario Modificación:</label>
+                        <input type="text" class="form-control" id="usuario_modificacion" name="usuario_modificacion" value="<?php echo $_SESSION['NOMBRE_USU']; ?>" readonly>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" name="enviar" class="btn btn-primary">Registrar</button>
+        </form>
 
 <!-- Logout Modal-->
 <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -481,24 +453,24 @@ $nombre = $_SESSION['NOMBRE_USU'];
 //         die('Error de conexión: ' . mysqli_connect_error());
 //     }
 
-// Crear la sentencia SQL para insertar los datos del cliente
-// $sql =$conex->query("INSERT INTO `cliente`(`CEDULA`, `FECHA_EXPEDICION`, `NOMBRES`, `APELLIDOS`, `FECHA_NACIMIENTO_CLIENTE`, `TELEFONO`, `DIRECCION`, `EMAIL`, `ESTADO_CIVIL`, `NOMBRES_REF1`, `TELEFONO_REF1`, `NOMBRES_REF2`, `TELEFONO_REF2`,  `USUARIO_REGISTRO_CLIENTE`,`USUARIO_MODIFICACION_CLIENTE`) VALUES ('$cedula', '$fecha_expedicion', '$nombres','$apellidos','$fecha_nacimiento','$telefono', '$direccion', '$email', '$estado_civil',  '$nombres_ref1', '$telefono_ref1', '$nombres_ref2', '$telefono_ref2','$id','$id')");
+    // Crear la sentencia SQL para insertar los datos del cliente
+    $sql = $conex->query("INSERT INTO `cliente`(`CEDULA`, `FECHA_EXPEDICION`, `NOMBRES`, `APELLIDOS`, `FECHA_NACIMIENTO_CLIENTE`, `TELEFONO`, `DIRECCION`, `EMAIL`, `ESTADO_CIVIL`, `NOMBRES_REF1`, `TELEFONO_REF1`, `NOMBRES_REF2`, `TELEFONO_REF2`,  `USUARIO_REGISTRO_CLIENTE`,`USUARIO_MODIFICACION_CLIENTE`) VALUES ('$cedula', '$fecha_expedicion', '$nombres','$apellidos','$fecha_nacimiento','$telefono', '$direccion', '$email', '$estado_civil',  '$nombres_ref1', '$telefono_ref1', '$nombres_ref2', '$telefono_ref2','$id','$id')");
 
-// Ejecutar la sentencia SQL
-// if ($sql) {
-//     // Si la inserción fue exitosa, mostrar un mensaje al usuario
-//     echo 'El cliente se registró correctamente.';
-// } else {
-//     // Si hubo un error en la inserción, mostrar un mensaje de error
-//     echo 'Error al registrar el cliente: ' . mysqli_error($conex);
-// }
+    // Ejecutar la sentencia SQL
+    if ($sql) {
+        // Si la inserción fue exitosa, mostrar un mensaje al usuario
+        echo 'El cliente se registró correctamente.';
+    } else {
+        // Si hubo un error en la inserción, mostrar un mensaje de error
+        echo 'Error al registrar el cliente: ' . mysqli_error($conex);
+    }
 
-// Redireccionar al cliente a una página de confirmación de registro exitoso
-// header('Location: index.php');
-// exit;
-// }
+    // Redireccionar al cliente a una página de confirmación de registro exitoso
+    // header('Location: index.php');
+    // exit;
+}
 
 // Si no hay errores, se procede a registrar el cliente
 
-
+require_once "vistas/footer.php";
 ?>
