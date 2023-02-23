@@ -13,7 +13,7 @@ $tipo = nombre_tipo($_SESSION['TIPO_USUARIO']);
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header py-3 row">
-        <h6 class="col-sm-6 m-0 font-weight-bold text-primary">Infomracion de usuario</h6>
+        <h6 class="col-sm-6 m-0 font-weight-bold text-primary">Informacion de usuario</h6>
         <h3 class="col-sm-6 d-flex justify-content-end m-0 font-weight-bold text-primary">
             <a class="nav-link fas fa-user-edit" href="editar_perfil.php?nombre=<?php echo $_SESSION['NOMBRE_USU'] ?> 
             & apellidos=<?php echo $_SESSION['APELLIDOS_USU'] ?> & email=<?php echo $_SESSION['EMAIL_USU'] ?>"></a></h3>

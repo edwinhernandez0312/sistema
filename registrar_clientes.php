@@ -9,7 +9,6 @@ if (!isset($_SESSION['TIPO_USUARIO'])) {
 }
 $tipo = nombre_tipo($_SESSION['TIPO_USUARIO']);
 $id= $_SESSION['ID_USUARIO'];
-echo $id;
 ?>
 
 <div class="card shadow mb-4">
