@@ -8,7 +8,7 @@ if (!isset($_SESSION['TIPO_USUARIO'])) {
     exit();
 }
 $tipo = nombre_tipo($_SESSION['TIPO_USUARIO']);
-$id= $_SESSION['ID_USUARIO'];
+$id = $_SESSION['ID_USUARIO'];
 ?>
 
 <div class="card shadow mb-4">
@@ -96,7 +96,8 @@ $id= $_SESSION['ID_USUARIO'];
                         <input type="text" class="form-control" id="usuario_modificacion" name="usuario_modificacion" value="<?php echo $_SESSION['NOMBRE_USU']; ?>" readonly>
                     </div>
                 </div>
-                <button type="submit" name="enviar" class="btn btn-primary">Registrar</button>
+            </div>
+            <button type="submit" name="enviar" class="btn btn-primary">Registrar</button>
         </form>
 
     </div>
@@ -199,24 +200,24 @@ if (isset($_POST['enviar'])) {
     //         die('Error de conexión: ' . mysqli_connect_error());
     //     }
 
-        // Crear la sentencia SQL para insertar los datos del cliente
-        $sql =$conex->query("INSERT INTO `cliente`(`CEDULA`, `FECHA_EXPEDICION`, `NOMBRES`, `APELLIDOS`, `FECHA_NACIMIENTO_CLIENTE`, `TELEFONO`, `DIRECCION`, `EMAIL`, `ESTADO_CIVIL`, `NOMBRES_REF1`, `TELEFONO_REF1`, `NOMBRES_REF2`, `TELEFONO_REF2`,  `USUARIO_REGISTRO_CLIENTE`,`USUARIO_MODIFICACION_CLIENTE`) VALUES ('$cedula', '$fecha_expedicion', '$nombres','$apellidos','$fecha_nacimiento','$telefono', '$direccion', '$email', '$estado_civil',  '$nombres_ref1', '$telefono_ref1', '$nombres_ref2', '$telefono_ref2','$id','$id')");
+    // Crear la sentencia SQL para insertar los datos del cliente
+    $sql = $conex->query("INSERT INTO `cliente`(`CEDULA`, `FECHA_EXPEDICION`, `NOMBRES`, `APELLIDOS`, `FECHA_NACIMIENTO_CLIENTE`, `TELEFONO`, `DIRECCION`, `EMAIL`, `ESTADO_CIVIL`, `NOMBRES_REF1`, `TELEFONO_REF1`, `NOMBRES_REF2`, `TELEFONO_REF2`,  `USUARIO_REGISTRO_CLIENTE`,`USUARIO_MODIFICACION_CLIENTE`) VALUES ('$cedula', '$fecha_expedicion', '$nombres','$apellidos','$fecha_nacimiento','$telefono', '$direccion', '$email', '$estado_civil',  '$nombres_ref1', '$telefono_ref1', '$nombres_ref2', '$telefono_ref2','$id','$id')");
 
-        // Ejecutar la sentencia SQL
-        if ($sql) {
-            // Si la inserción fue exitosa, mostrar un mensaje al usuario
-            echo 'El cliente se registró correctamente.';
-        } else {
-            // Si hubo un error en la inserción, mostrar un mensaje de error
-            echo 'Error al registrar el cliente: ' . mysqli_error($conex);
-        }
-
-        // Redireccionar al cliente a una página de confirmación de registro exitoso
-        // header('Location: index.php');
-        // exit;
+    // Ejecutar la sentencia SQL
+    if ($sql) {
+        // Si la inserción fue exitosa, mostrar un mensaje al usuario
+        echo 'El cliente se registró correctamente.';
+    } else {
+        // Si hubo un error en la inserción, mostrar un mensaje de error
+        echo 'Error al registrar el cliente: ' . mysqli_error($conex);
     }
 
-    // Si no hay errores, se procede a registrar el cliente
-    
+    // Redireccionar al cliente a una página de confirmación de registro exitoso
+    // header('Location: index.php');
+    // exit;
+}
+
+// Si no hay errores, se procede a registrar el cliente
+
 
 ?>

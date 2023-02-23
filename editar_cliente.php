@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('America/Bogota');
 include('php/conexion.php');
 include('php/funciones.php');
 session_start();
@@ -21,6 +22,10 @@ if (mysqli_num_rows($resultado) == 0) {
 
 // Obtener los datos del cliente
 $fila = mysqli_fetch_assoc($resultado);
+$Usuario_registro=$fila['USUARIO_REGISTRO_CLIENTE'];
+$sql="SELECT * FROM usuario WHERE ID_USUARIO=$Usuario_registro";
+$resultado=mysqli_query($conex, $sql);
+$usuario=mysqli_fetch_assoc($resultado);
 ?>
 <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -87,6 +92,28 @@ $fila = mysqli_fetch_assoc($resultado);
             <div class="form-group">
                 <label for="telefono_ref2">Teléfono de la referencia 2:</label>
                 <input type="text" class="form-control" name="telefono_ref2" value="<?php echo $fila['TELEFONO_REF2']; ?>">
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="fecha_registro">Fecha Registro:</label>
+                        <input type="text" class="form-control" id="fecha_registro" name="fecha_registro" value="<?php echo $fila['FECHA_REGISTRO'] ?>" readonly>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="usuario_registro">Usuario Registro:</label>
+                        <input type="text" class="form-control" id="usuario_registro" name="usuario_registro" value="<?php echo $usuario['NOMBRE_USU'] ; ?>" readonly>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="fecha_modificacion">Fecha Modificación:</label>
+                        <input type="text" class="form-control" id="fecha_modificacion" name="fecha_modificacion" value="<?php echo date('Y-m-d H:i:s'); ?>" readonly>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="usuario_modificacion">Usuario Modificación:</label>
+                        <input type="text" class="form-control" id="usuario_modificacion" name="usuario_modificacion" value="<?php echo $_SESSION['NOMBRE_USU']; ?>" readonly>
+                    </div>
+                </div>
             </div>
             <input type="submit" name="enviar" class="btn btn-primary">
         </form>
