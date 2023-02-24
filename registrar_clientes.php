@@ -110,7 +110,7 @@ require_once "vistas/nav.php";
                     <label for="usuario_modificacion">Usuario Modificación:</label>
                     <input type="text" class="form-control" id="usuario_modificacion" name="usuario_modificacion" value="<?php echo $_SESSION['NOMBRE_USU']; ?>" readonly>
                 </div>
-                <div class="form-group col-sm-12 col-md-6">
+                <div>
                     <button type="submit" id="enviar" name="enviar" class="btn btn-primary">Registrar</button>
                 </div>
             </div>
