@@ -147,6 +147,7 @@ require_once "vistas/nav.php";
             </div>
             <div class="form-group col-sm-12 col-md-6">
                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Editar</button>
+                <button type="button" class="btn btn-secondary" href="descargar_datos.php?id=<?php echo $fila['ID_CLIENTE']; ?>">Exportar pdf</button>
             </div>
         </div>
 

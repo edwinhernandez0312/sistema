@@ -11,7 +11,7 @@ require_once "vistas/nav.php";
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                            <h3 class="m-0 font-weight-bold text-primary">Clientes</h3>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -24,6 +24,7 @@ require_once "vistas/nav.php";
                                             <th>Teléfono</th>
                                             <th>Dirección</th>
                                             <th>Email</th>
+                                            <th>Opciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -38,6 +39,7 @@ require_once "vistas/nav.php";
                                             <td><?php echo $fila['TELEFONO']; ?></td>
                                             <td><?php echo $fila['DIRECCION']; ?></td>
                                             <td><?php echo $fila['EMAIL']; ?></td>
+                                            <td><a href="descargar_datos.php?id=<?php echo $fila['ID_CLIENTE']; ?>" target="_blank"><?php echo "Descargar"; ?></a></td>
                                         </tr>
                                     <?php
                                     }
