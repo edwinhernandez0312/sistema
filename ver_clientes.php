@@ -53,6 +53,7 @@ require_once "vistas/nav.php";
                                             <th>Teléfono</th>
                                             <th>Dirección</th>
                                             <th>Email</th>
+                                            <th>Opciones</th>
                                         </tr>
                                     </tfoot>
                                 </table>
