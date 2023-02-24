@@ -14,14 +14,14 @@ if (isset($_POST['TIPO_USUARIO'])) {
         default;
     }
 }
-$errores=array();
+$errores = array();
 if (isset($_POST['envio'])) {
     $correo = trim($_POST['correo']);
     $contraseña = trim($_POST['contraseña']);
     $error = 0;
     if (validar_login($correo, $contraseña)) {
         $error++;
-        $errores[]="Complete los todos los campos";
+        $errores[] = "Complete los todos los campos";
     }
     if ($error == 0) {
         $SQL = $conex->query("SELECT * FROM `usuario` WHERE EMAIL_USU='$correo';");
@@ -31,11 +31,11 @@ if (isset($_POST['envio'])) {
                 if ($pass) {
                     session_start();
                     $tipo = $row['TIPO_USUARIO'];
-                    $_SESSION['ID_USUARIO']=$row['ID_USUARIO'];
+                    $_SESSION['ID_USUARIO'] = $row['ID_USUARIO'];
                     $_SESSION['TIPO_USUARIO'] = $tipo;
-                    $_SESSION['NOMBRE_USU']=$row['NOMBRE_USU'];
-                    $_SESSION['APELLIDOS_USU']=$row['APELLIDOS_USU'];
-                    $_SESSION['EMAIL_USU']=$row['EMAIL_USU'];
+                    $_SESSION['NOMBRE_USU'] = $row['NOMBRE_USU'];
+                    $_SESSION['APELLIDOS_USU'] = $row['APELLIDOS_USU'];
+                    $_SESSION['EMAIL_USU'] = $row['EMAIL_USU'];
                     switch ($_SESSION['TIPO_USUARIO']) {
                         case 1:
                             header('location: index.php');
@@ -44,11 +44,11 @@ if (isset($_POST['envio'])) {
                         default:
                     }
                 } else {
-                    $errores[]="Contraseña incorrecta";
+                    $errores[] = "Contraseña incorrecta";
                 }
             }
         } else {
-            $errores[]="Datos incorrectos";
+            $errores[] = "Datos incorrectos";
         }
     }
 }
@@ -67,7 +67,9 @@ if (isset($_POST['envio'])) {
     <title>Docs CILR - Iniciar Sesion</title>
 
     <title>Docs CILR</title>
-
+    <link rel="stylesheet" href="css/sweetalert2.min.css" type="text/css">
+    <!-- SweetAlert2 JS -->
+    <script type="text/javascript" src="js/sweetalert2.all.min.js"></script>
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -114,7 +116,6 @@ if (isset($_POST['envio'])) {
                                         </button>
                                     </form>
                                     <hr>
-                                    <?php echo mostrar_errores($errores) ;?>
                                     <div class="text-center">
                                         <a class="small" href="olvido-contraseña.php">Olvide mi contraseña</a>
                                     </div>
@@ -164,3 +165,20 @@ if (isset($_POST['envio'])) {
 </body>
 
 </html>
+<?php
+if (!empty($errores)) {
+    $lista_errores = "<ul>";
+    foreach ($errores as $error) {
+        $lista_errores .= "<li>" . $error . "</li>";
+    }
+    $lista_errores .= "</ul>";
+    echo "<script>
+Swal.fire({
+icon: 'error',
+title: 'Error',
+html: '$lista_errores',
+confirmButtonText: 'Continuar'
+});
+</script>";
+}
+?>

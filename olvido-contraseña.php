@@ -2,36 +2,6 @@
 include ('php/conexion.php');
 include ('php/funciones.php');
 $errores = array();
-$completados = array();
-if(isset($_POST['enviar'])){
-    $email = $_POST['correo'];
-    if(!validar_correo($email)){
-        $errores[]="Correo Electronico no valido";
-    }else{
-    if(email_existe($email)){
-        $user_id=traer_valor('ID_USUARIO','EMAIL_USU',$email);
-        $user_nombre=traer_valor('NOMBRE_USU','EMAIL_USU',$email);
-        
-        $token=crear_token_pass($user_id);
-        $url='http://'.$_SERVER['SERVER_NAME'].
-        '/sistema/cambia_pass.php?user_id='.$user_id.'&token='.$token;
-
-        $asunto="Recuperar Password - Sistema de inmobiliaria";
-        $cuerpo="Hola $user_nombre: <br> <br> Se ha solicitado un cambio de contraseña:
-        <br> <br>
-        para restaurar la contraseña visita la siguiente direccion
-        <a href='$url'> Cambiar contraseña </a>";
-
-        if(enviar_email($email,$asunto,$asunto,$cuerpo)){
-            $completados[]="Se ha enviado un correo a $email para restablecer la contraseña";
-        }else{
-            $errores[]="Error al enviar el Email";
-        }
-    }else{
-        $errores[]="Este correo no esta vinculado a ninguna cuenta";
-    }
-}
-}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -48,6 +18,9 @@ if(isset($_POST['enviar'])){
 
     <title>Docs CILR - Olvide mi contraseña</title>
 
+<link rel="stylesheet" href="css/sweetalert2.min.css" type="text/css">
+    <!-- SweetAlert2 JS -->
+    <script type="text/javascript" src="js/sweetalert2.all.min.js"></script>
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -98,8 +71,6 @@ if(isset($_POST['enviar'])){
                                         </button>
                                     </form>
                                     <hr>
-                                    <?php echo mostrar_errores($errores) ;?>
-                                    <?php echo mostrar_bienes($completados) ;?>
                                     <div class="text-center">
                                         <a class="small" href="login.php">Tengo Una Cuenta? Iniciar Sesion!</a>
                                     </div>
@@ -149,3 +120,57 @@ if(isset($_POST['enviar'])){
 </body>
 
 </html>
+
+<?php
+if(isset($_POST['enviar'])){
+    $email = $_POST['correo'];
+    if(!validar_correo($email)){
+        $errores[]="Correo Electronico no valido";
+    }else{
+    if(email_existe($email)){
+        $user_id=traer_valor('ID_USUARIO','EMAIL_USU',$email);
+        $user_nombre=traer_valor('NOMBRE_USU','EMAIL_USU',$email);
+        
+        $token=crear_token_pass($user_id);
+        $url='http://'.$_SERVER['SERVER_NAME'].
+        '/sistema/cambia_pass.php?user_id='.$user_id.'&token='.$token;
+
+        $asunto="Recuperar Password - Sistema de inmobiliaria";
+        $cuerpo="Hola $user_nombre: <br> <br> Se ha solicitado un cambio de contraseña:
+        <br> <br>
+        para restaurar la contraseña visita la siguiente direccion
+        <a href='$url'> Cambiar contraseña </a>";
+
+        if(enviar_email($email,$asunto,$asunto,$cuerpo)){
+            echo "<script>
+            Swal.fire({
+              title: '¡Éxito!',
+              text: 'se ha enviado un correo a $email para restablecer la contraseña.',
+              icon: 'success',
+              confirmButtonText: 'Continuar'
+            });
+            </script>";
+        }else{
+            $errores[]="Error al enviar el Email";
+        }
+    }else{
+        $errores[]="Este correo no esta vinculado a ninguna cuenta";
+    }
+}
+if(!empty($errores)){
+    $lista_errores = "<ul>";
+        foreach ($errores as $error) {
+            $lista_errores .= "<li>" . $error . "</li>";
+        }
+        $lista_errores .= "</ul>";
+        echo "<script>
+Swal.fire({
+icon: 'error',
+title: 'Error',
+html: '$lista_errores',
+confirmButtonText: 'Continuar'
+});
+</script>";
+}
+}
+?>

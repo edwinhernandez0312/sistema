@@ -212,43 +212,43 @@ function actualizar_pass($pass1, $user_id, $user_token)
     }
 }
 // mostrar errores 
-function mostrar_errores($errores)
-{
-    if (count($errores) > 0) {
-        echo "<div id='alert' class='alert alert-danger' role='alert'>
-        <a href='#' onclick=\" showHide ('error');\">X</a>
-        <ul>";
-        foreach ($errores as $error) {
-            echo "<li>" . $error . "</li>";
-        }
-        echo "</ul>";
-        echo "</div>";
-        echo "<script>
-        setTimeout(function() {
-          document.getElementById('alert').style.display = 'none';
-        }, 4000);
-      </script>";
-    }
-}
+// function mostrar_errores($errores)
+// {
+//     if (count($errores) > 0) {
+//         echo "<div id='alert' class='alert alert-danger' role='alert'>
+//         <a href='#' onclick=\" showHide ('error');\">X</a>
+//         <ul>";
+//         foreach ($errores as $error) {
+//             echo "<li>" . $error . "</li>";
+//         }
+//         echo "</ul>";
+//         echo "</div>";
+//         echo "<script>
+//         setTimeout(function() {
+//           document.getElementById('alert').style.display = 'none';
+//         }, 4000);
+//       </script>";
+//     }
+// }
 // mostrar texto de completado correctamente
-function mostrar_bienes($bienes)
-{
-    if (count($bienes) > 0) {
-        echo "<div id='alert' class='alert alert-success' role='alert'>
-        <a href='#' onclick=\" showHide ('error');\">X</a>
-        <ul>";
-        foreach ($bienes as $bien) {
-            echo "<li>" . $bien . "</li>";
-        }
-        echo "</ul>";
-        echo "</div>";
-        echo "<script>
-        setTimeout(function() {
-          document.getElementById('alert').style.display = 'none';
-        }, 4000);
-      </script>";
-    }
-}
+// function mostrar_bienes($bienes)
+// {
+//     if (count($bienes) > 0) {
+//         echo "<div id='alert' class='alert alert-success' role='alert'>
+//         <a href='#' onclick=\" showHide ('error');\">X</a>
+//         <ul>";
+//         foreach ($bienes as $bien) {
+//             echo "<li>" . $bien . "</li>";
+//         }
+//         echo "</ul>";
+//         echo "</div>";
+//         echo "<script>
+//         setTimeout(function() {
+//           document.getElementById('alert').style.display = 'none';
+//         }, 4000);
+//       </script>";
+//     }
+// }
 // validar que las fechas no se han iguales
 function fechasDiferentes($fecha1, $fecha2)
 {

@@ -118,18 +118,25 @@ $nombre = $_SESSION['NOMBRE_USU'];
                 </div>
             </li>
 
-        <?php
-        if ($_SESSION['TIPO_USUARIO'] == 1) {
-        ?>
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+            <?php
+            if ($_SESSION['TIPO_USUARIO'] == 1) {
+            ?>
+                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-users-cog"></i>
-                    <span>Usuarios</span></a>
-            </li>
-        <?php
-        }
-        ?>
+                            <span>Usuarios</span>
+                    </a>
+                    <div id="collapseUsers" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" href="registrarse.php">Nuevo Usuario</a>
+                            <a class="collapse-item" href="">Ver Usuarios</a>
+                        </div>
+                    </div>
+                </li>
+            <?php
+            }
+            ?>
 
 
             <!-- Divider -->

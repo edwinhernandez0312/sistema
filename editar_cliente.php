@@ -298,20 +298,20 @@ require_once "vistas/nav.php";
         $errores = array();
         $completados = array();
         if (isset($_POST['Guardar'])) {
-            $id = $_POST['id_cliente'];
-            $cedula = $_POST['cedula'];
-            $fecha_expedicion = $_POST['fecha_expedicion'];
-            $nombres = $_POST['nombres'];
-            $apellidos = $_POST['apellidos'];
-            $fecha_nacimiento = $_POST['fecha_nacimiento'];
-            $telefono = $_POST['telefono'];
-            $direccion = $_POST['direccion'];
-            $email = $_POST['email'];
-            $estado_civil = $_POST['estado_civil'];
-            $nombres_ref1 = $_POST['nombres_ref1'];
-            $telefono_ref1 = $_POST['telefono_ref1'];
-            $nombres_ref2 = $_POST['nombres_ref2'];
-            $telefono_ref2 = $_POST['telefono_ref2'];
+            $id = trim($_POST['id_cliente']);
+            $cedula = trim($_POST['cedula']);
+            $fecha_expedicion = trim($_POST['fecha_expedicion']);
+            $nombres = trim($_POST['nombres']);
+            $apellidos = trim($_POST['apellidos']);
+            $fecha_nacimiento = trim($_POST['fecha_nacimiento']);
+            $telefono = trim($_POST['telefono']);
+            $direccion = trim($_POST['direccion']);
+            $email = trim($_POST['email']);
+            $estado_civil = trim($_POST['estado_civil']);
+            $nombres_ref1 = trim($_POST['nombres_ref1']);
+            $telefono_ref1 = trim($_POST['telefono_ref1']);
+            $nombres_ref2 = trim($_POST['nombres_ref2']);
+            $telefono_ref2 = trim($_POST['telefono_ref2']);
             $fecha_modificacion = date('Y-m-d H:i:s');
             $usuario_modificacion = $_SESSION['NOMBRE_USU'];
             if (
@@ -363,18 +363,56 @@ Swal.fire({
   confirmButtonText: 'Continuar'
 }).then((result) => {
   if (result.isConfirmed) {
-    window.location.href = 'editar_cliente.php?id=".$id_cliente."';
+    window.location.href = 'editar_cliente.php?id=" . $id_cliente . "';
   }
 })
 </script>";
                     } else {
                         $errores[] = "Cliente no se pudo actualizar" . mysqli_error($conex);
+                        $lista_errores = "<ul>";
+                        foreach ($errores as $error) {
+                            $lista_errores .= "<li>" . $error . "</li>";
+                        }
+                        $lista_errores .= "</ul>";
+                        echo "<script>
+        Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        html: '$lista_errores',
+        confirmButtonText: 'Continuar'
+        });
+        </script>";
                     }
+                } else {
+                    $lista_errores = "<ul>";
+                    foreach ($errores as $error) {
+                        $lista_errores .= "<li>" . $error . "</li>";
+                    }
+                    $lista_errores .= "</ul>";
+                    echo "<script>
+    Swal.fire({
+    icon: 'error',
+    title: 'Error',
+    html: '$lista_errores',
+    confirmButtonText: 'Continuar'
+    });
+    </script>";
                 }
             } else {
                 $errores[] = "Todos los campos son obligatorios";
+                $lista_errores = "<ul>";
+                foreach ($errores as $error) {
+                    $lista_errores .= "<li>" . $error . "</li>";
+                }
+                $lista_errores .= "</ul>";
+                echo "<script>
+    Swal.fire({
+    icon: 'error',
+    title: 'Error',
+    html: '$lista_errores',
+    confirmButtonText: 'Continuar'
+    });
+    </script>";
             }
-            mostrar_errores($errores);
-            mostrar_bienes($completados);
         }
         require_once "vistas/footer.php" ?>

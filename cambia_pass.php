@@ -7,8 +7,8 @@ if (empty($_GET['user_id'])) {
 if (empty($_GET['token'])) {
     header('location: login.php');
 }
-$errores=array();
-$completados=array();
+$errores = array();
+$completados = array();
 $user_id = $conex->real_escape_string($_GET['user_id']);
 $user_token = $conex->real_escape_string($_GET['token']);
 $error = 0;
@@ -16,28 +16,6 @@ if (!verificar_token_pass($user_id, $user_token)) {
     $error++;
     header('location: 404.html');
     exit;
-}
-if (isset($_POST['envio'])) {
-    $pass1 = trim($_POST['contraseña1']);
-    $pass2 = trim($_POST['contraseña2']);
-
-    if (pass_vacias($pass1, $pass2)) {
-        $error++;
-        $errores[]="Complete todos los campos";
-    }
-    if (!validar_contraseña($pass1, $pass2)) {
-        $error++;
-        $errores[]="Las contraseñas no coinciden";
-    }
-
-    if ($error == 0) {
-        $pass_cifrada = cifrar_contraseña($pass1);
-        if (actualizar_pass($pass_cifrada, $user_id, $user_token)) {
-            $completados[]="La contraseña se ha actualizado exitosamente";
-        } else {
-            $errores[]="La contraseña no se ha podido actualizar";
-        }
-    }
 }
 ?>
 <!DOCTYPE html>
@@ -55,6 +33,9 @@ if (isset($_POST['envio'])) {
 
     <title>Docs CILR - Actualizar contraseña</title>
 
+    <link rel="stylesheet" href="css/sweetalert2.min.css" type="text/css">
+    <!-- SweetAlert2 JS -->
+    <script type="text/javascript" src="js/sweetalert2.all.min.js"></script>
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -100,8 +81,6 @@ if (isset($_POST['envio'])) {
                                             Guardar Cambios
                                         </button>
                                     </form>
-                                    <?php echo mostrar_errores($errores) ;?>
-                                    <?php echo mostrar_bienes($completados) ;?>
                                     <hr>
                                     <div class="text-center">
                                         <a class="small" href="login.php">Tengo Una Cuenta? Iniciar Sesion!</a>
@@ -152,3 +131,56 @@ if (isset($_POST['envio'])) {
 </body>
 
 </html>
+<?php
+if (isset($_POST['envio'])) {
+    $pass1 = trim($_POST['contraseña1']);
+    $pass2 = trim($_POST['contraseña2']);
+
+    if (pass_vacias($pass1, $pass2)) {
+        $error++;
+        $errores[] = "Complete todos los campos";
+    }
+    if (!validar_contraseña($pass1, $pass2)) {
+        $error++;
+        $errores[] = "Las contraseñas no coinciden";
+    }
+
+    if ($error == 0) {
+        $pass_cifrada = cifrar_contraseña($pass1);
+        if (actualizar_pass($pass_cifrada, $user_id, $user_token)) {
+            $completados[] = "La contraseña se ha actualizado exitosamente";
+            $url = 'http://' . $_SERVER['SERVER_NAME'] .
+                '/sistema/login.php';
+            echo "<script>
+            Swal.fire({
+              title: '¡Éxito!',
+              text: 'La operación se realizó correctamente.',
+              icon: 'success',
+              confirmButtonText: 'Continuar'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                window.location.href = '$url';
+              }
+            })
+            </script>";
+        } else {
+            $errores[] = "La contraseña no se ha podido actualizar";
+        }
+    }
+    if (!empty($errores)) {
+        $lista_errores = "<ul>";
+        foreach ($errores as $error) {
+            $lista_errores .= "<li>" . $error . "</li>";
+        }
+        $lista_errores .= "</ul>";
+        echo "<script>
+Swal.fire({
+icon: 'error',
+title: 'Error',
+html: '$lista_errores',
+confirmButtonText: 'Continuar'
+});
+</script>";
+    }
+}
+?>
