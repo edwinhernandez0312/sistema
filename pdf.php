@@ -1,6 +1,6 @@
 <?php
 // Incluir la librería domPDF
-ob_start();
+/* ob_start();
 ?>
 <div>LA CONSTRUCTORA INMOBILIARIA LAURA RIVERA S.A.S. con NIT 900985803-9, con domicilio en la
 Carrera 9 No. 5-39 Centro de Villa del Rosario, representada legalmente por ROMAN GABRIEL APONTE FERRER,
@@ -11,9 +11,10 @@ __________________, quien para efectos de este contrato se denominara EL ARRENDA
 decidido celebrar un CONTRATO DE ARRENDAMIENTO (en adelante CONTRATO) de bien inmueble destinado a
 VIVIENDA,</div>
 <?php
-$html = ob_get_clean();
-//echo $html;
+$html = ob_get_clean(); */
+
 require_once 'dompdf/autoload.inc.php';
+
 use Dompdf\Dompdf;
 
 $dompdf = new Dompdf();
@@ -46,3 +47,4 @@ $dompdf->loadHtml($html);
 $dompdf->setPaper('letter');
 $dompdf->render();
 $dompdf->stream("archivo.pdf", array("Attachment" => false));
+?>
