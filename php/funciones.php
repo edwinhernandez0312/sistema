@@ -259,4 +259,3 @@ function cedula_existe($cedula)
         return false;
     }
 }
-

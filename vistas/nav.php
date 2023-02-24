@@ -22,6 +22,7 @@ $nombre = $_SESSION['NOMBRE_USU'];
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <script src="vendor/jquery/jquery.min.js"></script>
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 
 <body>

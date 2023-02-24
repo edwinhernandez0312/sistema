@@ -5,30 +5,18 @@ include('php/funciones.php');
 session_start();
 
 // Consulta SQL para obtener todos los clientes
-$resultado =$conex->query("SELECT * FROM cliente");
+$resultado = $conex->query("SELECT * FROM cliente");
 require_once "vistas/nav.php";
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Ver clientes</title>
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-</head>
-<body id="page-top">
-    <div id="wrapper">
-        <div id="content-wrapper" class="d-flex flex-column">
-            <div id="content">
-                <div class="container-fluid">
-                    <h1 class="h3 mb-2 text-gray-800">Clientes</h1>
+                    <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Lista de clientes</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
+                                <table class="table table-bordered" id="Table" width="100%" cellspacing="0">
+                                <thead>
                                         <tr>
                                             <th>Cédula</th>
                                             <th>Nombres</th>
@@ -45,7 +33,6 @@ require_once "vistas/nav.php";
                                     ?>
                                         <tr>
                                         <td><a href="editar_cliente.php?id=<?php echo $fila['ID_CLIENTE']; ?>"><?php echo $fila['CEDULA']; ?></a></td>
-
                                             <td><?php echo $fila['NOMBRES']; ?></td>
                                             <td><?php echo $fila['APELLIDOS']; ?></td>
                                             <td><?php echo $fila['TELEFONO']; ?></td>
@@ -56,17 +43,18 @@ require_once "vistas/nav.php";
                                     }
                                     ?>
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Position</th>
+                                            <th>Office</th>
+                                            <th>Age</th>
+                                            <th>Start date</th>
+                                            <th>Salary</th>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-    <script src="js/demo/datatables-demo.js"></script>
-</body>
-</html>
-    <?php require_once "vistas/footer.php"?>
+<?php require_once "vistas/footer.php" ?>
