@@ -45,12 +45,12 @@ require_once "vistas/nav.php";
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
+                                        <th>Cédula</th>
+                                            <th>Nombres</th>
+                                            <th>Apellidos</th>
+                                            <th>Teléfono</th>
+                                            <th>Dirección</th>
+                                            <th>Email</th>
                                         </tr>
                                     </tfoot>
                                 </table>
