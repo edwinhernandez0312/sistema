@@ -14,6 +14,10 @@ $nombre = $_SESSION['NOMBRE_USU'];
     <meta name="author" content="">
     <link rel="shortcut icon" href="img/favicon.png" type="image/png">
     <title>Docs CILR</title>
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="css/sweetalert2.min.css" type="text/css">
+    <!-- SweetAlert2 JS -->
+    <script type="text/javascript" src="js/sweetalert2.all.min.js"></script>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -21,7 +25,6 @@ $nombre = $_SESSION['NOMBRE_USU'];
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <script src="vendor/jquery/jquery.min.js"></script>
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 
@@ -115,34 +118,18 @@ $nombre = $_SESSION['NOMBRE_USU'];
                 </div>
             </li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Admin
-            </div>
-
-
+        <?php
+        if ($_SESSION['TIPO_USUARIO'] == 1) {
+        ?>
+            <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true" aria-controls="collapseUsers">
+                <a class="nav-link" href="charts.html">
                     <i class="fas fa-fw fa-users-cog"></i>
-                    <span>Usuarios</span>
-                </a>
-                <div id="collapseUsers" class="collapse" aria-labelledby="headingUsers" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Usuarios</h6>
-                        <?php
-                        if ($_SESSION['TIPO_USUARIO'] == 1) {
-                        ?>
-                            <a class="collapse-item" href="">Nuevo Usuario</a>
-                        <?php
-                        }
-                        ?>
-                        <a class="collapse-item" href="">Ver Usuarios</a>
-                    </div>
-                </div>
+                    <span>Usuarios</span></a>
             </li>
+        <?php
+        }
+        ?>
 
 
             <!-- Divider -->
