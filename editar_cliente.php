@@ -3,7 +3,11 @@ date_default_timezone_set('America/Bogota');
 include('php/conexion.php');
 include('php/funciones.php');
 session_start();
-$usuario_actual=$_SESSION['ID_USUARIO'];
+if (!isset($_SESSION['TIPO_USUARIO'])) {
+    header('Location: login.php');
+    exit();
+}
+$usuario_actual = $_SESSION['ID_USUARIO'];
 // Verificar si se envió el id del cliente a editar
 if (isset($_GET['id'])) {
     $id_cliente = $_GET['id'];
@@ -39,114 +43,112 @@ require_once "vistas/nav.php";
         <h1 class="m-0 font-weight-bold text-primary">Editar cliente</h1>
     </div>
     <div class="card-body">
-        <form method="POST">
-            <div class="row">
-                <input type="hidden" name="id_cliente" value="<?php echo $id_cliente; ?>" readonly>
-                <div class="form-group col-sm-12 col-md-6">
-                    <label for="cedula">Cédula:</label>
-                    <input type="text" class="form-control" name="cedula" value="<?php echo $fila['CEDULA']; ?>" readonly>
-                </div>
-                <div class="form-group col-sm-12 col-md-6">
-                    <label for="fecha_expedicion">Fecha de expedición de la cédula:</label>
-                    <input type="date" class="form-control" name="fecha_expedicion" value="<?php echo $fila['FECHA_EXPEDICION']; ?>" readonly>
-                </div>
-                <div class="form-group col-sm-12 col-md-6">
-                    <label for="nombres">Nombres:</label>
-                    <input type="text" class="form-control" name="nombres" value="<?php echo $fila['NOMBRES']; ?>" readonly>
-                </div>
-                <div class="form-group col-sm-12 col-md-6">
-                    <label for="apellidos">Apellidos:</label>
-                    <input type="text" class="form-control" name="apellidos" value="<?php echo $fila['APELLIDOS']; ?>" readonly>
-                </div>
-                <div class="form-group col-sm-12 col-md-6">
-                    <label for="fecha_nacimiento">Fecha de nacimiento:</label>
-                    <input type="date" class="form-control" name="fecha_nacimiento" value="<?php echo $fila['FECHA_NACIMIENTO_CLIENTE']; ?>" readonly>
-                </div>
-                <div class="form-group col-sm-12 col-md-6">
-                    <label for="telefono">Teléfono:</label>
-                    <input type="text" class="form-control" name="telefono" value="<?php echo $fila['TELEFONO']; ?>" readonly>
-                </div>
-                <div class="form-group col-sm-12 col-md-6">
-                    <label for="direccion">Dirección:</label>
-                    <input type="text" class="form-control" name="direccion" value="<?php echo $fila['DIRECCION']; ?>" readonly>
-                </div>
-                <div class="form-group col-sm-12 col-md-6">
-                    <label for="email">Email:</label>
-                    <input type="text" class="form-control" name="email" value="<?php echo $fila['EMAIL']; ?>" readonly>
-                </div>
-                <div class="form-group col-sm-12 col-md-6">
-                    <label for="estado_civil">Estado civil:</label>
-                    <select name="estado_civil" class="form-control" readonly>
-                        <?php
-                        if ($fila['ESTADO_CIVIL'] == "Soltero/a") {
-                        ?>
-                            <option value="Soltero/a" selected>Soltero/a</option>
-                            <option value="Casado/a">Casado/a</option>
-                            <option value="Divorciado/a">Divorciado/a</option>
-                            <option value="Viudo/a">Viudo/a</option>
-                        <?php
-                        } else if ($fila['ESTADO_CIVIL'] == "Casado/a") {
-                        ?>
-                            <option value="Soltero/a">Soltero/a</option>
-                            <option value="Casado/a" selected>Casado/a</option>
-                            <option value="Divorciado/a">Divorciado/a</option>
-                            <option value="Viudo/a">Viudo/a</option>
-                        <?php
-                        } else if ($fila['ESTADO_CIVIL'] == "Divorciado/a") {
-                        ?>
-                            <option value="Soltero/a">Soltero/a</option>
-                            <option value="Casado/a">Casado/a</option>
-                            <option value="Divorciado/a" selected>Divorciado/a</option>
-                            <option value="Viudo/a">Viudo/a</option>
-                        <?php
-                        } else if ($fila['ESTADO_CIVIL'] == "Viudo/a") {
-                        ?>
-                            <option value="Soltero/a">Soltero/a</option>
-                            <option value="Casado/a">Casado/a</option>
-                            <option value="Divorciado/a">Divorciado/a</option>
-                            <option value="Viudo/a" selected>Viudo/a</option>
-                        <?php
-                        }
-                        ?>
-                    </select>
-                </div>
-                <div class="form-group col-sm-12 col-md-6">
-                    <label for="nombres_ref1">Nombres de la referencia 1:</label>
-                    <input type="text" class="form-control" name="nombres_ref1" value="<?php echo $fila['NOMBRES_REF1']; ?>" readonly>
-                </div>
-                <div class="form-group col-sm-12 col-md-6">
-                    <label for="telefono_ref1">Teléfono de la referencia 1:</label>
-                    <input type="text" class="form-control" name="telefono_ref1" value="<?php echo $fila['TELEFONO_REF1']; ?>" readonly>
-                </div>
-                <div class="form-group col-sm-12 col-md-6">
-                    <label for="nombres_ref2">Nombres de la referencia 2:</label>
-                    <input type="text" class="form-control" name="nombres_ref2" value="<?php echo $fila['NOMBRES_REF2']; ?>" readonly>
-                </div>
-                <div class="form-group col-sm-12 col-md-6">
-                    <label for="telefono_ref2">Teléfono de la referencia 2:</label>
-                    <input type="text" class="form-control" name="telefono_ref2" value="<?php echo $fila['TELEFONO_REF2']; ?>" readonly>
-                </div>
-                <div class="form-group col-sm-12 col-md-6">
-                    <label for="fecha_registro">Fecha Registro:</label>
-                    <input type="text" class="form-control" id="fecha_registro" name="fecha_registro" value="<?php echo $fila['FECHA_REGISTRO'] ?>" readonly>
-                </div>
-                <div class="form-group col-sm-12 col-md-6">
-                    <label for="usuario_registro">Usuario Registro:</label>
-                    <input type="text" class="form-control" id="usuario_registro" name="usuario_registro" value="<?php echo $usuario['NOMBRE_USU']; ?>" readonly>
-                </div>
-                <div class="form-group col-sm-12 col-md-6">
-                    <label for="fecha_modificacion">Fecha Modificación:</label>
-                    <input type="text" class="form-control" id="fecha_modificacion" name="fecha_modificacion" value="<?php echo date('Y-m-d H:i:s'); ?>" readonly>
-                </div>
-                <div class="form-group col-sm-12 col-md-6">
-                    <label for="usuario_modificacion">Usuario Modificación:</label>
-                    <input type="text" class="form-control" id="usuario_modificacion" name="usuario_modificacion" value="<?php echo $_SESSION['NOMBRE_USU']; ?>" readonly>
-                </div>
-                <div class="form-group col-sm-12 col-md-6">
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Editar</button>
-                </div>
+        <div class="row">
+            <input type="hidden" name="id_cliente" value="<?php echo $id_cliente; ?>" readonly>
+            <div class="form-group col-sm-12 col-md-6">
+                <label for="cedula">Cédula:</label>
+                <input type="text" class="form-control" name="cedula" value="<?php echo $fila['CEDULA']; ?>" readonly>
             </div>
-        </form>
+            <div class="form-group col-sm-12 col-md-6">
+                <label for="fecha_expedicion">Fecha de expedición de la cédula:</label>
+                <input type="date" class="form-control" name="fecha_expedicion" value="<?php echo $fila['FECHA_EXPEDICION']; ?>" readonly>
+            </div>
+            <div class="form-group col-sm-12 col-md-6">
+                <label for="nombres">Nombres:</label>
+                <input type="text" class="form-control" name="nombres" value="<?php echo $fila['NOMBRES']; ?>" readonly>
+            </div>
+            <div class="form-group col-sm-12 col-md-6">
+                <label for="apellidos">Apellidos:</label>
+                <input type="text" class="form-control" name="apellidos" value="<?php echo $fila['APELLIDOS']; ?>" readonly>
+            </div>
+            <div class="form-group col-sm-12 col-md-6">
+                <label for="fecha_nacimiento">Fecha de nacimiento:</label>
+                <input type="date" class="form-control" name="fecha_nacimiento" value="<?php echo $fila['FECHA_NACIMIENTO_CLIENTE']; ?>" readonly>
+            </div>
+            <div class="form-group col-sm-12 col-md-6">
+                <label for="telefono">Teléfono:</label>
+                <input type="text" class="form-control" name="telefono" value="<?php echo $fila['TELEFONO']; ?>" readonly>
+            </div>
+            <div class="form-group col-sm-12 col-md-6">
+                <label for="direccion">Dirección:</label>
+                <input type="text" class="form-control" name="direccion" value="<?php echo $fila['DIRECCION']; ?>" readonly>
+            </div>
+            <div class="form-group col-sm-12 col-md-6">
+                <label for="email">Email:</label>
+                <input type="text" class="form-control" name="email" value="<?php echo $fila['EMAIL']; ?>" readonly>
+            </div>
+            <div class="form-group col-sm-12 col-md-6">
+                <label for="estado_civil">Estado civil:</label>
+                <select name="estado_civil" class="form-control" readonly>
+                    <?php
+                    if ($fila['ESTADO_CIVIL'] == "Soltero/a") {
+                    ?>
+                        <option value="Soltero/a" selected>Soltero/a</option>
+                        <option value="Casado/a">Casado/a</option>
+                        <option value="Divorciado/a">Divorciado/a</option>
+                        <option value="Viudo/a">Viudo/a</option>
+                    <?php
+                    } else if ($fila['ESTADO_CIVIL'] == "Casado/a") {
+                    ?>
+                        <option value="Soltero/a">Soltero/a</option>
+                        <option value="Casado/a" selected>Casado/a</option>
+                        <option value="Divorciado/a">Divorciado/a</option>
+                        <option value="Viudo/a">Viudo/a</option>
+                    <?php
+                    } else if ($fila['ESTADO_CIVIL'] == "Divorciado/a") {
+                    ?>
+                        <option value="Soltero/a">Soltero/a</option>
+                        <option value="Casado/a">Casado/a</option>
+                        <option value="Divorciado/a" selected>Divorciado/a</option>
+                        <option value="Viudo/a">Viudo/a</option>
+                    <?php
+                    } else if ($fila['ESTADO_CIVIL'] == "Viudo/a") {
+                    ?>
+                        <option value="Soltero/a">Soltero/a</option>
+                        <option value="Casado/a">Casado/a</option>
+                        <option value="Divorciado/a">Divorciado/a</option>
+                        <option value="Viudo/a" selected>Viudo/a</option>
+                    <?php
+                    }
+                    ?>
+                </select>
+            </div>
+            <div class="form-group col-sm-12 col-md-6">
+                <label for="nombres_ref1">Nombres de la referencia 1:</label>
+                <input type="text" class="form-control" name="nombres_ref1" value="<?php echo $fila['NOMBRES_REF1']; ?>" readonly>
+            </div>
+            <div class="form-group col-sm-12 col-md-6">
+                <label for="telefono_ref1">Teléfono de la referencia 1:</label>
+                <input type="text" class="form-control" name="telefono_ref1" value="<?php echo $fila['TELEFONO_REF1']; ?>" readonly>
+            </div>
+            <div class="form-group col-sm-12 col-md-6">
+                <label for="nombres_ref2">Nombres de la referencia 2:</label>
+                <input type="text" class="form-control" name="nombres_ref2" value="<?php echo $fila['NOMBRES_REF2']; ?>" readonly>
+            </div>
+            <div class="form-group col-sm-12 col-md-6">
+                <label for="telefono_ref2">Teléfono de la referencia 2:</label>
+                <input type="text" class="form-control" name="telefono_ref2" value="<?php echo $fila['TELEFONO_REF2']; ?>" readonly>
+            </div>
+            <div class="form-group col-sm-12 col-md-6">
+                <label for="fecha_registro">Fecha Registro:</label>
+                <input type="text" class="form-control" id="fecha_registro" name="fecha_registro" value="<?php echo $fila['FECHA_REGISTRO'] ?>" readonly>
+            </div>
+            <div class="form-group col-sm-12 col-md-6">
+                <label for="usuario_registro">Usuario Registro:</label>
+                <input type="text" class="form-control" id="usuario_registro" name="usuario_registro" value="<?php echo $usuario['NOMBRE_USU']; ?>" readonly>
+            </div>
+            <div class="form-group col-sm-12 col-md-6">
+                <label for="fecha_modificacion">Fecha Modificación:</label>
+                <input type="text" class="form-control" id="fecha_modificacion" name="fecha_modificacion" value="<?php echo date('Y-m-d H:i:s'); ?>" readonly>
+            </div>
+            <div class="form-group col-sm-12 col-md-6">
+                <label for="usuario_modificacion">Usuario Modificación:</label>
+                <input type="text" class="form-control" id="usuario_modificacion" name="usuario_modificacion" value="<?php echo $_SESSION['NOMBRE_USU']; ?>" readonly>
+            </div>
+            <div class="form-group col-sm-12 col-md-6">
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Editar</button>
+            </div>
+        </div>
 
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
@@ -341,7 +343,7 @@ require_once "vistas/nav.php";
                 if (!validar_correo($email)) {
                     $errores[] = "Correo no valido";
                 }
-                if($cedula!=$fila['CEDULA']){
+                if ($cedula != $fila['CEDULA']) {
                     if (cedula_existe($cedula)) {
                         $errores[] = "El usuario con esta cedula ya existe";
                     }
@@ -353,12 +355,26 @@ require_once "vistas/nav.php";
                     `NOMBRES_REF2`='$nombres_ref2',`TELEFONO_REF2`='$telefono_ref2',`USUARIO_REGISTRO_CLIENTE`='$Usuario_registro',`FECHA_MODIFICACION`='$fecha_modificacion',`USUARIO_MODIFICACION_CLIENTE`='$usuario_actual' WHERE ID_CLIENTE='$id';");
                     if ($SQL) {
                         $completados[] = "Cliente actualizado correctamente";
+                        echo "<script>
+Swal.fire({
+  title: '¡Éxito!',
+  text: 'La operación se realizó correctamente.',
+  icon: 'success',
+  confirmButtonText: 'Continuar'
+}).then((result) => {
+  if (result.isConfirmed) {
+    window.location.href = 'editar_cliente.php?id=".$id_cliente."';
+  }
+})
+</script>";
                     } else {
                         $errores[] = "Cliente no se pudo actualizar" . mysqli_error($conex);
                     }
                 }
-                mostrar_errores($errores);
-                mostrar_bienes($completados);
+            } else {
+                $errores[] = "Todos los campos son obligatorios";
             }
+            mostrar_errores($errores);
+            mostrar_bienes($completados);
         }
         require_once "vistas/footer.php" ?>

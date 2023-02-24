@@ -172,70 +172,86 @@ function crear_token_pass($user_id)
     return $token;
 }
 // verificar datos en la base de datos para el cambio de contraseña
-function verificar_token_pass($user_id,$user_token) {
+function verificar_token_pass($user_id, $user_token)
+{
     global $conex;
-    $consulta=$conex->query("SELECT PASSWORD_REQ FROM `usuario` WHERE ID_USUARIO='$user_id' AND TOKEN_PASS='$user_token' AND PASSWORD_REQ=1;");
-    $num=mysqli_num_rows($consulta);
+    $consulta = $conex->query("SELECT PASSWORD_REQ FROM `usuario` WHERE ID_USUARIO='$user_id' AND TOKEN_PASS='$user_token' AND PASSWORD_REQ=1;");
+    $num = mysqli_num_rows($consulta);
 
-    if($num>0) {
-        while($row=$consulta->fetch_array()){
-            $passReq=$row['PASSWORD_REQ'];
+    if ($num > 0) {
+        while ($row = $consulta->fetch_array()) {
+            $passReq = $row['PASSWORD_REQ'];
         }
-        if($passReq==1){
+        if ($passReq == 1) {
             return true;
-        }else{
+        } else {
             return false;
         }
-}else{
-    return false;
-}
+    } else {
+        return false;
+    }
 }
 // verificar que las contraseñas no esten vacias 
-function pass_vacias($pass1,$pass2){
-    if(strlen(trim($pass1))<1 || strlen(trim($pass2))<1){
+function pass_vacias($pass1, $pass2)
+{
+    if (strlen(trim($pass1)) < 1 || strlen(trim($pass2)) < 1) {
         return true;
-    }else{
+    } else {
         return false;
     }
 }
 // actualizar contraseña
-function actualizar_pass($pass1,$user_id,$user_token){
+function actualizar_pass($pass1, $user_id, $user_token)
+{
     global $conex;
-    $consulta=$conex->query("UPDATE `usuario` SET `PASSWORD_USUARIO`='$pass1',`TOKEN_PASS`='',`PASSWORD_REQ`=0  WHERE ID_USUARIO='$user_id' AND TOKEN_PASS='$user_token';");
-    if($consulta){
+    $consulta = $conex->query("UPDATE `usuario` SET `PASSWORD_USUARIO`='$pass1',`TOKEN_PASS`='',`PASSWORD_REQ`=0  WHERE ID_USUARIO='$user_id' AND TOKEN_PASS='$user_token';");
+    if ($consulta) {
         return true;
-    }else{
+    } else {
         return false;
     }
 }
 // mostrar errores 
-function mostrar_errores($errores){
-    if(count($errores)>0){
-        echo "<div class='alert alert-danger' role='alert'>
+function mostrar_errores($errores)
+{
+    if (count($errores) > 0) {
+        echo "<div id='alert' class='alert alert-danger' role='alert'>
         <a href='#' onclick=\" showHide ('error');\">X</a>
         <ul>";
-        foreach($errores as $error){
-            echo "<li>".$error."</li>";
+        foreach ($errores as $error) {
+            echo "<li>" . $error . "</li>";
         }
         echo "</ul>";
         echo "</div>";
-}
+        echo "<script>
+        setTimeout(function() {
+          document.getElementById('alert').style.display = 'none';
+        }, 4000);
+      </script>";
+    }
 }
 // mostrar texto de completado correctamente
-function mostrar_bienes($bienes){
-    if(count($bienes)>0){
-        echo "<div class='alert alert-success' role='alert'>
+function mostrar_bienes($bienes)
+{
+    if (count($bienes) > 0) {
+        echo "<div id='alert' class='alert alert-success' role='alert'>
         <a href='#' onclick=\" showHide ('error');\">X</a>
         <ul>";
-        foreach($bienes as $bien){
-            echo "<li>".$bien."</li>";
+        foreach ($bienes as $bien) {
+            echo "<li>" . $bien . "</li>";
         }
         echo "</ul>";
         echo "</div>";
-}
+        echo "<script>
+        setTimeout(function() {
+          document.getElementById('alert').style.display = 'none';
+        }, 4000);
+      </script>";
+    }
 }
 // validar que las fechas no se han iguales
-function fechasDiferentes($fecha1, $fecha2) {
+function fechasDiferentes($fecha1, $fecha2)
+{
     $fecha1_ts = strtotime($fecha1);
     $fecha2_ts = strtotime($fecha2);
 

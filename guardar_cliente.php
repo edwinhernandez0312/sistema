@@ -67,7 +67,9 @@ if (isset($_POST['enviar'])) {
         }
     }
     
-    mostrar_errores($errores);
-    mostrar_bienes($completados);
+}else{
+    $errores[]="Todos los campos son obligatorios";
 }
+mostrar_errores($errores);
+mostrar_bienes($completados);
 }
