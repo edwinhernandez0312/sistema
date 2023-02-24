@@ -118,18 +118,18 @@ $nombre = $_SESSION['NOMBRE_USU'];
                 </div>
             </li>
 
-            <?php
-            if ($_SESSION['TIPO_USUARIO'] == 1) {
-            ?>
-                <!-- Nav Item - Charts -->
-                <li class="nav-item">
-                    <a class="nav-link" href="charts.html">
-                        <i class="fas fa-fw fa-users-cog"></i>
-                        <span>Usuarios</span></a>
-                </li>
-            <?php
-            }
-            ?>
+        <?php
+        if ($_SESSION['TIPO_USUARIO'] == 1) {
+        ?>
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="charts.html">
+                    <i class="fas fa-fw fa-users-cog"></i>
+                    <span>Usuarios</span></a>
+            </li>
+        <?php
+        }
+        ?>
 
 
             <!-- Divider -->
