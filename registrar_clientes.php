@@ -6,25 +6,6 @@ if (!isset($_SESSION['TIPO_USUARIO'])) {
     header('Location: login.php');
     exit();
 }
-
-// saber que usuario es 
-function nombre_tipo($tipo_usuario)
-{
-    switch ($tipo_usuario) {
-        case 1:
-            return "Administrador";
-            break;
-        case 2:
-            return "Archivo";
-            break;
-        case 3:
-            return "Cordinador comercial";
-            break;
-        case 4:
-            return "Agente de servicios";
-    }
-}
-$tipo = nombre_tipo($_SESSION['TIPO_USUARIO']);
 $id = $_SESSION['ID_USUARIO'];
 require_once "vistas/nav.php";
 ?>
@@ -37,7 +18,7 @@ require_once "vistas/nav.php";
             <div class="row">
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="cedula">Cédula:</label>
-                    <input type="text" class="form-control" id="cedula" name="cedula" minlength="3" maxlength="250" required pattern="^[0-9]*$" title="Dijite la cedula solo numeros sin espacios">
+                    <input type="text" class="form-control" id="cedula" name="cedula" placeholder="Cédula" minlength="3" maxlength="250" required pattern="^[0-9]*$" title="Dijite la cedula solo numeros sin espacios">
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="fecha_expedicion">Fecha de Expedición:</label>
@@ -46,11 +27,11 @@ require_once "vistas/nav.php";
 
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="nombres">Nombres:</label>
-                    <input type="text" class="form-control" id="nombres" name="nombres" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚÑ]+" title="Dijite el nombre minimo 3 caracteres">
+                    <input type="text" class="form-control" id="nombres" name="nombres" placeholder="Nombres" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚÑ]+" title="Dijite el nombre minimo 3 caracteres">
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="apellidos">Apellidos:</label>
-                    <input type="text" class="form-control" id="apellidos" name="apellidos" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚÑ]+" title="Dijite los Apellidos minimo 3 caracteres">
+                    <input type="text" class="form-control" id="apellidos" name="apellidos" placeholder="Apellidos" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚÑ]+" title="Dijite los Apellidos minimo 3 caracteres">
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
@@ -58,15 +39,15 @@ require_once "vistas/nav.php";
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="telefono">Teléfono:</label>
-                    <input type="text" class="form-control" id="telefono" name="telefono" minlength="3" maxlength="250" required pattern="^[0-9()+-]*$" title="Dijite el telefono">
+                    <input type="text" class="form-control" id="telefono" name="telefono" minlength="3" placeholder="Teléfono" maxlength="250" required pattern="^[0-9()+-]*$" title="Dijite el telefono">
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="direccion">Dirección:</label>
-                    <input type="text" class="form-control" id="direccion" name="direccion" minlength="3" maxlength="250" required title="Dijite la direccion">
+                    <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Dirección" minlength="3" maxlength="250" required title="Dijite la direccion">
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="email">Email:</label>
-                    <input type="email" class="form-control" id="email" name="email" minlength="3" maxlength="250" required pattern="[a-zA-Z0-9!#$%&'*_+-]([\.]?[a-zA-Z0-9!#$%&'*_+-])+@[a-zA-Z0-9]([^@&%$\/()=?¿!.,:;]|\d)+[a-zA-Z0-9][\.][a-zA-Z]{2,4}([\.][a-zA-Z]{2})?">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" minlength="3" maxlength="250" required pattern="[a-zA-Z0-9!#$%&'*_+-]([\.]?[a-zA-Z0-9!#$%&'*_+-])+@[a-zA-Z0-9]([^@&%$\/()=?¿!.,:;]|\d)+[a-zA-Z0-9][\.][a-zA-Z]{2,4}([\.][a-zA-Z]{2})?">
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="estado_civil">Estado Civil:</label>
@@ -78,21 +59,44 @@ require_once "vistas/nav.php";
                         <option value="Viudo/a">Viudo/a</option>
                     </select>
                 </div>
+                <div class="for-group col-sm-12 col-md-6">
+                    <label for="mascotas">Mascotas</label>
+                    <select name="mascotas" id="mascotas" class="form-control"  title="Tiene mascotas?">
+                    <option value="">Selecciona una opción</option>
+                    <option value="si">SI</option>
+                    <option value="no">NO</option>
+                    </select>
+                </div>
+                <div class="for-group col-sm-12 col-md-6">
+                    <label for="ingresos">Ingresos (SMMLV)</label>
+                    <select name="ingresos" id="ingresos" class="form-control" title="Ingresos mensuales">
+                    <option value="">Selecciona una opción</option>
+                    <option value="1-2">1-2</option>
+                    <option value="2-3">2-3</option>
+                    <option value="3-4">3-4</option>
+                    <option value="4-5">4-5</option>
+                    <option value="+5">+5</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-12 col-md-6">
+                    <label for="vive_per">Personas con quien vive:</label>
+                    <input type="text" class="form-control" id="vive_per" name="vive_per" placeholder="Personas con quin vive" minlength="1" maxlength="250" pattern="^[0-9()+-]*$" title="Con cuantas personas vive">
+                </div>
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="nombres_ref1">Nombres Referencia 1:</label>
-                    <input type="text" class="form-control" id="nombres_ref1" name="nombres_ref1" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚÑ]+" title="Dijite el nombre minimo 3 caracteres">
+                    <input type="text" class="form-control" id="nombres_ref1" name="nombres_ref1" placeholder="Nombres Referencia 1" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚÑ]+" title="Dijite el nombre minimo 3 caracteres">
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="telefono_ref1">Teléfono Referencia 1:</label>
-                    <input type="tel" class="form-control" id="telefono_ref1" name="telefono_ref1" minlength="3" maxlength="250" required pattern="^[0-9()+-]*$" title="Dijite el telefono">
+                    <input type="tel" class="form-control" id="telefono_ref1" name="telefono_ref1" placeholder="Teléfono Referencia 1" minlength="3" maxlength="250" required pattern="^[0-9()+-]*$" title="Dijite el telefono">
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="nombres_ref2">Nombres Referencia 2:</label>
-                    <input type="text" class="form-control" id="nombres_ref2" name="nombres_ref2" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚÑ]+" title="Dijite el nombre minimo 3 caracteres">
+                    <input type="text" class="form-control" id="nombres_ref2" name="nombres_ref2" placeholder="Nombres de referencia 2" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚÑ]+" title="Dijite el nombre minimo 3 caracteres">
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="telefono_ref2">Teléfono Referencia 2:</label>
-                    <input type="tel" class="form-control" id="telefono_ref2" name="telefono_ref2" minlength="3" maxlength="250" required pattern="^[0-9()+-]*$" title="Dijite el telefono">
+                    <input type="tel" class="form-control" id="telefono_ref2" name="telefono_ref2" placeholder="Telefono Referencia 2" minlength="3" maxlength="250" required pattern="^[0-9()+-]*$" title="Dijite el telefono">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="fecha_registro">Fecha Registro:</label>
@@ -110,7 +114,7 @@ require_once "vistas/nav.php";
                     <label for="usuario_modificacion">Usuario Modificación:</label>
                     <input type="text" class="form-control" id="usuario_modificacion" name="usuario_modificacion" value="<?php echo $_SESSION['NOMBRE_USU']; ?>" readonly>
                 </div>
-                <div>
+                <div class="form-group col-sm-12 col-md-6">
                     <button type="submit" id="enviar" name="enviar" class="btn btn-primary">Registrar</button>
                 </div>
             </div>

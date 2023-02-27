@@ -26,6 +26,7 @@ $nombre = $_SESSION['NOMBRE_USU'];
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <script src="vendor/jquery/jquery.min.js"></script>
 </head>
 
 <body>
@@ -83,7 +84,7 @@ $nombre = $_SESSION['NOMBRE_USU'];
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Inmuebles:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Agregar Inmuebles</a>
+                        <a class="collapse-item" href="registrar_inmueble.php">Agregar Inmuebles</a>
                         <a class="collapse-item" href="utilities-border.html">Ver Inmuebles</a>
                     </div>
                 </div>

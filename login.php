@@ -40,7 +40,14 @@ if (isset($_POST['envio'])) {
                         case 1:
                             header('location: index.php');
                             break;
-
+                        case 2:
+                            header('location: index.php');
+                            break;
+                        case 3:
+                            header('location: index.php');
+                            break;
+                        case 4:
+                            header('location: index.php');
                         default:
                     }
                 } else {

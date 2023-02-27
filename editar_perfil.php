@@ -7,16 +7,16 @@ if (!isset($_SESSION['TIPO_USUARIO'])) {
     exit();
 }
 // verificcar que si se envio una id
-if(isset($_GET['id'])){
+if (isset($_GET['id'])) {
     $id_usuario = $_GET['id'];
-}else{
+} else {
     die("Error: no se ha espesificado el id del usuario");
 }
 // hacer la consulta con la id que llego
 $SQL = $conex->query("SELECT * FROM `usuario` WHERE ID_USUARIO='$id_usuario';");
 // comprobar que con esa id haya algun registro
-if(mysqli_num_rows($SQL)==0){
-    die("Error: no se ecnontro un usuario con la id" .$id_usuario);
+if (mysqli_num_rows($SQL) == 0) {
+    die("Error: no se ecnontro un usuario con la id" . $id_usuario);
 }
 $row = mysqli_fetch_assoc($SQL);
 require_once "vistas/nav.php";
@@ -88,20 +88,20 @@ if (isset($_POST['Guardar'])) {
         strlen(trim($apellidos)) >= 1 &&
         strlen(trim($email)) >= 1
     ) {
-        if(!validar_texto($nombre) || !validar_texto($apellidos)){
-            $errores[] ="Formato de caracteres incorrecto";
+        if (!validar_texto($nombre) || !validar_texto($apellidos)) {
+            $errores[] = "Formato de caracteres incorrecto";
         }
-        if(!validar_correo($email)){
-            $errores[] ="Correo no valido";
+        if (!validar_correo($email)) {
+            $errores[] = "Correo no valido";
         }
-        if($email != $row['EMAIL_USU']){
-            if(email_existe($email)){
-                $errores[] ="El correo electronico ya se encuentra registrado";
+        if ($email != $row['EMAIL_USU']) {
+            if (email_existe($email)) {
+                $errores[] = "El correo electronico ya se encuentra registrado";
             }
         }
-        if(empty($errores)){
-            $SQL=$conex->query("UPDATE `usuario` SET `NOMBRE_USU`='$nombre',`APELLIDOS_USU`='$apellidos',`EMAIL_USU`='$email' WHERE ID_USUARIO='$id_usuario';");
-            if($SQL){
+        if (empty($errores)) {
+            $SQL = $conex->query("UPDATE `usuario` SET `NOMBRE_USU`='$nombre',`APELLIDOS_USU`='$apellidos',`EMAIL_USU`='$email' WHERE ID_USUARIO='$id_usuario';");
+            if ($SQL) {
                 echo "<script>
                 Swal.fire({
                   title: '¡Éxito!',
@@ -114,8 +114,8 @@ if (isset($_POST['Guardar'])) {
                   }
                 })
                 </script>";
-            }else{
-                $errores[]="Usuario no se pudo actualizar" . mysqli_error($conex);
+            } else {
+                $errores[] = "Usuario no se pudo actualizar" . mysqli_error($conex);
                 $lista_errores = "<ul>";
                 foreach ($errores as $error) {
                     $lista_errores .= "<li>" . $error . "</li>";
@@ -130,7 +130,7 @@ confirmButtonText: 'Continuar'
 });
 </script>";
             }
-        }else{
+        } else {
             $lista_errores = "<ul>";
             foreach ($errores as $error) {
                 $lista_errores .= "<li>" . $error . "</li>";
@@ -145,14 +145,14 @@ confirmButtonText: 'Continuar'
 });
 </script>";
         }
-    }else{
+    } else {
         $errores[] = "Todos los campos son obligatorios";
-                $lista_errores = "<ul>";
-                foreach ($errores as $error) {
-                    $lista_errores .= "<li>" . $error . "</li>";
-                }
-                $lista_errores .= "</ul>";
-                echo "<script>
+        $lista_errores = "<ul>";
+        foreach ($errores as $error) {
+            $lista_errores .= "<li>" . $error . "</li>";
+        }
+        $lista_errores .= "</ul>";
+        echo "<script>
     Swal.fire({
     icon: 'error',
     title: 'Error',

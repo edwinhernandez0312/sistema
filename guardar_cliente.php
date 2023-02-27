@@ -21,6 +21,9 @@ if (isset($_POST['enviar'])) {
     $usuario_registro = $_SESSION['NOMBRE_USU'];
     $fecha_modificacion = date('Y-m-d H:i:s');
     $usuario_modificacion = $_SESSION['NOMBRE_USU'];
+    $mascotas=trim($_POST['mascotas']);
+    $ingresos=trim($_POST['ingresos']);
+    $vive_per=trim($_POST['vive_per']);
     if (
         strlen(trim($cedula)) >= 1 &&
         strlen(trim($fecha_expedicion)) >= 1 &&
@@ -55,21 +58,41 @@ if (isset($_POST['enviar'])) {
         if (cedula_existe($cedula)) {
             $errores[] = "El usuario con esta cedula ya existe";
         }
-        if(empty($errores)) {
-            $sql = $conex->query("INSERT INTO `cliente`(`CEDULA`, `FECHA_EXPEDICION`, `NOMBRES`, `APELLIDOS`, `FECHA_NACIMIENTO_CLIENTE`, `TELEFONO`, `DIRECCION`, `EMAIL`, `ESTADO_CIVIL`, `NOMBRES_REF1`, `TELEFONO_REF1`, `NOMBRES_REF2`, `TELEFONO_REF2`,  `USUARIO_REGISTRO_CLIENTE`,`USUARIO_MODIFICACION_CLIENTE`) VALUES ('$cedula', '$fecha_expedicion', '$nombres','$apellidos','$fecha_nacimiento','$telefono', '$direccion', '$email', '$estado_civil',  '$nombres_ref1', '$telefono_ref1', '$nombres_ref2', '$telefono_ref2','$id','$id')");
+        if (empty($errores)) {
+            $sql = $conex->query("INSERT INTO `cliente`(`CEDULA`, `FECHA_EXPEDICION`, `NOMBRES`, `APELLIDOS`, `FECHA_NACIMIENTO_CLIENTE`, `TELEFONO`, `DIRECCION`, `EMAIL`, `ESTADO_CIVIL`,`MASCOTA`,`INGRESOS`,`VIVE_PERSONAS`, `NOMBRES_REF1`, `TELEFONO_REF1`, `NOMBRES_REF2`, `TELEFONO_REF2`,  `USUARIO_REGISTRO_CLIENTE`,`USUARIO_MODIFICACION_CLIENTE`) 
+            VALUES ('$cedula', '$fecha_expedicion', '$nombres','$apellidos','$fecha_nacimiento','$telefono', '$direccion', '$email', '$estado_civil','$mascotas','$ingresos','$vive_per','$nombres_ref1', '$telefono_ref1', '$nombres_ref2', '$telefono_ref2','$id','$id')");
             // Ejecutar la sentencia SQL
             if ($sql) {
                 // Si la inserción fue exitosa, mostrar un mensaje al usuario
-                $completados[]="Cliente registrado correctamente";
+                echo "<script>
+                Swal.fire({
+                  title: '¡Éxito!',
+                  text: 'La operación se realizó correctamente.',
+                  icon: 'success',
+                  confirmButtonText: 'Continuar'
+                });
+                </script>";
             } else {
                 // Si hubo un error en la inserción, mostrar un mensaje de error
-                $errores[]="Cliente no se ha registrado correctamente".mysqli_error($conex);
+                $errores[] = "Cliente no se ha registrado correctamente" . mysqli_error($conex);
+            }
         }
+    } else {
+        $errores[] = "Todos los campos son obligatorios";
     }
-    
-}else{
-    $errores[]="Todos los campos son obligatorios";
-}
-mostrar_errores($errores);
-mostrar_bienes($completados);
+    if (!empty($errores)) {
+        $lista_errores = "<ul>";
+        foreach ($errores as $error) {
+            $lista_errores .= "<li>" . $error . "</li>";
+        }
+        $lista_errores .= "</ul>";
+        echo "<script>
+    Swal.fire({
+    icon: 'error',
+    title: 'Error',
+    html: '$lista_errores',
+    confirmButtonText: 'Continuar'
+    });
+    </script>";
+    }
 }

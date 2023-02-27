@@ -113,6 +113,91 @@ require_once "vistas/nav.php";
                     ?>
                 </select>
             </div>
+            <div class="for-group col-sm-12 col-md-6">
+                <label for="mascotas">Mascotas</label>
+                <select name="mascotas" id="mascotas" class="form-control" title="Tiene mascotas?" readonly>
+                    <?php
+                    if ($fila['MASCOTA'] == "si") {
+                    ?>
+                        <option value="si" selected>SI</option>
+                        <option value="no">NO</option>
+                    <?php
+                    } elseif ($fila['MASCOTA'] == "no") {
+                    ?>
+                        <option value="si">SI</option>
+                        <option value="no">NO</option>
+                    <?php
+                    } else {
+                    ?>
+                        <option value="">Selecciona una opción</option>
+                        <option value="si">SI</option>
+                        <option value="no">NO</option>
+                    <?php
+                    }
+                    ?>
+                </select>
+            </div>
+            <div class="for-group col-sm-12 col-md-6">
+                <label for="ingresos">Ingresos (SMMLV)</label>
+                <select name="ingresos" id="ingresos" class="form-control" title="Ingresos mensuales" readonly>
+                    <?php
+                    if ($fila['INGRESOS' == "1-2"]) {
+                    ?>
+                        <option value="1-2" selected>1-2</option>
+                        <option value="2-3">2-3</option>
+                        <option value="3-4">3-4</option>
+                        <option value="4-5">4-5</option>
+                        <option value="+5">+5</option>
+                    <?php
+                    }elseif($fila['INGRESOS' == "2-3"]){
+                        ?>
+                        <option value="1-2">1-2</option>
+                        <option value="2-3" selected>2-3</option>
+                        <option value="3-4">3-4</option>
+                        <option value="4-5">4-5</option>
+                        <option value="+5">+5</option>
+                    <?php
+                    }else if($fila['INGRESOS'] =="3-4"){
+                        ?>
+                        <option value="1-2">1-2</option>
+                        <option value="2-3">2-3</option>
+                        <option value="3-4" selected>3-4</option>
+                        <option value="4-5">4-5</option>
+                        <option value="+5">+5</option>
+                    <?php
+                    }elseif($fila['INGRESOS'] =="4-5"){
+                        ?>
+                        <option value="1-2">1-2</option>
+                        <option value="2-3">2-3</option>
+                        <option value="3-4">3-4</option>
+                        <option value="4-5" selected>4-5</option>
+                        <option value="+5">+5</option>
+                    <?php
+                    }elseif($fila['INGRESOS'] =="+5"){
+                        ?>
+                        <option value="1-2">1-2</option>
+                        <option value="2-3">2-3</option>
+                        <option value="3-4">3-4</option>
+                        <option value="4-5">4-5</option>
+                        <option value="+5" selected>+5</option>
+                    <?php
+                    }else{
+                        ?>
+                        <option value="">Selecciona una opción</option>
+                        <option value="1-2">1-2</option>
+                        <option value="2-3">2-3</option>
+                        <option value="3-4">3-4</option>
+                        <option value="4-5">4-5</option>
+                        <option value="5">5</option>
+                        <?php
+                    }
+                    ?>
+                </select>
+            </div>
+            <div class="form-group col-sm-12 col-md-6">
+                <label for="vive_per">Personas con quien vive:</label>
+                <input type="text" class="form-control" id="vive_per" name="vive_per" value="<?php echo $fila['VIVE_PERSONAS'] ?>" placeholder="Personas con quin vive" minlength="1" maxlength="250" pattern="^[0-9()+-]*$" title="Con cuantas personas vive" readonly>
+            </div>
             <div class="form-group col-sm-12 col-md-6">
                 <label for="nombres_ref1">Nombres de la referencia 1:</label>
                 <input type="text" class="form-control" name="nombres_ref1" value="<?php echo $fila['NOMBRES_REF1']; ?>" readonly>
@@ -231,6 +316,29 @@ require_once "vistas/nav.php";
                                         }
                                         ?>
                                     </select>
+                                </div>
+                                <div class="for-group col-sm-12 col-md-6">
+                                    <label for="mascotas">Mascotas</label>
+                                    <select name="mascotas" id="mascotas" class="form-control" title="Tiene mascotas?">
+                                        <option value="">Selecciona una opción</option>
+                                        <option value="si">SI</option>
+                                        <option value="no">NO</option>
+                                    </select>
+                                </div>
+                                <div class="for-group col-sm-12 col-md-6">
+                                    <label for="ingresos">Ingresos (SMMLV)</label>
+                                    <select name="ingresos" id="ingresos" class="form-control" title="Ingresos mensuales">
+                                        <option value="">Selecciona una opción</option>
+                                        <option value="1-2">1-2</option>
+                                        <option value="2-3">2-3</option>
+                                        <option value="3-4">3-4</option>
+                                        <option value="4-5">4-5</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-sm-12 col-md-6">
+                                    <label for="vive_per">Personas con quien vive:</label>
+                                    <input type="text" class="form-control" id="vive_per" name="vive_per" placeholder="Personas con quin vive" minlength="1" maxlength="250" pattern="^[0-9()+-]*$" title="Con cuantas personas vive">
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6">
                                     <label for="nombres_ref1">Nombres de la referencia 1:</label>
