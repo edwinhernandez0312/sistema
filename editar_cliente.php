@@ -79,7 +79,7 @@ require_once "vistas/nav.php";
             </div>
             <div class="form-group col-sm-12 col-md-6">
                 <label for="estado_civil">Estado civil:</label>
-                <select name="estado_civil" class="form-control" readonly>
+                <select name="estado_civil" class="form-control" disabled>
                     <?php
                     if ($fila['ESTADO_CIVIL'] == "Soltero/a") {
                     ?>
@@ -115,7 +115,7 @@ require_once "vistas/nav.php";
             </div>
             <div class="for-group col-sm-12 col-md-6">
                 <label for="mascotas">Mascotas</label>
-                <select name="mascotas" id="mascotas" class="form-control" title="Tiene mascotas?" readonly>
+                <select name="mascotas" id="mascotas" class="form-control" title="Tiene mascotas?" disabled>
                     <?php
                     if ($fila['MASCOTA'] == "si") {
                     ?>
@@ -125,7 +125,7 @@ require_once "vistas/nav.php";
                     } elseif ($fila['MASCOTA'] == "no") {
                     ?>
                         <option value="si">SI</option>
-                        <option value="no">NO</option>
+                        <option value="no" selected>NO</option>
                     <?php
                     } else {
                     ?>
@@ -139,9 +139,9 @@ require_once "vistas/nav.php";
             </div>
             <div class="for-group col-sm-12 col-md-6">
                 <label for="ingresos">Ingresos (SMMLV)</label>
-                <select name="ingresos" id="ingresos" class="form-control" title="Ingresos mensuales" readonly>
+                <select name="ingresos" id="ingresos" class="form-control" title="Ingresos mensuales" disabled>
                     <?php
-                    if ($fila['INGRESOS' == "1-2"]) {
+                    if ($fila['INGRESOS'] == "1-2") {
                     ?>
                         <option value="1-2" selected>1-2</option>
                         <option value="2-3">2-3</option>
@@ -149,47 +149,47 @@ require_once "vistas/nav.php";
                         <option value="4-5">4-5</option>
                         <option value="+5">+5</option>
                     <?php
-                    }elseif($fila['INGRESOS' == "2-3"]){
-                        ?>
+                    } elseif ($fila['INGRESOS'] == "2-3") {
+                    ?>
                         <option value="1-2">1-2</option>
                         <option value="2-3" selected>2-3</option>
                         <option value="3-4">3-4</option>
                         <option value="4-5">4-5</option>
                         <option value="+5">+5</option>
                     <?php
-                    }else if($fila['INGRESOS'] =="3-4"){
-                        ?>
+                    } else if ($fila['INGRESOS'] == "3-4") {
+                    ?>
                         <option value="1-2">1-2</option>
                         <option value="2-3">2-3</option>
                         <option value="3-4" selected>3-4</option>
                         <option value="4-5">4-5</option>
                         <option value="+5">+5</option>
                     <?php
-                    }elseif($fila['INGRESOS'] =="4-5"){
-                        ?>
+                    } elseif ($fila['INGRESOS'] == "4-5") {
+                    ?>
                         <option value="1-2">1-2</option>
                         <option value="2-3">2-3</option>
                         <option value="3-4">3-4</option>
                         <option value="4-5" selected>4-5</option>
                         <option value="+5">+5</option>
                     <?php
-                    }elseif($fila['INGRESOS'] =="+5"){
-                        ?>
+                    } elseif ($fila['INGRESOS'] == "+5") {
+                    ?>
                         <option value="1-2">1-2</option>
                         <option value="2-3">2-3</option>
                         <option value="3-4">3-4</option>
                         <option value="4-5">4-5</option>
                         <option value="+5" selected>+5</option>
                     <?php
-                    }else{
-                        ?>
+                    } else {
+                    ?>
                         <option value="">Selecciona una opción</option>
                         <option value="1-2">1-2</option>
                         <option value="2-3">2-3</option>
                         <option value="3-4">3-4</option>
                         <option value="4-5">4-5</option>
                         <option value="5">5</option>
-                        <?php
+                    <?php
                     }
                     ?>
                 </select>
@@ -320,25 +320,87 @@ require_once "vistas/nav.php";
                                 <div class="for-group col-sm-12 col-md-6">
                                     <label for="mascotas">Mascotas</label>
                                     <select name="mascotas" id="mascotas" class="form-control" title="Tiene mascotas?">
-                                        <option value="">Selecciona una opción</option>
-                                        <option value="si">SI</option>
-                                        <option value="no">NO</option>
+                                        <?php
+                                        if ($fila['MASCOTA'] == "si") {
+                                        ?>
+                                            <option value="si" selected>SI</option>
+                                            <option value="no">NO</option>
+                                        <?php
+                                        } elseif ($fila['MASCOTA'] == "no") {
+                                        ?>
+                                            <option value="si">SI</option>
+                                            <option value="no" selected>NO</option>
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <option value="">Selecciona una opción</option>
+                                            <option value="si">SI</option>
+                                            <option value="no">NO</option>
+                                        <?php
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                                 <div class="for-group col-sm-12 col-md-6">
                                     <label for="ingresos">Ingresos (SMMLV)</label>
                                     <select name="ingresos" id="ingresos" class="form-control" title="Ingresos mensuales">
-                                        <option value="">Selecciona una opción</option>
-                                        <option value="1-2">1-2</option>
-                                        <option value="2-3">2-3</option>
-                                        <option value="3-4">3-4</option>
-                                        <option value="4-5">4-5</option>
-                                        <option value="5">5</option>
+                                        <?php
+                                        if ($fila['INGRESOS'] == "1-2") {
+                                        ?>
+                                            <option value="1-2" selected>1-2</option>
+                                            <option value="2-3">2-3</option>
+                                            <option value="3-4">3-4</option>
+                                            <option value="4-5">4-5</option>
+                                            <option value="+5">+5</option>
+                                        <?php
+                                        } elseif ($fila['INGRESOS'] == "2-3") {
+                                        ?>
+                                            <option value="1-2">1-2</option>
+                                            <option value="2-3" selected>2-3</option>
+                                            <option value="3-4">3-4</option>
+                                            <option value="4-5">4-5</option>
+                                            <option value="+5">+5</option>
+                                        <?php
+                                        } else if ($fila['INGRESOS'] == "3-4") {
+                                        ?>
+                                            <option value="1-2">1-2</option>
+                                            <option value="2-3">2-3</option>
+                                            <option value="3-4" selected>3-4</option>
+                                            <option value="4-5">4-5</option>
+                                            <option value="+5">+5</option>
+                                        <?php
+                                        } elseif ($fila['INGRESOS'] == "4-5") {
+                                        ?>
+                                            <option value="1-2">1-2</option>
+                                            <option value="2-3">2-3</option>
+                                            <option value="3-4">3-4</option>
+                                            <option value="4-5" selected>4-5</option>
+                                            <option value="+5">+5</option>
+                                        <?php
+                                        } elseif ($fila['INGRESOS'] == "+5") {
+                                        ?>
+                                            <option value="1-2">1-2</option>
+                                            <option value="2-3">2-3</option>
+                                            <option value="3-4">3-4</option>
+                                            <option value="4-5">4-5</option>
+                                            <option value="+5" selected>+5</option>
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <option value="">Selecciona una opción</option>
+                                            <option value="1-2">1-2</option>
+                                            <option value="2-3">2-3</option>
+                                            <option value="3-4">3-4</option>
+                                            <option value="4-5">4-5</option>
+                                            <option value="5">5</option>
+                                        <?php
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6">
                                     <label for="vive_per">Personas con quien vive:</label>
-                                    <input type="text" class="form-control" id="vive_per" name="vive_per" placeholder="Personas con quin vive" minlength="1" maxlength="250" pattern="^[0-9()+-]*$" title="Con cuantas personas vive">
+                                    <input type="text" class="form-control" id="vive_per" name="vive_per" value="<?php echo $fila['VIVE_PERSONAS'] ?>" placeholder="Personas con quin vive" minlength="1" maxlength="250" pattern="^[0-9()+-]*$" title="Con cuantas personas vive">
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6">
                                     <label for="nombres_ref1">Nombres de la referencia 1:</label>
@@ -423,6 +485,9 @@ require_once "vistas/nav.php";
             $telefono_ref2 = trim($_POST['telefono_ref2']);
             $fecha_modificacion = date('Y-m-d H:i:s');
             $usuario_modificacion = $_SESSION['NOMBRE_USU'];
+            $mascota=trim($_POST['mascotas']);
+            $ingresos=trim($_POST['ingresos']);
+            $viven_per=trim($_POST['vive_per']);
             if (
                 strlen(trim($cedula)) >= 1 &&
                 strlen(trim($fecha_expedicion)) >= 1 &&
@@ -460,7 +525,7 @@ require_once "vistas/nav.php";
                 if (empty($errores)) {
                     $SQL = $conex->query("UPDATE `cliente` SET `CEDULA`='$cedula',`FECHA_EXPEDICION`='$fecha_expedicion',
                     `NOMBRES`='$nombres',`APELLIDOS`='$apellidos',`FECHA_NACIMIENTO_CLIENTE`='$fecha_nacimiento',`TELEFONO`='$telefono',
-                    `DIRECCION`='$direccion',`EMAIL`='$email',`ESTADO_CIVIL`='$estado_civil',`NOMBRES_REF1`='$nombres_ref1',`TELEFONO_REF1`='$telefono_ref1',
+                    `DIRECCION`='$direccion',`EMAIL`='$email',`ESTADO_CIVIL`='$estado_civil',`MASCOTA`='$mascota',`INGRESOS`='$ingresos',`VIVE_PERSONAS`='$viven_per',`NOMBRES_REF1`='$nombres_ref1',`TELEFONO_REF1`='$telefono_ref1',
                     `NOMBRES_REF2`='$nombres_ref2',`TELEFONO_REF2`='$telefono_ref2',`USUARIO_REGISTRO_CLIENTE`='$Usuario_registro',`FECHA_MODIFICACION`='$fecha_modificacion',`USUARIO_MODIFICACION_CLIENTE`='$usuario_actual' WHERE ID_CLIENTE='$id';");
                     if ($SQL) {
                         $completados[] = "Cliente actualizado correctamente";
