@@ -277,9 +277,9 @@ function cedula_existe($cedula)
 }
 
 //validar que el codigo wasi del inmueble no exista
-function wasi_existe($codigo){
+function wasi_existe($codigo,$matricula){
     global $conex;
-    $consulta = $conex->query("SELECT * FROM `inmueble` WHERE CODIGO_WASI_INMUEBLE ='$codigo';");
+    $consulta = $conex->query("SELECT * FROM `inmueble` WHERE CODIGO_WASI_INMUEBLE ='$codigo' OR MATRICULA_INMUEBLE='$matricula';");
     $num = mysqli_num_rows($consulta);
     $consulta->close();
     

@@ -85,7 +85,7 @@ $nombre = $_SESSION['NOMBRE_USU'];
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Inmuebles:</h6>
                         <a class="collapse-item" href="registrar_inmueble.php">Agregar Inmuebles</a>
-                        <a class="collapse-item" href="utilities-border.html">Ver Inmuebles</a>
+                        <a class="collapse-item" href="ver_inmuebles.php">Ver Inmuebles</a>
                     </div>
                 </div>
             </li>
