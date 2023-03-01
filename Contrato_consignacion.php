@@ -309,6 +309,7 @@ ob_start();
 $html = ob_get_clean();
 $dompdf->loadHtml($html);
 $dompdf->setPaper('letter');
+
 $dompdf->render();
 
 $dompdf->stream("archivo.pdf", array("Attachment" => false));
