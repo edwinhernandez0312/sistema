@@ -275,3 +275,18 @@ function cedula_existe($cedula)
         return false;
     }
 }
+
+//validar que el codigo wasi del inmueble no exista
+function wasi_existe($codigo){
+    global $conex;
+    $consulta = $conex->query("SELECT * FROM `inmueble` WHERE CODIGO_WASI_INMUEBLE ='$codigo';");
+    $num = mysqli_num_rows($consulta);
+    $consulta->close();
+    
+    if ($num > 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+?>
