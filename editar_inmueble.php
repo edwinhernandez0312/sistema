@@ -84,6 +84,14 @@ require_once "vistas/nav.php";
                 </select>
             </div>
             <div class="form-group col-sm-12 col-md-6">
+                <label for="precio_ven">Precio de venta:</label>
+                <input type="text" class="form-control" value="<?php echo $row['PRECIO_VENTA'] ?>"  name="precio_ven" minlength="3" maxlength="250" required pattern="^[0-9()+-.]*$" readonly disabled>
+            </div>
+            <div class="form-group col-sm-12 col-md-6">
+                <label for="precio_can">Precio de canon de arriendo:</label>
+                <input type="text" class="form-control" value="<?php echo $row['PRECIO_CANON'] ?>"  name="precio_can" minlength="3" maxlength="250" required pattern="^[0-9()+-.]*$" readonly disabled>
+            </div>
+            <div class="form-group col-sm-12 col-md-6">
                 <label for="wasi_inm">Codigo wasi del inmueble:</label>
                 <input type="tel" class="form-control" value="<?php echo $row['CODIGO_WASI_INMUEBLE'] ?>" id="wasi_inm" name="wasi_inm" minlength="3" maxlength="250" pattern="^[0-9()+-]*$" title="Codigo del inmueble" readonly disabled>
             </div>
@@ -150,20 +158,20 @@ require_once "vistas/nav.php";
                     ?>
                 </select>
             </div>
-            <div class="form-group col-sm-12 col-md-6">
+            <div class="form-group col-sm-12 col-md-12">
                 <div class="row">
                     <?php
                     $valor_tv = strpos($row['SERVICIOS'], "Television");
                     if ($valor_tv !== false) {
                     ?>
-                        <div class="form-group col-sm-12 col-md-6 form-check form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check form-check">
                             <input type="checkbox" class="form-check-input" id="television" name="servicios[]" value="Television" checked readonly disabled>
                             <label for="television">Televisión</label>
                         </div>
                     <?php
                     } else {
                     ?>
-                        <div class="form-group col-sm-12 col-md-6 form-check form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check form-check">
                             <input type="checkbox" class="form-check-input" id="television" name="servicios[]" value="Television" readonly disabled>
                             <label for="television">Televisión</label>
                         </div>
@@ -172,14 +180,14 @@ require_once "vistas/nav.php";
                     $valor_wifi = strpos($row['SERVICIOS'], "Servicio de wifi");
                     if ($valor_wifi !== false) {
                     ?>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check">
                             <input type="checkbox" class="form-check-input" id="wifi" name="servicios[]" value="Servicio de wifi" checked readonly disabled>
                             <label for="wifi">Servicio de wifi</label>
                         </div>
                     <?php
                     } else {
                     ?>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check">
                             <input type="checkbox" class="form-check-input" id="wifi" name="servicios[]" value="Servicio de wifi" readonly disabled>
                             <label for="wifi">Servicio de wifi</label>
                         </div>
@@ -188,14 +196,14 @@ require_once "vistas/nav.php";
                     $valor_elec = strpos($row['SERVICIOS'], "Sevicio de electricidad");
                     if ($valor_elec !== false) {
                     ?>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check">
                             <input type="checkbox" class="form-check-input" id="electricidad" name="servicios[]" value="Sevicio de electricidad" checked readonly disabled>
                             <label for="electricidad">Sevicio de electricidad</label>
                         </div>
                     <?php
                     } else {
                     ?>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check">
                             <input type="checkbox" class="form-check-input" id="electricidad" name="servicios[]" value="Sevicio de electricidad" readonly disabled>
                             <label for="electricidad">Sevicio de electricidad</label>
                         </div>
@@ -204,14 +212,14 @@ require_once "vistas/nav.php";
                     $valor_agua = strpos($row['SERVICIOS'], "Agua");
                     if ($valor_agua !== false) {
                     ?>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check">
                             <input type="checkbox" class="form-check-input" id="agua" name="servicios[]" value="Agua" checked readonly disabled>
                             <label for="agua">Agua</label>
                         </div>
                     <?php
                     } else {
                     ?>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check">
                             <input type="checkbox" class="form-check-input" id="agua" name="servicios[]" value="Agua" readonly disabled>
                             <label for="agua">Agua</label>
                         </div>
@@ -220,14 +228,14 @@ require_once "vistas/nav.php";
                     $valor_gas = strpos($row['SERVICIOS'], "Gas");
                     if ($valor_gas !== false) {
                     ?>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check">
                             <input type="checkbox" class="form-check-input" id="gas" name="servicios[]" value="Gas" checked readonly disabled>
                             <label for="gas">Gas</label>
                         </div>
                     <?php
                     } else {
                     ?>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check">
                             <input type="checkbox" class="form-check-input" id="gas" name="servicios[]" value="Gas" readonly disabled>
                             <label for="gas">Gas</label>
                         </div>
@@ -236,14 +244,14 @@ require_once "vistas/nav.php";
                     $valor_seg = strpos($row['SERVICIOS'], "Seguridad");
                     if ($valor_seg !== false) {
                     ?>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check">
                             <input type="checkbox" class="form-check-input" id="seguridad" name="servicios[]" value="Seguridad" checked readonly disabled>
                             <label for="seguridad">Seguridad</label>
                         </div>
                     <?php
                     } else {
                     ?>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check">
                             <input type="checkbox" class="form-check-input" id="seguridad" name="servicios[]" value="Seguridad" readonly disabled>
                             <label for="seguridad">Seguridad</label>
                         </div>
@@ -252,14 +260,14 @@ require_once "vistas/nav.php";
                     $valos_pis = strpos($row['SERVICIOS'], "Piscina");
                     if ($valos_pis !== false) {
                     ?>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check">
                             <input type="checkbox" class="form-check-input" id="piscina" name="servicios[]" value="Piscina" checked readonly disabled>
                             <label for="piscina">Piscina</label>
                         </div>
                     <?php
                     } else {
                     ?>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check">
                             <input type="checkbox" class="form-check-input" id="piscina" name="servicios[]" value="Piscina" readonly disabled>
                             <label for="piscina">Piscina</label>
                         </div>
@@ -268,14 +276,14 @@ require_once "vistas/nav.php";
                     $valor_sau = strpos($row['SERVICIOS'], "Sauna");
                     if ($valor_sau !== false) {
                     ?>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check">
                             <input type="checkbox" class="form-check-input" id="sauna" name="servicios[]" value="Sauna" checked readonly disabled>
                             <label for="sauna">Sauna</label>
                         </div>
                     <?php
                     } else {
                     ?>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check">
                             <input type="checkbox" class="form-check-input" id="sauna" name="servicios[]" value="Sauna" readonly disabled>
                             <label for="sauna">Sauna</label>
                         </div>
@@ -284,14 +292,14 @@ require_once "vistas/nav.php";
                     $valor_air = strpos($row['SERVICIOS'], "Aire acondicionado");
                     if ($valor_air !== false) {
                     ?>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check">
                             <input type="checkbox" class="form-check-input" id="aire_acon" name="servicios[]" value="Aire acondicionado" checked readonly disabled>
                             <label for="aire_acon">Aire acondicionado</label>
                         </div>
                     <?php
                     } else {
                     ?>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check">
                             <input type="checkbox" class="form-check-input" id="aire_acon" name="servicios[]" value="Aire acondicionado" readonly disabled>
                             <label for="aire_acon">Aire acondicionado</label>
                         </div>
@@ -300,14 +308,14 @@ require_once "vistas/nav.php";
                     $valor = strpos($row['SERVICIOS'], "Cancha de futbol");
                     if ($valor !== false) {
                     ?>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check">
                             <input type="checkbox" class="form-check-input" id="cancha_fut" name="servicios[]" value="Cancha de futbol" checked readonly disabled>
                             <label for="cancha_fut">Cancha de futbol</label>
                         </div>
                     <?php
                     } else {
                     ?>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check">
                             <input type="checkbox" class="form-check-input" id="cancha_fut" name="servicios[]" value="Cancha de futbol" readonly disabled>
                             <label for="cancha_fut">Cancha de futbol</label>
                         </div>
@@ -316,14 +324,14 @@ require_once "vistas/nav.php";
                     $valor_gym = strpos($row['SERVICIOS'], "Gimnacio");
                     if ($valor_gym !== false) {
                     ?>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check">
                             <input type="checkbox" class="form-check-input" id="gimnacio" name="servicios[]" value="Gimnacio" checked readonly disabled>
                             <label for="gimnacio">Gimnacio</label>
                         </div>
                     <?php
                     } else {
                     ?>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check">
                             <input type="checkbox" class="form-check-input" id="gimnacio" name="servicios[]" value="Gimnacio" readonly disabled>
                             <label for="gimnacio">Gimnacio</label>
                         </div>
@@ -332,14 +340,14 @@ require_once "vistas/nav.php";
                     $valor_tel = strpos($row['SERVICIOS'], "Telefono fijo");
                     if ($valor_tel !== false) {
                     ?>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check">
                             <input type="checkbox" class="form-check-input" id="gimnacio" name="servicios[]" value="Telefono fijo" checked readonly disabled>
                             <label for="gimnacio">Telefono fijo</label>
                         </div>
                     <?php
                     } else {
                     ?>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check">
                             <input type="checkbox" class="form-check-input" id="gimnacio" name="servicios[]" value="Telefono fijo" readonly disabled>
                             <label for="gimnacio">Telefono fijo</label>
                         </div>
@@ -347,6 +355,10 @@ require_once "vistas/nav.php";
                     }
                     ?>
                 </div>
+            </div>
+            <div class="form-group col-sm-12 col-md-6">
+                <label for="precio_adm">Precio administración:</label>
+                <input type="text" class="form-control" value="<?php echo $row['PRECIO_ADMINISTRACION'] ?> "  name="precio_adm" minlength="3" maxlength="250" required pattern="^[0-9()+-.]*$" readonly disabled>
             </div>
             <div class="form-group col-sm-12 col-md-6">
                 <label for="habitaciones">Habitaciones</label>
@@ -551,9 +563,9 @@ require_once "vistas/nav.php";
                                     <input type="hidden" id="id_pro" name="id_pro" value="<?php echo $row['ID_INMUEBLE'] ?>">
                                     <div class="row">
                                         <label for="cedula" class="col-sm-6">Propietario:</label>
-                                        <h3 class="col-sm-6 d-flex justify-content-end m-0 font-weight-bold text-primary">
+                                        <h5 class="col-sm-6 d-flex justify-content-end m-0 font-weight-bold text-primary">
                                             <a type="button" class="nav-link fa fa-user-plus" data-toggle="modal" data-target="#exampleModal"></a>
-                                        </h3>
+                                        </h5>
                                     </div>
                                     <input type="text" class="form-control" value="<?php echo $row['NOMBRES'] . " " . $row['APELLIDOS'] ?>" id="propietario" name="propietario" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚÑ]+" title="Dijite el propietario" readonly disabled>
                                 </div>
@@ -604,6 +616,14 @@ require_once "vistas/nav.php";
                                         }
                                         ?>
                                     </select>
+                                </div>
+                                <div class="form-group col-sm-12 col-md-6">
+                                    <label for="precio_ven">Precio de venta:</label>
+                                    <input type="text" class="form-control" value="<?php echo $row['PRECIO_VENTA'] ?>" id="precio_ven" name="precio_ven" minlength="3" maxlength="250" required pattern="^[0-9()+-.]*$">
+                                </div>
+                                <div class="form-group col-sm-12 col-md-6">
+                                    <label for="precio_can">Precio de canon de arriendo:</label>
+                                    <input type="text" class="form-control" value="<?php echo $row['PRECIO_CANON'] ?>" id="precio_can" name="precio_can" minlength="3" maxlength="250" required pattern="^[0-9()+-.]*$">
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6">
                                     <label for="wasi_inm">Codigo wasi del inmueble:</label>
@@ -672,20 +692,20 @@ require_once "vistas/nav.php";
                                         ?>
                                     </select>
                                 </div>
-                                <div class="form-group col-sm-12 col-md-6">
+                                <div class="form-group col-sm-12 col-md-12">
                                     <div class="row">
                                         <?php
                                         $valor_tv = strpos($row['SERVICIOS'], "Television");
                                         if ($valor_tv !== false) {
                                         ?>
-                                            <div class="form-group col-sm-12 col-md-6 form-check form-check">
+                                            <div class="form-group col-sm-12 col-md-4 form-check form-check">
                                                 <input type="checkbox" class="form-check-input" id="television" name="servicios[]" value="Television" checked>
                                                 <label for="television">Televisión</label>
                                             </div>
                                         <?php
                                         } else {
                                         ?>
-                                            <div class="form-group col-sm-12 col-md-6 form-check form-check">
+                                            <div class="form-group col-sm-12 col-md-4 form-check form-check">
                                                 <input type="checkbox" class="form-check-input" id="television" name="servicios[]" value="Television">
                                                 <label for="television">Televisión</label>
                                             </div>
@@ -694,14 +714,14 @@ require_once "vistas/nav.php";
                                         $valor_wifi = strpos($row['SERVICIOS'], "Servicio de wifi");
                                         if ($valor_wifi !== false) {
                                         ?>
-                                            <div class="form-group col-sm-12 col-md-6 form-check">
+                                            <div class="form-group col-sm-12 col-md-4 form-check">
                                                 <input type="checkbox" class="form-check-input" id="wifi" name="servicios[]" value="Servicio de wifi" checked>
                                                 <label for="wifi">Servicio de wifi</label>
                                             </div>
                                         <?php
                                         } else {
                                         ?>
-                                            <div class="form-group col-sm-12 col-md-6 form-check">
+                                            <div class="form-group col-sm-12 col-md-4 form-check">
                                                 <input type="checkbox" class="form-check-input" id="wifi" name="servicios[]" value="Servicio de wifi">
                                                 <label for="wifi">Servicio de wifi</label>
                                             </div>
@@ -710,14 +730,14 @@ require_once "vistas/nav.php";
                                         $valor_elec = strpos($row['SERVICIOS'], "Sevicio de electricidad");
                                         if ($valor_elec !== false) {
                                         ?>
-                                            <div class="form-group col-sm-12 col-md-6 form-check">
+                                            <div class="form-group col-sm-12 col-md-4 form-check">
                                                 <input type="checkbox" class="form-check-input" id="electricidad" name="servicios[]" value="Sevicio de electricidad" checked>
                                                 <label for="electricidad">Sevicio de electricidad</label>
                                             </div>
                                         <?php
                                         } else {
                                         ?>
-                                            <div class="form-group col-sm-12 col-md-6 form-check">
+                                            <div class="form-group col-sm-12 col-md-4 form-check">
                                                 <input type="checkbox" class="form-check-input" id="electricidad" name="servicios[]" value="Sevicio de electricidad">
                                                 <label for="electricidad">Sevicio de electricidad</label>
                                             </div>
@@ -726,14 +746,14 @@ require_once "vistas/nav.php";
                                         $valor_agua = strpos($row['SERVICIOS'], "Agua");
                                         if ($valor_agua !== false) {
                                         ?>
-                                            <div class="form-group col-sm-12 col-md-6 form-check">
+                                            <div class="form-group col-sm-12 col-md-4 form-check">
                                                 <input type="checkbox" class="form-check-input" id="agua" name="servicios[]" value="Agua" checked>
                                                 <label for="agua">Agua</label>
                                             </div>
                                         <?php
                                         } else {
                                         ?>
-                                            <div class="form-group col-sm-12 col-md-6 form-check">
+                                            <div class="form-group col-sm-12 col-md-4 form-check">
                                                 <input type="checkbox" class="form-check-input" id="agua" name="servicios[]" value="Agua">
                                                 <label for="agua">Agua</label>
                                             </div>
@@ -742,14 +762,14 @@ require_once "vistas/nav.php";
                                         $valor_gas = strpos($row['SERVICIOS'], "Gas");
                                         if ($valor_gas !== false) {
                                         ?>
-                                            <div class="form-group col-sm-12 col-md-6 form-check">
+                                            <div class="form-group col-sm-12 col-md-4 form-check">
                                                 <input type="checkbox" class="form-check-input" id="gas" name="servicios[]" value="Gas" checked>
                                                 <label for="gas">Gas</label>
                                             </div>
                                         <?php
                                         } else {
                                         ?>
-                                            <div class="form-group col-sm-12 col-md-6 form-check">
+                                            <div class="form-group col-sm-12 col-md-4 form-check">
                                                 <input type="checkbox" class="form-check-input" id="gas" name="servicios[]" value="Gas">
                                                 <label for="gas">Gas</label>
                                             </div>
@@ -758,14 +778,14 @@ require_once "vistas/nav.php";
                                         $valor_seg = strpos($row['SERVICIOS'], "Seguridad");
                                         if ($valor_seg !== false) {
                                         ?>
-                                            <div class="form-group col-sm-12 col-md-6 form-check">
+                                            <div class="form-group col-sm-12 col-md-4 form-check">
                                                 <input type="checkbox" class="form-check-input" id="seguridad" name="servicios[]" value="Seguridad" checked>
                                                 <label for="seguridad">Seguridad</label>
                                             </div>
                                         <?php
                                         } else {
                                         ?>
-                                            <div class="form-group col-sm-12 col-md-6 form-check">
+                                            <div class="form-group col-sm-12 col-md-4 form-check">
                                                 <input type="checkbox" class="form-check-input" id="seguridad" name="servicios[]" value="Seguridad">
                                                 <label for="seguridad">Seguridad</label>
                                             </div>
@@ -774,14 +794,14 @@ require_once "vistas/nav.php";
                                         $valos_pis = strpos($row['SERVICIOS'], "Piscina");
                                         if ($valos_pis !== false) {
                                         ?>
-                                            <div class="form-group col-sm-12 col-md-6 form-check">
+                                            <div class="form-group col-sm-12 col-md-4 form-check">
                                                 <input type="checkbox" class="form-check-input" id="piscina" name="servicios[]" value="Piscina" checked>
                                                 <label for="piscina">Piscina</label>
                                             </div>
                                         <?php
                                         } else {
                                         ?>
-                                            <div class="form-group col-sm-12 col-md-6 form-check">
+                                            <div class="form-group col-sm-12 col-md-4 form-check">
                                                 <input type="checkbox" class="form-check-input" id="piscina" name="servicios[]" value="Piscina">
                                                 <label for="piscina">Piscina</label>
                                             </div>
@@ -790,14 +810,14 @@ require_once "vistas/nav.php";
                                         $valor_sau = strpos($row['SERVICIOS'], "Sauna");
                                         if ($valor_sau !== false) {
                                         ?>
-                                            <div class="form-group col-sm-12 col-md-6 form-check">
+                                            <div class="form-group col-sm-12 col-md-4 form-check">
                                                 <input type="checkbox" class="form-check-input" id="sauna" name="servicios[]" value="Sauna" checked>
                                                 <label for="sauna">Sauna</label>
                                             </div>
                                         <?php
                                         } else {
                                         ?>
-                                            <div class="form-group col-sm-12 col-md-6 form-check">
+                                            <div class="form-group col-sm-12 col-md-4 form-check">
                                                 <input type="checkbox" class="form-check-input" id="sauna" name="servicios[]" value="Sauna">
                                                 <label for="sauna">Sauna</label>
                                             </div>
@@ -806,14 +826,14 @@ require_once "vistas/nav.php";
                                         $valor_air = strpos($row['SERVICIOS'], "Aire acondicionado");
                                         if ($valor_air !== false) {
                                         ?>
-                                            <div class="form-group col-sm-12 col-md-6 form-check">
+                                            <div class="form-group col-sm-12 col-md-4 form-check">
                                                 <input type="checkbox" class="form-check-input" id="aire_acon" name="servicios[]" value="Aire acondicionado" checked>
                                                 <label for="aire_acon">Aire acondicionado</label>
                                             </div>
                                         <?php
                                         } else {
                                         ?>
-                                            <div class="form-group col-sm-12 col-md-6 form-check">
+                                            <div class="form-group col-sm-12 col-md-4 form-check">
                                                 <input type="checkbox" class="form-check-input" id="aire_acon" name="servicios[]" value="Aire acondicionado">
                                                 <label for="aire_acon">Aire acondicionado</label>
                                             </div>
@@ -822,14 +842,14 @@ require_once "vistas/nav.php";
                                         $valor = strpos($row['SERVICIOS'], "Cancha de futbol");
                                         if ($valor !== false) {
                                         ?>
-                                            <div class="form-group col-sm-12 col-md-6 form-check">
+                                            <div class="form-group col-sm-12 col-md-4 form-check">
                                                 <input type="checkbox" class="form-check-input" id="cancha_fut" name="servicios[]" value="Cancha de futbol" checked>
                                                 <label for="cancha_fut">Cancha de futbol</label>
                                             </div>
                                         <?php
                                         } else {
                                         ?>
-                                            <div class="form-group col-sm-12 col-md-6 form-check">
+                                            <div class="form-group col-sm-12 col-md-4 form-check">
                                                 <input type="checkbox" class="form-check-input" id="cancha_fut" name="servicios[]" value="Cancha de futbol">
                                                 <label for="cancha_fut">Cancha de futbol</label>
                                             </div>
@@ -838,14 +858,14 @@ require_once "vistas/nav.php";
                                         $valor_gym = strpos($row['SERVICIOS'], "Gimnacio");
                                         if ($valor_gym !== false) {
                                         ?>
-                                            <div class="form-group col-sm-12 col-md-6 form-check">
+                                            <div class="form-group col-sm-12 col-md-4 form-check">
                                                 <input type="checkbox" class="form-check-input" id="gimnacio" name="servicios[]" value="Gimnacio" checked>
                                                 <label for="gimnacio">Gimnacio</label>
                                             </div>
                                         <?php
                                         } else {
                                         ?>
-                                            <div class="form-group col-sm-12 col-md-6 form-check">
+                                            <div class="form-group col-sm-12 col-md-4 form-check">
                                                 <input type="checkbox" class="form-check-input" id="gimnacio" name="servicios[]" value="Gimnacio">
                                                 <label for="gimnacio">Gimnacio</label>
                                             </div>
@@ -854,14 +874,14 @@ require_once "vistas/nav.php";
                                         $valor_tel = strpos($row['SERVICIOS'], "Telefono fijo");
                                         if ($valor_tel !== false) {
                                         ?>
-                                            <div class="form-group col-sm-12 col-md-6 form-check">
+                                            <div class="form-group col-sm-12 col-md-4 form-check">
                                                 <input type="checkbox" class="form-check-input" id="gimnacio" name="servicios[]" value="Telefono fijo" checked>
                                                 <label for="gimnacio">Telefono fijo</label>
                                             </div>
                                         <?php
                                         } else {
                                         ?>
-                                            <div class="form-group col-sm-12 col-md-6 form-check">
+                                            <div class="form-group col-sm-12 col-md-4 form-check">
                                                 <input type="checkbox" class="form-check-input" id="gimnacio" name="servicios[]" value="Telefono fijo">
                                                 <label for="gimnacio">Telefono fijo</label>
                                             </div>
@@ -869,6 +889,10 @@ require_once "vistas/nav.php";
                                         }
                                         ?>
                                     </div>
+                                </div>
+                                <div class="form-group col-sm-12 col-md-6">
+                                    <label for="precio_adm">Precio administración:</label>
+                                    <input type="text" class="form-control" value="<?php echo $row['PRECIO_ADMINISTRACION'] ?> " id="precio_adm" name="precio_adm" minlength="3" maxlength="250" required pattern="^[0-9()+-.]*$">
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6">
                                     <label for="habitaciones">Habitaciones</label>
@@ -1229,6 +1253,62 @@ require_once "vistas/nav.php";
             });
         });
     </script>
+    <script>
+        var separador = document.getElementById('precio_ven');
+        separador.addEventListener('keyup', (e) => {
+            var entrada = e.target.value.split('.').join('');
+            entrada = entrada.split('').reverse();
+            var salida = [];
+            var aux = '';
+            var paginador = Math.ceil(entrada.length / 3);
+            for (let i = 0; i < paginador; i++) {
+                for (let j = 0; j < 3; j++) {
+                    if (entrada[j + (i * 3)] != undefined) {
+                        aux += entrada[j + (i * 3)];
+                    }
+                }
+                salida.push(aux);
+                aux = '';
+                e.target.value = salida.join('.').split("").reverse().join('');
+            }
+        }, false);
+        var separador2 = document.getElementById('precio_can');
+        separador2.addEventListener('keyup', (e) => {
+            var entrada = e.target.value.split('.').join('');
+            entrada = entrada.split('').reverse();
+            var salida = [];
+            var aux = '';
+            var paginador = Math.ceil(entrada.length / 3);
+            for (let i = 0; i < paginador; i++) {
+                for (let j = 0; j < 3; j++) {
+                    if (entrada[j + (i * 3)] != undefined) {
+                        aux += entrada[j + (i * 3)];
+                    }
+                }
+                salida.push(aux);
+                aux = '';
+                e.target.value = salida.join('.').split("").reverse().join('');
+            }
+        }, false);
+        var separador3 = document.getElementById('precio_adm');
+        separador3.addEventListener('keyup', (e) => {
+            var entrada = e.target.value.split('.').join('');
+            entrada = entrada.split('').reverse();
+            var salida = [];
+            var aux = '';
+            var paginador = Math.ceil(entrada.length / 3);
+            for (let i = 0; i < paginador; i++) {
+                for (let j = 0; j < 3; j++) {
+                    if (entrada[j + (i * 3)] != undefined) {
+                        aux += entrada[j + (i * 3)];
+                    }
+                }
+                salida.push(aux);
+                aux = '';
+                e.target.value = salida.join('.').split("").reverse().join('');
+            }
+        }, false);
+    </script>
     <?php
     $errores = array();
     if (isset($_POST['Guardar'])) {
@@ -1247,6 +1327,9 @@ require_once "vistas/nav.php";
         } else {
             $servicios = "";
         }
+        $precio_venta = trim($_POST['precio_ven']);
+        $precio_can = trim($_POST['precio_can']);
+        $precio_adm = trim($_POST['precio_adm']);
         $habitaciones = trim($_POST['habitaciones']);
         $baños = trim($_POST['baños']);
         $garaje = trim($_POST['garaje']);
@@ -1262,6 +1345,9 @@ require_once "vistas/nav.php";
             strlen($codigo_postal) >= 1 &&
             strlen($direccion) >= 1 &&
             strlen($tipo_negocios) >= 1 &&
+            strlen($precio_venta) >= 1 &&
+            strlen($precio_can) >= 1 &&
+            strlen($precio_adm) >= 1 &&
             strlen($codigo_wasi) >= 1 &&
             strlen($estrato) >= 1 &&
             strlen($habitaciones) >= 1 &&
@@ -1274,7 +1360,7 @@ require_once "vistas/nav.php";
             } else {
                 $servicios_total = "";
             }
-            if (!validar_numero($matricula) || !validar_numero($codigo_postal) || !validar_numero($codigo_wasi)) {
+            if (!validar_numero($matricula) || !validar_numero($codigo_postal) || !validar_numero($codigo_wasi) || !validar_numero($precio_venta) || !validar_numero($precio_can) || !validar_numero($precio_adm)) {
                 $errores[] = "Datos no validos, vefique los tipos de datos";
             }
             if ($matricula != $row['MATRICULA_INMUEBLE']) {
@@ -1290,7 +1376,7 @@ require_once "vistas/nav.php";
             if (empty($errores)) {
                 $SQL = $conex->query("UPDATE `inmueble` SET `PROPIETARIO`='$id_pro',`MATRICULA_INMUEBLE`='$matricula',
     `DEPARTAMENTO`='$departamento',`MUNICIPIO`='$municipio',`BARRIO`='$barrio',`CODIGO_POSTAL`='$codigo_postal',`DIRECCION`='$direccion',
-    `TIPO_NEGOCIO`='$tipo_negocios',`CODIGO_WASI_INMUEBLE`='$codigo_wasi',`ESTRATO`='$estrato',`SERVICIOS`='$servicios_total',
+    `TIPO_NEGOCIO`='$tipo_negocios',`PRECIO_VENTA`='$precio_venta',`PRECIO_CANON`='$precio_can',`PRECIO_ADMINISTRACION`='$precio_adm', `CODIGO_WASI_INMUEBLE`='$codigo_wasi',`ESTRATO`='$estrato',`SERVICIOS`='$servicios_total',
     `HABITACIONES`='$habitaciones',`BAÑOS`='$baños',`GARAJE`='$garaje',`ACEPTAN_MASCOTAS`='$mascotas',
     `FECHA_MODIFICACION_INMUEBLE`='$fecha_modificacion', `USUARIO_MODIFICACION_INMUEBLE`='$usuario_modificacion' WHERE ID_INMUEBLE='$id_inmueble';");
                 if ($SQL) {

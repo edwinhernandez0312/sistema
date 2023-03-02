@@ -21,9 +21,9 @@ require_once "vistas/nav.php";
                     <input type="hidden" id="id_pro" name="id_pro">
                     <div class="row">
                         <label for="cedula" class="col-sm-6">Propietario:</label>
-                        <h3 class="col-sm-6 d-flex justify-content-end m-0 font-weight-bold text-primary">
+                        <h5 class="col-sm-6 d-flex justify-content-end m-0 font-weight-bold text-primary">
                             <a type="button" class="nav-link fa fa-user-plus" data-toggle="modal" data-target="#exampleModal"></a>
-                        </h3>
+                        </h5>
                     </div>
                     <input type="text" class="form-control" id="propietario" name="propietario" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚÑ]+" title="Dijite el propietario" readonly disabled>
                 </div>
@@ -68,6 +68,14 @@ require_once "vistas/nav.php";
                     </select>
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
+                    <label for="precio_ven">Precio de venta:</label>
+                    <input type="text" class="form-control" id="precio_ven" name="precio_ven" minlength="3" maxlength="250" required pattern="^[0-9()+-.]*$" title="Precio de venta">
+                </div>
+                <div class="form-group col-sm-12 col-md-6">
+                    <label for="precio_can">Precio de canon de arriendo:</label>
+                    <input type="text" class="form-control" id="precio_can" name="precio_can" minlength="3" maxlength="250" required pattern="^[0-9()+-.]*$" title="Precio de canon de arriendo">
+                </div>
+                <div class="form-group col-sm-12 col-md-6">
                     <label for="wasi_inm">Codigo wasi del inmueble:</label>
                     <input type="tel" class="form-control" id="wasi_inm" name="wasi_inm" minlength="3" maxlength="250" required pattern="^[0-9()+-]*$" title="Codigo del inmueble">
                 </div>
@@ -83,57 +91,61 @@ require_once "vistas/nav.php";
                         <option value="6">6</option>
                     </select>
                 </div>
-                <div class="form-group col-sm-12 col-md-6">
-                    <div class="row">
-                        <div class="form-group col-sm-12 col-md-6 form-check form-check">
+                <div class="form-group col-sm-12 col-md-12">
+                    <div class=" row">
+                        <div class="form-group col-sm-12 col-md-3 form-check form-check">
                             <input type="checkbox" class="form-check-input" id="television" name="servicios[]" value="Television">
                             <label for="television">Televisión</label>
                         </div>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-3 form-check">
                             <input type="checkbox" class="form-check-input" id="wifi" name="servicios[]" value="Servicio de wifi">
                             <label for="wifi">Servicio de wifi</label>
                         </div>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-3 form-check">
                             <input type="checkbox" class="form-check-input" id="electricidad" name="servicios[]" value="Sevicio de electricidad">
                             <label for="electricidad">Sevicio de electricidad</label>
                         </div>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-3 form-check">
                             <input type="checkbox" class="form-check-input" id="agua" name="servicios[]" value="Agua">
                             <label for="agua">Agua</label>
                         </div>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-3 form-check">
                             <input type="checkbox" class="form-check-input" id="gas" name="servicios[]" value="Gas">
                             <label for="gas">Gas</label>
                         </div>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-3 form-check">
                             <input type="checkbox" class="form-check-input" id="seguridad" name="servicios[]" value="Seguridad">
                             <label for="seguridad">Seguridad</label>
                         </div>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-3 form-check">
                             <input type="checkbox" class="form-check-input" id="piscina" name="servicios[]" value="Piscina">
                             <label for="piscina">Piscina</label>
                         </div>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-3 form-check">
                             <input type="checkbox" class="form-check-input" id="sauna" name="servicios[]" value="Sauna">
                             <label for="sauna">Sauna</label>
                         </div>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-3 form-check">
                             <input type="checkbox" class="form-check-input" id="aire_acon" name="servicios[]" value="Aire acondicionado">
                             <label for="aire_acon">Aire acondicionado</label>
                         </div>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-3 form-check">
                             <input type="checkbox" class="form-check-input" id="cancha_fut" name="servicios[]" value="Cancha de futbol">
                             <label for="cancha_fut">Cancha de futbol</label>
                         </div>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-3 form-check">
                             <input type="checkbox" class="form-check-input" id="gimnacio" name="servicios[]" value="Gimnacio">
                             <label for="gimnacio">Gimnacio</label>
                         </div>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
+                        <div class="form-group col-sm-12 col-md-3 form-check">
                             <input type="checkbox" class="form-check-input" id="gimnacio" name="servicios[]" value="Telefono fijo">
                             <label for="gimnacio">Telefono fijo</label>
                         </div>
                     </div>
+                </div>
+                <div class="form-group col-sm-12 col-md-6">
+                    <label for="precio_adm">Precio administración:</label>
+                    <input type="text" class="form-control" id="precio_adm" name="precio_adm" minlength="3" maxlength="250" required pattern="^[0-9()+-.]*$" title="Precio de la administración">
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="habitaciones">Habitaciones</label>
@@ -369,6 +381,62 @@ $resultado = $conex->query("SELECT * FROM cliente");
         });
     });
 </script>
+<script>
+    var separador = document.getElementById('precio_ven');
+    separador.addEventListener('keyup', (e) => {
+        var entrada = e.target.value.split('.').join('');
+        entrada = entrada.split('').reverse();
+        var salida = [];
+        var aux = '';
+        var paginador = Math.ceil(entrada.length / 3);
+        for (let i = 0; i < paginador; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (entrada[j + (i * 3)] != undefined) {
+                    aux += entrada[j + (i * 3)];
+                }
+            }
+            salida.push(aux);
+            aux = '';
+            e.target.value = salida.join('.').split("").reverse().join('');
+        }
+    }, false);
+    var separador2 = document.getElementById('precio_can');
+    separador2.addEventListener('keyup', (e) => {
+        var entrada = e.target.value.split('.').join('');
+        entrada = entrada.split('').reverse();
+        var salida = [];
+        var aux = '';
+        var paginador = Math.ceil(entrada.length / 3);
+        for (let i = 0; i < paginador; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (entrada[j + (i * 3)] != undefined) {
+                    aux += entrada[j + (i * 3)];
+                }
+            }
+            salida.push(aux);
+            aux = '';
+            e.target.value = salida.join('.').split("").reverse().join('');
+        }
+    }, false);
+    var separador3 = document.getElementById('precio_adm');
+    separador3.addEventListener('keyup', (e) => {
+        var entrada = e.target.value.split('.').join('');
+        entrada = entrada.split('').reverse();
+        var salida = [];
+        var aux = '';
+        var paginador = Math.ceil(entrada.length / 3);
+        for (let i = 0; i < paginador; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (entrada[j + (i * 3)] != undefined) {
+                    aux += entrada[j + (i * 3)];
+                }
+            }
+            salida.push(aux);
+            aux = '';
+            e.target.value = salida.join('.').split("").reverse().join('');
+        }
+    }, false);
+</script>
 <?php
 $errores = array();
 if (isset($_POST['enviar'])) {
@@ -382,11 +450,14 @@ if (isset($_POST['enviar'])) {
     $tipo_negocios = trim($_POST['negocio']);
     $codigo_wasi = trim($_POST['wasi_inm']);
     $estrato = trim($_POST['Estrato']);
-    if(isset($_POST['servicios'])){
+    if (isset($_POST['servicios'])) {
         $servicios = $_POST['servicios'];
-    }else{
-        $servicios="";
+    } else {
+        $servicios = "";
     }
+    $precio_venta = trim($_POST['precio_ven']);
+    $precio_can = trim($_POST['precio_can']);
+    $precio_adm = trim($_POST['precio_adm']);
     $habitaciones = trim($_POST['habitaciones']);
     $baños = trim($_POST['baños']);
     $garaje = trim($_POST['garaje']);
@@ -404,6 +475,9 @@ if (isset($_POST['enviar'])) {
         strlen($codigo_postal) >= 1 &&
         strlen($direccion) >= 1 &&
         strlen($tipo_negocios) >= 1 &&
+        strlen($precio_venta) >= 1 &&
+        strlen($precio_can) >= 1 &&
+        strlen($precio_adm) >= 1 &&
         strlen($codigo_wasi) >= 1 &&
         strlen($estrato) >= 1 &&
         strlen($habitaciones) >= 1 &&
@@ -416,15 +490,15 @@ if (isset($_POST['enviar'])) {
         } else {
             $servicios_total = "";
         }
-        if (!validar_numero($matricula) || !validar_numero($codigo_postal) || !validar_numero($codigo_wasi)) {
+        if (!validar_numero($matricula) || !validar_numero($codigo_postal) || !validar_numero($codigo_wasi) || !validar_numero($precio_venta) || !validar_numero($precio_can) || !validar_numero($precio_adm)) {
             $errores[] = "Datos no validos, vefique los tipos de datos";
         }
-        if (wasi_existe($codigo_wasi,$matricula)) {
+        if (wasi_existe($codigo_wasi, $matricula)) {
             $errores[] = "Ya existe un registro con el codigo de wasi o con esa matricula";
         }
         if (empty($errores)) {
-            $SQL = $conex->query("INSERT INTO `inmueble`( `PROPIETARIO`, `MATRICULA_INMUEBLE`, `DEPARTAMENTO`, `MUNICIPIO`, `BARRIO`, `CODIGO_POSTAL`, `DIRECCION`, `TIPO_NEGOCIO`, `CODIGO_WASI_INMUEBLE`, `ESTRATO`, `SERVICIOS`, `HABITACIONES`, `BAÑOS`, `GARAJE`, `ACEPTAN_MASCOTAS`, `FECHA_CREACION_INMUEBLE`, `USUARIO_CREACION_INMUEBLE`, `FECHA_MODIFICACION_INMUEBLE`, `USUARIO_MODIFICACION_INMUEBLE`) 
-            VALUES ('$id_pro','$matricula','$departamento','$municipio','$barrio','$codigo_postal','$direccion','$tipo_negocios','$codigo_wasi','$estrato','$servicios_total','$habitaciones','$baños','$garaje','$mascotas','$fecha_registro','$usuario_registro','$fecha_modificacion','$usuario_modificacion');");
+            $SQL = $conex->query("INSERT INTO `inmueble`( `PROPIETARIO`, `MATRICULA_INMUEBLE`, `DEPARTAMENTO`, `MUNICIPIO`, `BARRIO`, `CODIGO_POSTAL`, `DIRECCION`, `TIPO_NEGOCIO`,`PRECIO_VENTA`,`PRECIO_CANON`,`PRECIO_ADMINISTRACION`, `CODIGO_WASI_INMUEBLE`, `ESTRATO`, `SERVICIOS`, `HABITACIONES`, `BAÑOS`, `GARAJE`, `ACEPTAN_MASCOTAS`, `FECHA_CREACION_INMUEBLE`, `USUARIO_CREACION_INMUEBLE`, `FECHA_MODIFICACION_INMUEBLE`, `USUARIO_MODIFICACION_INMUEBLE`) 
+            VALUES ('$id_pro','$matricula','$departamento','$municipio','$barrio','$codigo_postal','$direccion','$tipo_negocios','$precio_venta','$precio_can','$precio_adm','$codigo_wasi','$estrato','$servicios_total','$habitaciones','$baños','$garaje','$mascotas','$fecha_registro','$usuario_registro','$fecha_modificacion','$usuario_modificacion');");
             if ($SQL) {
                 echo "<script>
                 Swal.fire({
