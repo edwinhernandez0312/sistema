@@ -84,7 +84,7 @@ $nombre = $_SESSION['NOMBRE_USU'];
                 infoPostFix: "",
                 loadingRecords: "Chargement en cours...",
                 zeroRecords: "No se encontro ningun Registro",
-                emptyTable: "Aucune donnée disponible dans le tableau",
+                emptyTable: "No se encontro ningun Registro",
                 paginate: {
                     first: "Premier",
                     previous: "Anterior",

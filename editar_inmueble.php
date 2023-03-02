@@ -7,51 +7,66 @@ if (!isset($_SESSION['TIPO_USUARIO'])) {
     header('Location: login.php');
     exit();
 }
-$id = $_SESSION['ID_USUARIO'];
+$usuario_actual = $_SESSION['ID_USUARIO'];
+// Verificar si se envió el id del cliente a editar
+if (isset($_GET['id'])) {
+    $id_inmueble = $_GET['id'];
+} else {
+    die('Error: no se ha especificado el id del cliente');
+}
+// consulta para tarer todos los datos del inmueble
+$resultado = $conex->query("SELECT NOMBRES,APELLIDOS,NOMBRE_USU, inmueble.* FROM cliente INNER JOIN inmueble ON cliente.ID_CLIENTE = inmueble.PROPIETARIO INNER JOIN usuario ON inmueble.USUARIO_CREACION_INMUEBLE = usuario.ID_USUARIO  WHERE ID_INMUEBLE='$id_inmueble';");
+//verificar si la consulta nos trae algun resultado
+if (mysqli_num_rows($resultado) == 0) {
+    die("No se encontraron resultados del inmueble con el id" . $id_inmueble);
+}
+$row = mysqli_fetch_array($resultado);
 require_once "vistas/nav.php";
 ?>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Registrar inmueble</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Editar inmueble</h6>
     </div>
     <div class="card-body">
         <form method="POST" class="user needs-validation" novalidate>
             <div class="row">
                 <div class="form-group col-sm-12 col-md-6">
-                    <input type="hidden" id="id_pro" name="id_pro">
+                    <input type="hidden" id="id_pro" name="id_pro" value="<?php echo $row['ID_INMUEBLE'] ?>">
                     <div class="row">
                         <label for="cedula" class="col-sm-6">Propietario:</label>
                         <h3 class="col-sm-6 d-flex justify-content-end m-0 font-weight-bold text-primary">
                             <a type="button" class="nav-link fa fa-user-plus" data-toggle="modal" data-target="#exampleModal"></a>
                         </h3>
                     </div>
-                    <input type="text" class="form-control" id="propietario" name="propietario" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚÑ]+" title="Dijite el propietario" readonly disabled>
+                    <input type="text" class="form-control" value="<?php echo $row['NOMBRES'] . " " . $row['APELLIDOS'] ?>" id="propietario" name="propietario" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚÑ]+" title="Dijite el propietario" readonly disabled>
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="fecha_expedicion">Matricula del inmueble:</label>
-                    <input type="text" class="form-control" id="matricula" name="matricula" minlength="5" maxlength="250" required title="Dijite la matricula del inmueble">
+                    <input type="text" class="form-control" value="<?php echo $row['MATRICULA_INMUEBLE'] ?>" id="matricula" name="matricula" minlength="5" maxlength="250" required title="Dijite la matricula del inmueble">
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="departamento">Departamento</label>
                     <select id="departamento" name="departamento" class="form-control" required>
+                        <option value="<?php echo $row['DEPARTAMENTO']; ?>"><?php echo $row['DEPARTAMENTO']; ?></option>
                     </select>
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="municipio">Municipio:</label>
                     <select id="municipio" name="municipio" class="form-control" required>
+                        <option value="<?php echo $row['MUNICIPIO']; ?>"><?php echo $row['MUNICIPIO']; ?></option>
                     </select>
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="barrio">Barrio:</label>
-                    <input type="text" class="form-control" id="barrio" name="barrio" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚÑ]+" title="Dijite el barrio donde esta ubicado el inmueble">
+                    <input type="text" class="form-control" value="<?php echo $row['BARRIO'] ?>" id="barrio" name="barrio" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚÑ]+" title="Dijite el barrio donde esta ubicado el inmueble">
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="codigo-postal">Codigo postal:</label>
-                    <input type="text" class="form-control" id="codigo-postal" name="codigo-postal" minlength="3" maxlength="250" required pattern="^[0-9()+-]*$" title="Dijite el codigo postal">
+                    <input type="text" class="form-control" value="<?php echo $row['CODIGO_POSTAL'] ?>" id="codigo-postal" name="codigo-postal" minlength="3" maxlength="250" required pattern="^[0-9()+-]*$" title="Dijite el codigo postal">
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="direccion">Dirección:</label>
-                    <input type="text" class="form-control" id="direccion" name="direccion" minlength="3" maxlength="250" required title="Dijite la direccion">
+                    <input type="text" class="form-control" value="<?php echo $row['DIRECCION'] ?>" id="direccion" name="direccion" minlength="3" maxlength="250" required title="Dijite la direccion">
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="negocio">Tipo de negocio:</label>
@@ -59,44 +74,140 @@ require_once "vistas/nav.php";
                         <option value="">Selecciona una opción</option>
                         <?php
                         $consulta = $conex->query("SELECT * FROM `tipo_negocio`;");
-                        while ($row = $consulta->fetch_array()) {
+                        while ($row2 = $consulta->fetch_array()) {
+                            if ($row2['ID_NEGOCIO'] == $row['TIPO_NEGOCIO']) {
                         ?>
-                            <option value="<?php echo $row['ID_NEGOCIO'] ?>"><?php echo $row['TIPO_NEGOCIO'] ?></option>
+                                <option value="<?php echo $row2['ID_NEGOCIO'] ?>" selected><?php echo $row2['TIPO_NEGOCIO'] ?></option>
+                            <?php
+                            } else {
+                            ?>
+                                <option value="<?php echo $row2['ID_NEGOCIO'] ?>"><?php echo $row2['TIPO_NEGOCIO'] ?></option>
                         <?php
+                            }
                         }
                         ?>
                     </select>
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="wasi_inm">Codigo wasi del inmueble:</label>
-                    <input type="tel" class="form-control" id="wasi_inm" name="wasi_inm" minlength="3" maxlength="250" required pattern="^[0-9()+-]*$" title="Codigo del inmueble">
+                    <input type="tel" class="form-control" value="<?php echo $row['CODIGO_WASI_INMUEBLE'] ?>" id="wasi_inm" name="wasi_inm" minlength="3" maxlength="250" required pattern="^[0-9()+-]*$" title="Codigo del inmueble">
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="Estrato">Estrato del inmueble</label>
                     <select name="Estrato" id="Estrato" class="form-control" title="Estrato del inmueble" required>
                         <option value="">Selecciona una opción</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
+                        <?php
+                        if ($row['ESTRATO'] == 1) {
+                        ?>
+                            <option value="1" selected>1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                        <?php
+                        } elseif ($row['ESTRATO'] == 2) {
+                        ?>
+                            <option value="1">1</option>
+                            <option value="2" selected>2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                        <?php
+                        } elseif ($row['ESTRATO'] == 3) {
+                        ?>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3" selected>3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                        <?php
+                        } elseif ($row['ESTRATO'] == 4) {
+                        ?>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4" selected>4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                        <?php
+                        } elseif ($row['ESTRATO'] == 5) {
+                        ?>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5" selected>5</option>
+                            <option value="6">6</option>
+                        <?php
+                        } elseif ($row['ESTRATO'] == 6) {
+                        ?>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6" selected>6</option>
+                        <?php
+                        }
+                        ?>
                     </select>
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
                     <div class="row">
-                        <div class="form-group col-sm-12 col-md-6 form-check form-check">
-                            <input type="checkbox" class="form-check-input" id="television" name="servicios[]" value="Television">
-                            <label for="television">Televisión</label>
-                        </div>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
-                            <input type="checkbox" class="form-check-input" id="wifi" name="servicios[]" value="Servicio de wifi">
-                            <label for="wifi">Servicio de wifi</label>
-                        </div>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
-                            <input type="checkbox" class="form-check-input" id="electricidad" name="servicios[]" value="Sevicio de electricidad">
-                            <label for="electricidad">Sevicio de electricidad</label>
-                        </div>
+                        <?php
+                        $valor_tv = strpos($row['SERVICIOS'], "Television");
+                        if ($valor_tv !== false) {
+                        ?>
+                            <div class="form-group col-sm-12 col-md-6 form-check form-check">
+                                <input type="checkbox" class="form-check-input" id="television" name="servicios[]" value="Television" checked>
+                                <label for="television">Televisión</label>
+                            </div>
+                        <?php
+                        } else {
+                        ?>
+                            <div class="form-group col-sm-12 col-md-6 form-check form-check">
+                                <input type="checkbox" class="form-check-input" id="television" name="servicios[]" value="Television">
+                                <label for="television">Televisión</label>
+                            </div>
+                        <?php
+                        }
+                        $valor_wifi = strpos($row['SERVICIOS'], "Servicio de wifi");
+                        if ($valor_wifi !== false) {
+                        ?>
+                            <div class="form-group col-sm-12 col-md-6 form-check">
+                                <input type="checkbox" class="form-check-input" id="wifi" name="servicios[]" value="Servicio de wifi" checked>
+                                <label for="wifi">Servicio de wifi</label>
+                            </div>
+                        <?php
+                        } else {
+                        ?>
+                            <div class="form-group col-sm-12 col-md-6 form-check">
+                                <input type="checkbox" class="form-check-input" id="wifi" name="servicios[]" value="Servicio de wifi">
+                                <label for="wifi">Servicio de wifi</label>
+                            </div>
+                        <?php
+                        }
+                        $valor_elec = strpos($row['SERVICIOS'], "Sevicio de electricidad");
+                        if ($valor_elec !== false) {
+                        ?>
+                            <div class="form-group col-sm-12 col-md-6 form-check">
+                                <input type="checkbox" class="form-check-input" id="electricidad" name="servicios[]" value="Sevicio de electricidad" checked>
+                                <label for="electricidad">Sevicio de electricidad</label>
+                            </div>
+                        <?php
+                        } else {
+                        ?>
+                            <div class="form-group col-sm-12 col-md-6 form-check">
+                                <input type="checkbox" class="form-check-input" id="electricidad" name="servicios[]" value="Sevicio de electricidad">
+                                <label for="electricidad">Sevicio de electricidad</label>
+                            </div>
+                        <?php
+                        }
+                        ?>
+
                         <div class="form-group col-sm-12 col-md-6 form-check">
                             <input type="checkbox" class="form-check-input" id="agua" name="servicios[]" value="Agua">
                             <label for="agua">Agua</label>
@@ -121,10 +232,24 @@ require_once "vistas/nav.php";
                             <input type="checkbox" class="form-check-input" id="aire_acon" name="servicios[]" value="Aire acondicionado">
                             <label for="aire_acon">Aire acondicionado</label>
                         </div>
-                        <div class="form-group col-sm-12 col-md-6 form-check">
-                            <input type="checkbox" class="form-check-input" id="cancha_fut" name="servicios[]" value="Cancha de futbol">
-                            <label for="cancha_fut">Cancha de futbol</label>
-                        </div>
+                        <?php
+                        $valor = strpos($row['SERVICIOS'], "Cancha de futbol");
+                        if ($valor !== false) {
+                        ?>
+                            <div class="form-group col-sm-12 col-md-6 form-check">
+                                <input type="checkbox" class="form-check-input" id="cancha_fut" name="servicios[]" value="Cancha de futbol" checked>
+                                <label for="cancha_fut">Cancha de futbol</label>
+                            </div>
+                        <?php
+                        } else {
+                        ?>
+                            <div class="form-group col-sm-12 col-md-6 form-check">
+                                <input type="checkbox" class="form-check-input" id="cancha_fut" name="servicios[]" value="Cancha de futbol">
+                                <label for="cancha_fut">Cancha de futbol</label>
+                            </div>
+                        <?php
+                        }
+                        ?>
                         <div class="form-group col-sm-12 col-md-6 form-check">
                             <input type="checkbox" class="form-check-input" id="gimnacio" name="servicios[]" value="Gimnacio">
                             <label for="gimnacio">Gimnacio</label>
@@ -329,6 +454,7 @@ $resultado = $conex->query("SELECT * FROM cliente");
                 // Añadir las opciones con los nombres de los departamentos al select de departamentos
                 $.each(departamentos, function(index, value) {
                     $("#departamento").append("<option value='" + value + "'>" + value + "</option>");
+
                 });
 
                 // Añadir una opción vacía al select de municipios
@@ -361,6 +487,7 @@ $resultado = $conex->query("SELECT * FROM cliente");
                         // Añadir las opciones con los nombres de los municipios al select de municipios
                         $.each(municipios, function(index, value) {
                             $("#municipio").append("<option value='" + value + "'>" + value + "</option>");
+
                         });
                     }
 
@@ -370,95 +497,5 @@ $resultado = $conex->query("SELECT * FROM cliente");
     });
 </script>
 <?php
-$errores = array();
-if (isset($_POST['enviar'])) {
-    $id_pro = trim($_POST['id_pro']);
-    $matricula = trim($_POST['matricula']);
-    $departamento = trim($_POST['departamento']);
-    $municipio = trim($_POST['municipio']);
-    $barrio = trim($_POST['barrio']);
-    $codigo_postal = trim($_POST['codigo-postal']);
-    $direccion = trim($_POST['direccion']);
-    $tipo_negocios = trim($_POST['negocio']);
-    $codigo_wasi = trim($_POST['wasi_inm']);
-    $estrato = trim($_POST['Estrato']);
-    $servicios = $_POST['servicios'];
-    $habitaciones = trim($_POST['habitaciones']);
-    $baños = trim($_POST['baños']);
-    $garaje = trim($_POST['garaje']);
-    $mascotas = trim($_POST['mascotas']);
-    $fecha_registro = date('Y-m-d H:i:s');
-    $usuario_registro = $_SESSION['ID_USUARIO'];
-    $fecha_modificacion = date('Y-m-d H:i:s');
-    $usuario_modificacion = $_SESSION['ID_USUARIO'];
-    if (
-        strlen($id_pro) >= 1 &&
-        strlen($matricula) >= 1 &&
-        strlen($departamento) >= 1 &&
-        strlen($municipio) >= 1 &&
-        strlen($barrio) >= 1 &&
-        strlen($codigo_postal) >= 1 &&
-        strlen($direccion) >= 1 &&
-        strlen($tipo_negocios) >= 1 &&
-        strlen($codigo_wasi) >= 1 &&
-        strlen($estrato) >= 1 &&
-        strlen($habitaciones) >= 1 &&
-        strlen($baños) >= 1 &&
-        strlen($garaje) >= 1 &&
-        strlen($mascotas) >= 1
-    ) {
-        echo "paso el 1";
-        if (!empty($servicios)) {
-            $servicios_total = implode(',', $servicios);
-        } else {
-            $servicios_total = "";
-        }
-        if (!validar_numero($matricula) || !validar_numero($codigo_postal) || !validar_numero($codigo_wasi)) {
-            $errores[] = "Datos no validos, vefique los tipos de datos";
-        }
-        if (wasi_existe($codigo_wasi,$matricula)) {
-            $errores[] = "Ya existe un registro con el codigo de wasi o con esa matricula";
-        }
-        if (empty($errores)) {
-            echo "paso el 2";
-            $SQL = $conex->query("INSERT INTO `inmueble`( `PROPIETARIO`, `MATRICULA_INMUEBLE`, `DEPARTAMENTO`, `MUNICIPIO`, `BARRIO`, `CODIGO_POSTAL`, `DIRECCION`, `TIPO_NEGOCIO`, `CODIGO_WASI_INMUEBLE`, `ESTRATO`, `SERVICIOS`, `HABITACIONES`, `BAÑOS`, `GARAJE`, `ACEPTAN_MASCOTAS`, `FECHA_CREACION_INMUEBLE`, `USUARIO_CREACION_INMUEBLE`, `FECHA_MODIFICACION_INMUEBLE`, `USUARIO_MODIFICACION_INMUEBLE`) 
-            VALUES ('$id_pro','$matricula','$departamento','$municipio','$barrio','$codigo_postal','$direccion','$tipo_negocios','$codigo_wasi','$estrato','$servicios_total','$habitaciones','$baños','$garaje','$mascotas','$fecha_registro','$usuario_registro','$fecha_modificacion','$usuario_modificacion');");
-            if ($SQL) {
-                echo "paso el 3";
-                echo "<script>
-                Swal.fire({
-                  title: '¡Éxito!',
-                  text: 'La operación se realizó correctamente.',
-                  icon: 'success',
-                  confirmButtonText: 'Continuar'
-                });
-                </script>";
-            } else {
-                echo "paso el 4";
-                $errores[] = "El inmueble no se ha registrado correctamente" . mysqli_error($conex);
-            }
-        }
-    } else {
-        echo "paso el 5";
-        $errores[] = "Todos los campos son obligatorios";
-    }
-    if (!empty($errores)) {
-        echo "paso el 6";
-        $lista_errores = "<ul>";
-        foreach ($errores as $error) {
-            $lista_errores .= "<li>" . $error . "</li>";
-        }
-        $lista_errores .= "</ul>";
-        echo "<script>
-    Swal.fire({
-    icon: 'error',
-    title: 'Error',
-    html: '$lista_errores',
-    confirmButtonText: 'Continuar'
-    });
-    </script>";
-    }
-    echo "paso el 6";
-}
 require_once "vistas/footer.php";
 ?>
