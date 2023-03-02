@@ -8,25 +8,43 @@ if (!isset($_SESSION['TIPO_USUARIO'])) {
     exit();
 }
 $usuario_actual = $_SESSION['ID_USUARIO'];
-// Verificar si se envió el id del cliente a editar
-if (isset($_GET['id'])) {
-    $id_cliente = $_GET['id'];
+// Verificar si se envió el id del inmueble a mostrar
+if (isset($_GET['ID_INMUEBLE'])) {
+    $ID_INMUEBLE = $_GET['ID_INMUEBLE'];
 } else {
     die('Error: no se ha especificado el id del cliente');
 }
 
-// Consulta SQL para obtener los datos del cliente a editar
-$sql = "SELECT * FROM cliente WHERE ID_CLIENTE = $id_cliente";
+// Consulta SQL para obtener los datos del inmueble a mostrar
+$sql = "SELECT * FROM inmueble WHERE ID_INMUEBLE = $ID_INMUEBLE";
 $resultado = mysqli_query($conex, $sql);
 
-// Comprobar si se encontró el cliente
+// Comprobar si se encontró el inmueble
 if (mysqli_num_rows($resultado) == 0) {
-    die('Error: no se encontró el cliente con id ' . $id_cliente);
+    die('Error: no se encontró el inmueble con id ' . $ID_INMUEBLE);
 }
 
-// Obtener los datos del cliente
-$fila = mysqli_fetch_assoc($resultado);
-$Usuario_registro = $fila['USUARIO_REGISTRO_CLIENTE'];
+// Obtener los datos del inmueble
+$inmueble = mysqli_fetch_assoc($resultado);
+$Usuario_registro = $inmueble['USUARIO_CREACION_INMUEBLE'];
+$propietario=$inmueble['PROPIETARIO'];
+
+// Consulta SQL para obtener los datos del precio del inmueble a mostrar
+$sql = "SELECT * FROM precio_inmueble WHERE ID_INMUEBLE = $ID_INMUEBLE";
+$resultado = mysqli_query($conex, $sql);
+
+// Comprobar si se encontró el precio inmueble
+if (mysqli_num_rows($resultado) == 0) {
+    die('Error: no se encontró el precio del inmueble con id ' . $ID_INMUEBLE);
+}
+// Obtener los datos del precio inmueble
+$precio_inmueble = mysqli_fetch_assoc($resultado);
+
+// Obtener los datos del propietario
+$sql = "SELECT * FROM cliente WHERE ID_CLIENTE=$propietario";
+$resultado = mysqli_query($conex, $sql);
+$propietario = mysqli_fetch_assoc($resultado);
+// Obtener los datos del usuario de registro
 $sql = "SELECT * FROM usuario WHERE ID_USUARIO=$Usuario_registro";
 $resultado = mysqli_query($conex, $sql);
 $usuario = mysqli_fetch_assoc($resultado);
@@ -76,19 +94,19 @@ $pdf->Cell(0, 10, 'Contrato de Administracion para Corretaje Inmobiliario de Arr
 $pdf->Ln(10);
 
 // Dividir el texto en párrafos
-$text ='Entre los suscritos _____________________________________________________ con C.C. No. ___________________ de _______________, actuando como propietario del inmueble ubicado en _____________________________________________________, municipio ________________________________ quien en adelante se denominará EL PROPIETARIO y CONSTRUCTORA INMOBILIARIA LAURA RIVERA S.A.S. con NIT 900985803-9, representada legalmente por ROMAN GABRIEL APONTE FERRER, quien en adelante se denominará EL ADMINISTRADOR, se ha suscrito el siguiente contrato de ADMINISTRACIÓN para corretaje inmobiliario de arriendo, el cual se regirá por las normas del Código Civil y de Comercio y en especial por las cláusulas que a continuación se enumeran:
+$text ='Entre los suscritos '.$propietario['NOMBRES'].' '.$propietario['APELLIDOS'].' con C.C. No. '.$propietario['CEDULA'].' de '.$propietario['ESTADO_CIVIL'].', actuando como propietario del inmueble ubicado en '.$inmueble['DIRECCION'].', municipio '.$inmueble['MUNICIPIO'].' quien en adelante se denominará EL PROPIETARIO y CONSTRUCTORA INMOBILIARIA LAURA RIVERA S.A.S. con NIT 900985803-9, representada legalmente por ROMAN GABRIEL APONTE FERRER, quien en adelante se denominará EL ADMINISTRADOR, se ha suscrito el siguiente contrato de ADMINISTRACIÓN para corretaje inmobiliario de arriendo, el cual se regirá por las normas del Código Civil y de Comercio y en especial por las cláusulas que a continuación se enumeran:
 
-PRIMERO: EL PROPIETARIO entrega al administrador para que éste administre en arrendamiento por cuenta y riesgo del consígnate, y autoriza para que se promueva el corretaje inmobiliario del bien inmueble ubicado en __________________________________________, municipio __________________, matrícula inmobiliaria No. _____________________. El inmueble cuenta además con los siguientes servicios públicos:
+PRIMERO: EL PROPIETARIO entrega al administrador para que éste administre en arrendamiento por cuenta y riesgo del consígnate, y autoriza para que se promueva el corretaje inmobiliario del bien inmueble ubicado en '.$inmueble['DIRECCION'].', municipio '.$inmueble['MUNICIPIO'].', matrícula inmobiliaria No. '.$inmueble['MATRICULA_INMUEBLE'].'. El inmueble cuenta además con los siguientes servicios públicos:
 
 Acueducto y alcantarillado si___ No___, Energía eléctrica si___ No___, Gas domiciliario si___ No___, Línea telefónica si___ No___, TV cable si___ No___, Administración si___ No___.
 
 SEGUNDO: FACULTADES DEL ADMINISTRADOR- EL PROPIETARIO faculta AL ADMINISTRADOR, para que en su nombre y representación tramite y ejecute los asuntos que a continuación se enumeran así: a) Anunciar y promover por medios ordinarios e idóneos y bajo sus costas (Administrador), el arriendo del inmueble de que trata el presente contrato. b) Escoger a los arrendatarios, que a criterios de EL ADMINISTRADOR reúnan los requisitos exigidos por este, para calificar como arrendatario del inmueble. c) Celebrar los contratos de arrendamiento respectivos bajo las garantías que a juicio del ADMINISTRADOR sean oportunas. d) Recibir los Cánones y demás pagos a cargo de los arrendatarios. e) Arrendar el inmueble por el precio acordado con EL PROPIETARIO, teniendo en cuenta la calidad, ubicación del inmueble y las leyes vigentes en materia de arrendamiento, procurando el mejor beneficio para los propietarios. f) Otorgar autorizaciones a los arrendatarios para traslado o instalaciones de líneas de servicio telefónico, internet o de banda ancha al inmueble. g) Efectuar todas aquellas reparaciones locativas que legalmente correspondan a EL PROPIETARIO para la conservación del inmueble y faciliten su arrendamiento o las que estén encaminadas a satisfacer el goce pleno del inmueble, así como todas aquellas que sean ordenadas por las autoridades. h) Dar por terminado antes del vencimiento, por justa causa, el contrato de arriendo que se haya suscrito sobre el inmueble, e iniciar las acciones legales. i) Iniciar oportunamente, las acciones judiciales, administrativas y/o policivas de las que sea titular, tendiente a librar de perturbaciones a los arrendatarios. En el evento de que haya necesidad de promover procesos para obtener judicialmente la restitución del inmueble, los gastos del proceso serán aquellos que señale el correspondiente juzgado y los pagarán los arrendatarios. 
 j) Descontar inmediatamente de los correspondientes cánones de arrendamiento que reciba, el valor de la comisión y el I.V.A. causado, además de los gastos y costos en que incurra EL ADMINISTRADOR por causa de la gestión que adelante, exceptuando los de comercialización del inmueble, así como también a descontar fianza de arrendamiento, reparaciones locativas, acciones judiciales, administrativas y/o policivas y demás, que demande el inmueble y que EL ADMINISTRADOR haya asumido de manera directa por autorización de EL PROPIETARIO. l) Poder: otorgar poder a un abogado para que inicie cualquier proceso judicial, administrativo o extrajudicial relacionado con el inmueble, e incluso para que eleven derechos de petición y cualquier tipo de recurso, en aras de defender los intereses de EL PROPIETARIO y del bien.
 
-TERCERO: El término señado para el contrato es indefinido o hasta que se logre el fin perseguido, es decir, el arriendo del bien inmueble ubicado en ______________________________, municipio ___________________, matrícula inmobiliaria No. ____________________. a.- cuando una de las partes lo considere pertinente, podrá prescindir del presente contrato de administración a través de comunicación escrita, siempre y cuando avisaré con 5 días de anticipación su decisión. b.- EL PROPIETARIO exime a EL ADMINISTRADOR del pago de indemnizaciones por la cancelación del contrato. c.- En el evento de que el bien inmueble sea destruido o su estructura sea parcial o totalmente por fuerza mayor o caso fortuito, se podrá 
+TERCERO: El término señado para el contrato es indefinido o hasta que se logre el fin perseguido, es decir, el arriendo del bien inmueble ubicado en '.$inmueble['DIRECCION'].', municipio '.$inmueble['MUNICIPIO'].', matrícula inmobiliaria No. '.$inmueble['MATRICULA_INMUEBLE'].'. a.- cuando una de las partes lo considere pertinente, podrá prescindir del presente contrato de administración a través de comunicación escrita, siempre y cuando avisaré con 5 días de anticipación su decisión. b.- EL PROPIETARIO exime a EL ADMINISTRADOR del pago de indemnizaciones por la cancelación del contrato. c.- En el evento de que el bien inmueble sea destruido o su estructura sea parcial o totalmente por fuerza mayor o caso fortuito, se podrá 
 Prescindir del contrato sin que hubiere lugar a indemnización. d.- En el evento que llegaré a ocurrir los hechos mencionados en el literal c, EL PROPIETARIO excluye de toda responsabilidad a EL ADMINISTRADOR. 
 
-CUARTO: FIJACIÓN DE CANON Y FORMA DE PAGO: El precio acordado con EL PROPIETARIO, por el cual se arrendará el inmueble será de _________________________________________________________ MIL PESOS m/c ($___________________ y consignados a la cuenta de Ahorros No. 83400028896 Del banco Bancolombia. EL PROPIETARIO pagará al ADMINISTRADOR por sus servicios una comisión equivalente al diez por ciento (10%) del canon de arrendamiento más IVA. Más dos puntos, cinco por ciento (2.5%) de la fianza de arriendo.
+CUARTO: FIJACIÓN DE CANON Y FORMA DE PAGO: El precio acordado con EL PROPIETARIO, por el cual se arrendará el inmueble será de '.$precio_inmueble['PRECIO_ARRIENDO'].' MIL PESOS m/c ($'.$precio_inmueble['PRECIO_ARRIENDO'].' y consignados a la cuenta de Ahorros No. 83400028896 Del banco Bancolombia. EL PROPIETARIO pagará al ADMINISTRADOR por sus servicios una comisión equivalente al diez por ciento (10%) del canon de arrendamiento más IVA. Más dos puntos, cinco por ciento (2.5%) de la fianza de arriendo.
 
 QUINTO: DEDUCCIÓN MENSUAL: EL PROPIETARIO autoriza en forma expresa al ADMINISTRADOR, deducir mensualmente del monto total de los arrendamientos, la comisión estipulada, así como el valor del IVA y de los gastos en que incurriere en el desempeño de este contrato.
 
@@ -114,8 +132,7 @@ DÉCIMO QUINTO: RESPONSABILIDAD DEL ADMINISTRADOR: EL ADMINISTRADOR: se hará re
 
 DÉCIMO SEXTO: DESOCUPACIÓN DEL BIEN: Si el inmueble fuere desocupado por los arrendatarios después de vencido el término inicial del contrato de arrendamiento, no habrá lugar a indemnización alguna. Si el inmueble es desocupado durante el término inicial del arrendamiento, el PROPIETARIO autoriza al ADMINISTRADOR (A), para que llegado el caso negocie con los arrendatarios el valor de la indemnización prevista por el incumplimiento en el contrato de arrendamiento o los exonere, y su pago solo se hará efectivo en el momento en que sea recibido por el ADMINISTRADOR (A) y únicamente por el monto recaudado, descontando la respectiva comisión del 10% que se aplicará sobre el total de la suma recibida. En caso del ADMINISTRADOR aplicar procesos de restitución de inmueble arrendado por incumplimiento del contrato, por ser un riesgo para el mismo de recaudar efectivamente el dinero a través de un proceso judicial, el PROPIETARIO renuncia a la cláusula penal establecida en el contrato, y la deja a criterio del ADMINISTRADOR, cobrarla o no. En caso de cobrar la misma, este dinero será de propiedad exclusiva del ADMINISTRADOR.
 
-DÉCIMO SÉPTIMO: En el caso de que se llegue a presentar abandono del inmueble por parte del inquilino en cualquier momento, la Inmobiliaria procederá inmediatamente a tomar posesión del inmueble, para lo cual se informará al propietario, bien sea para su devolución o para nuevamente colocarlo en arrendamiento. Hasta la fecha de recuperación del inmueble, se cancelará el valor del arrendamiento por $ __________________, quedando suspendida por este hecho la 
-responsabilidad de la Inmobiliaria en el pago acordado.
+DÉCIMO SÉPTIMO: En el caso de que se llegue a presentar abandono del inmueble por parte del inquilino en cualquier momento, la Inmobiliaria procederá inmediatamente a tomar posesión del inmueble, para lo cual se informará al propietario, bien sea para su devolución o para nuevamente colocarlo en arrendamiento. Hasta la fecha de recuperación del inmueble, se cancelará el valor del arrendamiento por $ '.$precio_inmueble['PRECIO_ARRIENDO'].', quedando suspendida por este hecho la responsabilidad de la Inmobiliaria en el pago acordado.
 
 DÉCIMO OCTAVO:   VENTA DEL INMUEBLE: En caso de que él (los) inmueble (s) objeto de este contrato fuere comprado por el arrendatario o por cualquier otra persona, EL PROPIETARIO cancelará a EL ADMINISTRADOR el valor de la comisión de venta, según tarifas vigentes. El administrador gestionará los trámites de venta respectivos, si así lo pidiere EL PROPIETARIO.
 
@@ -140,7 +157,7 @@ VIGÉSIMO SEXTO: LAS PARTES acuerdan y aceptan que el presente contrato, junto c
 
 derechos estos a los que renuncia expresamente EL PROPIETARIO, así como cualquier otro que sea establecido en alguna norma de carácter procesal o sustancial. Otorgándole las partes, al contenido del presente contrato, los efectos de cosa juzgada material. 
 
-VIGÉSIMA SÉPTIMO: EL PROPIETARIO recibirá notificaciones en la dirección de residencia ______________________, municipio ___________________. Correo electrónico ____________________, teléfono __________________, dirección de trabajo ______________________________ y EL ADMINISTRADOR recibirá notificaciones en la Carrera 9 No. 5-39 Barrio Centro de Villa del Rosario, correo electrónico Inmobiliarialaurarivera@gmail.com, teléfono 3043849768. 
+VIGÉSIMA SÉPTIMO: EL PROPIETARIO recibirá notificaciones en la dirección de residencia '.$propietario['DIRECCION'].', municipio '.$propietario['DIRECCION'].'. Correo electrónico '.$propietario['EMAIL'].', teléfono '.$propietario['TELEFONO'].', dirección de trabajo ______________________________ y EL ADMINISTRADOR recibirá notificaciones en la Carrera 9 No. 5-39 Barrio Centro de Villa del Rosario, correo electrónico Inmobiliarialaurarivera@gmail.com, teléfono 3043849768. 
 
 
 
@@ -151,6 +168,34 @@ En señal de conformidad, los contratantes suscriben este documento en dos ejemp
 $pdf->SetFont('Arial','',10);
 // Justificar los párrafos
 $paragraphs = $pdf->MultiCell($col_width, 5, utf8_decode($text), 0, 'J');
+
+$col_width = 80;
+$text='EL ADMINISTRADOR ______________________________________ ROMAN GABRIEL APONTE FERRER REPRESENTANTE LEGAL CONSTRUCTORA INMOBILIARIA LAURA RIVERA SAS EL PROPIETARIO______________________________________ _________________________________ C.C. _________ TEL: ___________ E-mail: _____________
+';
+$pdf->SetFont('Arial', '', 10);
+
+// Dividir el texto en dos partes
+$text_parts = explode("\n", wordwrap($text, $col_width, "\n"));
+
+// Guardar la posición actual del cursor
+$current_x = $pdf->GetX();
+$current_y = $pdf->GetY();
+
+// Mostrar la primera columna de texto
+$pdf->MultiCell($col_width, 5, utf8_decode($text_parts[0]), 0, 'J');
+
+// Restaurar la posición del cursor
+$pdf->SetXY($current_x, $current_y);
+
+// Mover la posición del cursor para mostrar la segunda columna
+$pdf->Cell($col_width + 20);
+$current_y = $pdf->GetY();
+
+// Mostrar la segunda columna de texto
+$pdf->MultiCell($col_width, 5, utf8_decode($text_parts[1]), 0, 'J');
+
+// Restaurar la posición del cursor
+$pdf->SetXY($current_x, $current_y);
 
 // Guardar el PDF
 $pdf->Output();
