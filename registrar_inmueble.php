@@ -382,7 +382,11 @@ if (isset($_POST['enviar'])) {
     $tipo_negocios = trim($_POST['negocio']);
     $codigo_wasi = trim($_POST['wasi_inm']);
     $estrato = trim($_POST['Estrato']);
-    $servicios = $_POST['servicios'];
+    if(isset($_POST['servicios'])){
+        $servicios = $_POST['servicios'];
+    }else{
+        $servicios="";
+    }
     $habitaciones = trim($_POST['habitaciones']);
     $baños = trim($_POST['baños']);
     $garaje = trim($_POST['garaje']);
@@ -407,7 +411,6 @@ if (isset($_POST['enviar'])) {
         strlen($garaje) >= 1 &&
         strlen($mascotas) >= 1
     ) {
-        echo "paso el 1";
         if (!empty($servicios)) {
             $servicios_total = implode(',', $servicios);
         } else {
@@ -420,11 +423,9 @@ if (isset($_POST['enviar'])) {
             $errores[] = "Ya existe un registro con el codigo de wasi o con esa matricula";
         }
         if (empty($errores)) {
-            echo "paso el 2";
             $SQL = $conex->query("INSERT INTO `inmueble`( `PROPIETARIO`, `MATRICULA_INMUEBLE`, `DEPARTAMENTO`, `MUNICIPIO`, `BARRIO`, `CODIGO_POSTAL`, `DIRECCION`, `TIPO_NEGOCIO`, `CODIGO_WASI_INMUEBLE`, `ESTRATO`, `SERVICIOS`, `HABITACIONES`, `BAÑOS`, `GARAJE`, `ACEPTAN_MASCOTAS`, `FECHA_CREACION_INMUEBLE`, `USUARIO_CREACION_INMUEBLE`, `FECHA_MODIFICACION_INMUEBLE`, `USUARIO_MODIFICACION_INMUEBLE`) 
             VALUES ('$id_pro','$matricula','$departamento','$municipio','$barrio','$codigo_postal','$direccion','$tipo_negocios','$codigo_wasi','$estrato','$servicios_total','$habitaciones','$baños','$garaje','$mascotas','$fecha_registro','$usuario_registro','$fecha_modificacion','$usuario_modificacion');");
             if ($SQL) {
-                echo "paso el 3";
                 echo "<script>
                 Swal.fire({
                   title: '¡Éxito!',
@@ -434,16 +435,13 @@ if (isset($_POST['enviar'])) {
                 });
                 </script>";
             } else {
-                echo "paso el 4";
                 $errores[] = "El inmueble no se ha registrado correctamente" . mysqli_error($conex);
             }
         }
     } else {
-        echo "paso el 5";
         $errores[] = "Todos los campos son obligatorios";
     }
     if (!empty($errores)) {
-        echo "paso el 6";
         $lista_errores = "<ul>";
         foreach ($errores as $error) {
             $lista_errores .= "<li>" . $error . "</li>";
@@ -458,7 +456,6 @@ if (isset($_POST['enviar'])) {
     });
     </script>";
     }
-    echo "paso el 6";
 }
 require_once "vistas/footer.php";
 ?>

@@ -467,7 +467,6 @@ require_once "vistas/nav.php";
         </script>
         <?php
         $errores = array();
-        $completados = array();
         if (isset($_POST['Guardar'])) {
             $id = trim($_POST['id_cliente']);
             $cedula = trim($_POST['cedula']);
@@ -528,7 +527,6 @@ require_once "vistas/nav.php";
                     `DIRECCION`='$direccion',`EMAIL`='$email',`ESTADO_CIVIL`='$estado_civil',`MASCOTA`='$mascota',`INGRESOS`='$ingresos',`VIVE_PERSONAS`='$viven_per',`NOMBRES_REF1`='$nombres_ref1',`TELEFONO_REF1`='$telefono_ref1',
                     `NOMBRES_REF2`='$nombres_ref2',`TELEFONO_REF2`='$telefono_ref2',`USUARIO_REGISTRO_CLIENTE`='$Usuario_registro',`FECHA_MODIFICACION`='$fecha_modificacion',`USUARIO_MODIFICACION_CLIENTE`='$usuario_actual' WHERE ID_CLIENTE='$id';");
                     if ($SQL) {
-                        $completados[] = "Cliente actualizado correctamente";
                         echo "<script>
 Swal.fire({
   title: '¡Éxito!',

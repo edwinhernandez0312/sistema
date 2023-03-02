@@ -289,4 +289,28 @@ function wasi_existe($codigo,$matricula){
         return false;
     }
 }
+function wasi_existe_update($codigo){
+    global $conex;
+    $consulta = $conex->query("SELECT * FROM `inmueble` WHERE CODIGO_WASI_INMUEBLE ='$codigo';");
+    $num = mysqli_num_rows($consulta);
+    $consulta->close();
+    
+    if ($num > 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+function matricula_existe_update($matricula){
+    global $conex;
+    $consulta = $conex->query("SELECT * FROM `inmueble` WHERE MATRICULA_INMUEBLE ='$matricula';");
+    $num = mysqli_num_rows($consulta);
+    $consulta->close();
+    
+    if ($num > 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
 ?>
