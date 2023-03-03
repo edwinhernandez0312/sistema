@@ -93,51 +93,51 @@ require_once "vistas/nav.php";
                 </div>
                 <div class="form-group col-sm-12 col-md-12">
                     <div class=" row">
-                        <div class="form-group col-sm-12 col-md-3 form-check form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check form-check">
                             <input type="checkbox" class="form-check-input" id="television" name="servicios[]" value="Television">
                             <label for="television">Televisión</label>
                         </div>
-                        <div class="form-group col-sm-12 col-md-3 form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check">
                             <input type="checkbox" class="form-check-input" id="wifi" name="servicios[]" value="Servicio de wifi">
                             <label for="wifi">Servicio de wifi</label>
                         </div>
-                        <div class="form-group col-sm-12 col-md-3 form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check">
                             <input type="checkbox" class="form-check-input" id="electricidad" name="servicios[]" value="Sevicio de electricidad">
                             <label for="electricidad">Sevicio de electricidad</label>
                         </div>
-                        <div class="form-group col-sm-12 col-md-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="agua" name="servicios[]" value="Agua">
-                            <label for="agua">Agua</label>
+                        <div class="form-group col-sm-12 col-md-4 form-check">
+                            <input type="checkbox" class="form-check-input" id="Acueducto y alcantarillado" name="servicios[]" value="Acueducto y alcantarillado">
+                            <label for="Acueducto y alcantarillado">Acueducto y alcantarillado</label>
                         </div>
-                        <div class="form-group col-sm-12 col-md-3 form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check">
                             <input type="checkbox" class="form-check-input" id="gas" name="servicios[]" value="Gas">
                             <label for="gas">Gas</label>
                         </div>
-                        <div class="form-group col-sm-12 col-md-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="seguridad" name="servicios[]" value="Seguridad">
-                            <label for="seguridad">Seguridad</label>
+                        <div class="form-group col-sm-12 col-md-4 form-check">
+                            <input type="checkbox" class="form-check-input" id="Administracion" name="servicios[]" value="Administracion">
+                            <label for="Administracion">Administracion</label>
                         </div>
-                        <div class="form-group col-sm-12 col-md-3 form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check">
                             <input type="checkbox" class="form-check-input" id="piscina" name="servicios[]" value="Piscina">
                             <label for="piscina">Piscina</label>
                         </div>
-                        <div class="form-group col-sm-12 col-md-3 form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check">
                             <input type="checkbox" class="form-check-input" id="sauna" name="servicios[]" value="Sauna">
                             <label for="sauna">Sauna</label>
                         </div>
-                        <div class="form-group col-sm-12 col-md-3 form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check">
                             <input type="checkbox" class="form-check-input" id="aire_acon" name="servicios[]" value="Aire acondicionado">
                             <label for="aire_acon">Aire acondicionado</label>
                         </div>
-                        <div class="form-group col-sm-12 col-md-3 form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check">
                             <input type="checkbox" class="form-check-input" id="cancha_fut" name="servicios[]" value="Cancha de futbol">
                             <label for="cancha_fut">Cancha de futbol</label>
                         </div>
-                        <div class="form-group col-sm-12 col-md-3 form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check">
                             <input type="checkbox" class="form-check-input" id="gimnacio" name="servicios[]" value="Gimnacio">
                             <label for="gimnacio">Gimnacio</label>
                         </div>
-                        <div class="form-group col-sm-12 col-md-3 form-check">
+                        <div class="form-group col-sm-12 col-md-4 form-check">
                             <input type="checkbox" class="form-check-input" id="gimnacio" name="servicios[]" value="Telefono fijo">
                             <label for="gimnacio">Telefono fijo</label>
                         </div>

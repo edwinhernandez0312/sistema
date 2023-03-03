@@ -40,7 +40,7 @@ require_once "vistas/nav.php";
 <script src="vendor/jquery/jquery.min.js"></script>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h1 class="m-0 font-weight-bold text-primary">Editar cliente</h1>
+        <h1 class="m-0 font-weight-bold text-primary">Datos del cliente</h1>
     </div>
     <div class="card-body">
         <div class="row">
@@ -50,8 +50,12 @@ require_once "vistas/nav.php";
                 <input type="text" class="form-control" name="cedula" value="<?php echo $fila['CEDULA']; ?>" readonly>
             </div>
             <div class="form-group col-sm-12 col-md-6">
-                <label for="fecha_expedicion">Fecha de expedición de la cédula:</label>
+                <label for="fecha_expedicion">Fecha de expedición:</label>
                 <input type="date" class="form-control" name="fecha_expedicion" value="<?php echo $fila['FECHA_EXPEDICION']; ?>" readonly>
+            </div>
+            <div class="form-group col-sm-12 col-md-6">
+                <label for="lugar_exp">Lugar de expedición:</label>
+                <input type="text" class="form-control" value="<?php echo $fila['LUGAR_EXPEDICION'] ?>" id="lugar_exp" name="lugar_exp" placeholder="Lugar de expedición" readonly disabled>
             </div>
             <div class="form-group col-sm-12 col-md-6">
                 <label for="nombres">Nombres:</label>
@@ -70,8 +74,24 @@ require_once "vistas/nav.php";
                 <input type="text" class="form-control" name="telefono" value="<?php echo $fila['TELEFONO']; ?>" readonly>
             </div>
             <div class="form-group col-sm-12 col-md-6">
+                <label for="departamento">Departamento</label>
+                <select name="departamento" class="form-control" readonly disabled>
+                    <option value="<?php echo $fila['DEPARTAMENTO_CLI'] ?>"><?php echo $fila['DEPARTAMENTO_CLI'] ?></option>
+                </select>
+            </div>
+            <div class="form-group col-sm-12 col-md-6">
+                <label for="municipio">Municipio:</label>
+                <select name="municipio" class="form-control" readonly disabled>
+                    <option value="<?php echo $fila['MUNICIPIO_CLI'] ?>"><?php echo $fila['MUNICIPIO_CLI'] ?></option>
+                </select>
+            </div>
+            <div class="form-group col-sm-12 col-md-6">
                 <label for="direccion">Dirección:</label>
                 <input type="text" class="form-control" name="direccion" value="<?php echo $fila['DIRECCION']; ?>" readonly>
+            </div>
+            <div class="form-group col-sm-12 col-md-6">
+                <label for="direccion_lab">Dirección laboral:</label>
+                <input type="text" value="<?php echo $fila['DIRECCION_LAB'] ?>" class="form-control" id="direccion_lab" name="direccion_lab" readonly disabled>
             </div>
             <div class="form-group col-sm-12 col-md-6">
                 <label for="email">Email:</label>
@@ -258,6 +278,10 @@ require_once "vistas/nav.php";
                                     <input type="date" class="form-control" name="fecha_expedicion" value="<?php echo $fila['FECHA_EXPEDICION']; ?>" required title="Dijite la fecha de expedición">
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6">
+                                    <label for="lugar_exp">Lugar de expedición:</label>
+                                    <input type="text" class="form-control" value="<?php echo $fila['LUGAR_EXPEDICION'] ?>" id="lugar_exp" name="lugar_exp" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚÑ]+(?:\(([^)]+)\))?" placeholder="Lugar de expedición">
+                                </div>
+                                <div class="form-group col-sm-12 col-md-6">
                                     <label for="nombres">Nombres:</label>
                                     <input type="text" class="form-control" name="nombres" value="<?php echo $fila['NOMBRES']; ?>" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚÑ]+" title="Dijite el nombre minimo 3 caracteres">
                                 </div>
@@ -274,8 +298,24 @@ require_once "vistas/nav.php";
                                     <input type="text" class="form-control" name="telefono" value="<?php echo $fila['TELEFONO']; ?>" minlength="3" maxlength="250" required pattern="^[0-9()+- ]*$" title="Dijite el telefono">
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6">
+                                    <label for="departamento">Departamento</label>
+                                    <select id="departamento" name="departamento" class="form-control">
+                                        <option value="<?php echo $fila['DEPARTAMENTO_CLI'] ?>"><?php echo $fila['DEPARTAMENTO_CLI'] ?></option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-sm-12 col-md-6">
+                                    <label for="municipio">Municipio:</label>
+                                    <select id="municipio" name="municipio" class="form-control">
+                                        <option value="<?php echo $fila['MUNICIPIO_CLI'] ?>"><?php echo $fila['MUNICIPIO_CLI'] ?></option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-sm-12 col-md-6">
                                     <label for="direccion">Dirección:</label>
                                     <input type="text" class="form-control" name="direccion" value="<?php echo $fila['DIRECCION']; ?>" minlength="3" maxlength="250" required title="Dijite la direccion">
+                                </div>
+                                <div class="form-group col-sm-12 col-md-6">
+                                    <label for="direccion_lab">Dirección laboral:</label>
+                                    <input type="text" value="<?php echo $fila['DIRECCION_LAB'] ?>" class="form-control" id="direccion_lab" name="direccion_lab" placeholder="Dirección laboral" minlength="3" maxlength="250" required title="Dijite la direccion laboral">
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6">
                                     <label for="email">Email:</label>
@@ -445,6 +485,71 @@ require_once "vistas/nav.php";
             </div>
         </div>
         <script>
+            $(document).ready(function() {
+                // Obtener los datos de la API usando Ajax
+                $.ajax({
+                    url: "https://www.datos.gov.co/resource/xdk5-pm3f.json?$query=SELECT%0A%20%20%60region%60%2C%0A%20%20%60c_digo_dane_del_departamento%60%2C%0A%20%20%60departamento%60%2C%0A%20%20%60c_digo_dane_del_municipio%60%2C%0A%20%20%60municipio%60%0AWHERE%0A%20%20%60region%60%20IN%20(%0A%20%20%20%20%22Regi%C3%B3n%20Caribe%22%2C%0A%20%20%20%20%22Regi%C3%B3n%20Centro%20Oriente%22%2C%0A%20%20%20%20%22Regi%C3%B3n%20Centro%20Sur%22%2C%0A%20%20%20%20%22Regi%C3%B3n%20Eje%20Cafetero%20-%20Antioquia%22%2C%0A%20%20%20%20%22Regi%C3%B3n%20Llano%22%2C%0A%20%20%20%20%22Regi%C3%B3n%20Pac%C3%ADfico%22%0A%20%20)",
+                    type: "GET",
+                    dataType: "json",
+                    success: function(data) {
+                        // Crear un arreglo con los nombres de los departamentos sin repetir
+                        var departamentos = [];
+                        $.each(data, function(index, value) {
+                            if ($.inArray(value.departamento, departamentos) === -1) {
+                                departamentos.push(value.departamento);
+                            }
+                        });
+
+                        // Ordenar el arreglo alfabéticamente
+                        departamentos.sort();
+
+                        // Añadir una opción vacía al select de departamentos
+                        $("#departamento").append("<option value=''>Seleccione un departamento</option>");
+
+                        // Añadir las opciones con los nombres de los departamentos al select de departamentos
+                        $.each(departamentos, function(index, value) {
+                            $("#departamento").append("<option value='" + value + "'>" + value + "</option>");
+                        });
+
+                        // Añadir una opción vacía al select de municipios
+                        $("#municipio").append("<option value=''>Seleccione un municipio</option>");
+
+                        // Cuando se cambia el valor del select de departamentos
+                        $("#departamento").change(function() {
+                            // Obtener el valor seleccionado
+                            var departamento = $(this).val();
+
+                            // Vaciar el select de municipios
+                            $("#municipio").empty();
+
+                            // Añadir una opción vacía al select de municipios
+                            $("#municipio").append("<option value=''>Seleccione un municipio</option>");
+
+                            // Si se seleccionó un departamento válido
+                            if (departamento != "") {
+                                // Crear un arreglo con los nombres de los municipios del departamento seleccionado sin repetir
+                                var municipios = [];
+                                $.each(data, function(index, value) {
+                                    if (value.departamento == departamento && $.inArray(value.municipio, municipios) === -1) {
+                                        municipios.push(value.municipio);
+                                    }
+                                });
+
+                                // Ordenar el arreglo alfabéticamente
+                                municipios.sort();
+
+                                // Añadir las opciones con los nombres de los municipios al select de municipios
+                                $.each(municipios, function(index, value) {
+                                    $("#municipio").append("<option value='" + value + "'>" + value + "</option>");
+                                });
+                            }
+
+                        });
+                    }
+                });
+            });
+        </script>
+        <script>
             // Example starter JavaScript for disabling form submissions if there are invalid fields
             (() => {
                 'use strict'
@@ -484,17 +589,25 @@ require_once "vistas/nav.php";
             $telefono_ref2 = trim($_POST['telefono_ref2']);
             $fecha_modificacion = date('Y-m-d H:i:s');
             $usuario_modificacion = $_SESSION['NOMBRE_USU'];
-            $mascota=trim($_POST['mascotas']);
-            $ingresos=trim($_POST['ingresos']);
-            $viven_per=trim($_POST['vive_per']);
+            $mascota = trim($_POST['mascotas']);
+            $ingresos = trim($_POST['ingresos']);
+            $viven_per = trim($_POST['vive_per']);
+            $departmento=trim($_POST['departamento']);
+            $municipio=trim($_POST['municipio']);
+            $direccion_lab=trim($_POST['direccion_lab']);
+            $lugar_exp=trim($_POST['lugar_exp']);
             if (
                 strlen(trim($cedula)) >= 1 &&
                 strlen(trim($fecha_expedicion)) >= 1 &&
+                strlen(trim($lugar_exp)) >= 1 &&
                 strlen(trim($nombres)) >= 1 &&
                 strlen(trim($apellidos)) >= 1 &&
                 strlen(trim($fecha_modificacion)) >= 1 &&
                 strlen(trim($telefono)) >= 1 &&
+                strlen(trim($departmento)) >= 1 &&
+                strlen(trim($municipio)) >= 1 &&
                 strlen(trim($direccion)) >= 1 &&
+                strlen(trim($direccion_lab)) >= 1 &&
                 strlen(trim($email)) >= 1 &&
                 strlen(trim($estado_civil)) >= 1 &&
                 strlen(trim($nombres_ref1)) >= 1 &&
@@ -510,7 +623,7 @@ require_once "vistas/nav.php";
                 if (fechasDiferentes($fecha_nacimiento, $fecha_expedicion)) {
                     $errores[] = "la fecha de naciminiento no puede ser igual a la fecha de expedicion de la cedula";
                 }
-                if (!validar_texto($nombres) || !validar_texto($apellidos) || !validar_texto($estado_civil) || !validar_texto($nombres_ref1) || !validar_texto($nombres_ref2)) {
+                if (!validar_texto($nombres) || !validar_texto($apellidos) || !validar_texto($estado_civil) || !validar_texto($nombres_ref1) || !validar_texto($nombres_ref2) || !validar_texto($lugar_exp)) {
                     $errores[] = "Formato de caracteres incorrecto";
                 }
                 if (!validar_correo($email)) {
@@ -522,9 +635,10 @@ require_once "vistas/nav.php";
                     }
                 }
                 if (empty($errores)) {
-                    $SQL = $conex->query("UPDATE `cliente` SET `CEDULA`='$cedula',`FECHA_EXPEDICION`='$fecha_expedicion',
-                    `NOMBRES`='$nombres',`APELLIDOS`='$apellidos',`FECHA_NACIMIENTO_CLIENTE`='$fecha_nacimiento',`TELEFONO`='$telefono',
-                    `DIRECCION`='$direccion',`EMAIL`='$email',`ESTADO_CIVIL`='$estado_civil',`MASCOTA`='$mascota',`INGRESOS`='$ingresos',`VIVE_PERSONAS`='$viven_per',`NOMBRES_REF1`='$nombres_ref1',`TELEFONO_REF1`='$telefono_ref1',
+                    $SQL = $conex->query("UPDATE `cliente` SET `CEDULA`='$cedula',`FECHA_EXPEDICION`='$fecha_expedicion',`LUGAR_EXPEDICION`='$lugar_exp',
+                    `NOMBRES`='$nombres',`APELLIDOS`='$apellidos',`FECHA_NACIMIENTO_CLIENTE`='$fecha_nacimiento',`TELEFONO`='$telefono',`DEPARTAMENTO_CLI`='$departmento',
+                    `MUNICIPIO_CLI`='$municipio', `DIRECCION`='$direccion',`DIRECCION_LAB`='$direccion_lab',`EMAIL`='$email',`ESTADO_CIVIL`='$estado_civil',`MASCOTA`='$mascota',
+                    `INGRESOS`='$ingresos',`VIVE_PERSONAS`='$viven_per', `NOMBRES_REF1`='$nombres_ref1',`TELEFONO_REF1`='$telefono_ref1',
                     `NOMBRES_REF2`='$nombres_ref2',`TELEFONO_REF2`='$telefono_ref2',`USUARIO_REGISTRO_CLIENTE`='$Usuario_registro',`FECHA_MODIFICACION`='$fecha_modificacion',`USUARIO_MODIFICACION_CLIENTE`='$usuario_actual' WHERE ID_CLIENTE='$id';");
                     if ($SQL) {
                         echo "<script>
