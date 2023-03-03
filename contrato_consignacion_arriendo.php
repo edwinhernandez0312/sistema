@@ -1,4 +1,5 @@
 <?php
+setlocale(LC_ALL, "es_ES");
 date_default_timezone_set('America/Bogota');
 include('php/conexion.php');
 include('php/funciones.php');
@@ -28,18 +29,6 @@ if (mysqli_num_rows($resultado) == 0) {
 $inmueble = mysqli_fetch_assoc($resultado);
 $Usuario_registro = $inmueble['USUARIO_CREACION_INMUEBLE'];
 $propietario=$inmueble['PROPIETARIO'];
-
-// Consulta SQL para obtener los datos del precio del inmueble a mostrar
-$sql = "SELECT * FROM precio_inmueble WHERE ID_INMUEBLE = $ID_INMUEBLE";
-$resultado = mysqli_query($conex, $sql);
-
-// Comprobar si se encontró el precio inmueble
-if (mysqli_num_rows($resultado) == 0) {
-    die('Error: no se encontró el precio del inmueble con id ' . $ID_INMUEBLE);
-}
-// Obtener los datos del precio inmueble
-$precio_inmueble = mysqli_fetch_assoc($resultado);
-
 // Obtener los datos del propietario
 $sql = "SELECT * FROM cliente WHERE ID_CLIENTE=$propietario";
 $resultado = mysqli_query($conex, $sql);
@@ -49,6 +38,67 @@ $sql = "SELECT * FROM usuario WHERE ID_USUARIO=$Usuario_registro";
 $resultado = mysqli_query($conex, $sql);
 $usuario = mysqli_fetch_assoc($resultado);
 
+$valor_gas = strpos($inmueble['SERVICIOS'], "Gas");
+if ($valor_gas !== false) {
+    $gas="Si";
+}else{
+    $gas="No";    
+}
+$valor_tv = strpos($inmueble['SERVICIOS'], "Television");
+if ($valor_tv !== false) {
+    $tv="Si";
+}else{
+    $tv="No";
+}
+$valor_elec = strpos($inmueble['SERVICIOS'], "Sevicio de electricidad");
+if ($valor_elec !== false) {
+    $luz="Si";
+}else{
+    $luz="No";
+}
+$valor_agua = strpos($inmueble['SERVICIOS'], "Agua");
+if ($valor_agua !== false){
+    $agua="Si";
+}else{
+    $agua="No";
+}
+$valor_tel = strpos($inmueble['SERVICIOS'], "Telefono fijo");
+if ($valor_tel !== false){
+    $tel="Si";
+}else{
+    $tel="No";
+}
+$valor_seg = strpos($inmueble['SERVICIOS'], "Seguridad");
+if ($valor_seg !== false) {
+    $adm="Si";
+}else{
+    $adm="No";
+}
+
+
+$fecha_actual = date('d \d\e F \d\e Y'); // Obtener fecha actual en formato d de F de Y
+$meses = array(
+    'January' => 'enero',
+    'February' => 'febrero',
+    'March' => 'marzo',
+    'April' => 'abril',
+    'May' => 'mayo',
+    'June' => 'junio',
+    'July' => 'julio',
+    'August' => 'agosto',
+    'September' => 'septiembre',
+    'October' => 'octubre',
+    'November' => 'noviembre',
+    'December' => 'diciembre'
+);
+$fecha_actual = strtr($fecha_actual, $meses);
+$fecha_array = explode(" de", $fecha_actual);
+$dia = $fecha_array[0];
+$mes = $fecha_array[1];
+$anio = $fecha_array[2];
+
+
+//realizacion pdf
 require('fpdf/fpdf.php');
 
 class PDF extends FPDF
@@ -61,9 +111,7 @@ class PDF extends FPDF
         $this->SetFont('Arial','B',15);
         // Move to the right
         $this->Cell(80);
-        // Title
-/*         $this->Cell(30,10,'Contrato de Administracion para Corretaje Inmobiliario de Arriendo',0,0,'C');
- */        // Line break
+        // Line break
         $this->Ln(30);
     }
 
@@ -94,11 +142,11 @@ $pdf->Cell(0, 10, 'Contrato de Administracion para Corretaje Inmobiliario de Arr
 $pdf->Ln(10);
 
 // Dividir el texto en párrafos
-$text ='Entre los suscritos '.$propietario['NOMBRES'].' '.$propietario['APELLIDOS'].' con C.C. No. '.$propietario['CEDULA'].' de '.$propietario['ESTADO_CIVIL'].', actuando como propietario del inmueble ubicado en '.$inmueble['DIRECCION'].', municipio '.$inmueble['MUNICIPIO'].' quien en adelante se denominará EL PROPIETARIO y CONSTRUCTORA INMOBILIARIA LAURA RIVERA S.A.S. con NIT 900985803-9, representada legalmente por ROMAN GABRIEL APONTE FERRER, quien en adelante se denominará EL ADMINISTRADOR, se ha suscrito el siguiente contrato de ADMINISTRACIÓN para corretaje inmobiliario de arriendo, el cual se regirá por las normas del Código Civil y de Comercio y en especial por las cláusulas que a continuación se enumeran:
+$text ='Entre los suscritos '.$propietario['NOMBRES'].' '.$propietario['APELLIDOS'].' con C.C. No. '.$propietario['CEDULA'].' de '.$propietario['LUGAR_EXPEDICION'].', actuando como propietario del inmueble ubicado en '.$inmueble['DIRECCION'].', municipio '.$inmueble['MUNICIPIO'].' quien en adelante se denominará EL PROPIETARIO y CONSTRUCTORA INMOBILIARIA LAURA RIVERA S.A.S. con NIT 900985803-9, representada legalmente por ROMAN GABRIEL APONTE FERRER, quien en adelante se denominará EL ADMINISTRADOR, se ha suscrito el siguiente contrato de ADMINISTRACIÓN para corretaje inmobiliario de arriendo, el cual se regirá por las normas del Código Civil y de Comercio y en especial por las cláusulas que a continuación se enumeran:
 
 PRIMERO: EL PROPIETARIO entrega al administrador para que éste administre en arrendamiento por cuenta y riesgo del consígnate, y autoriza para que se promueva el corretaje inmobiliario del bien inmueble ubicado en '.$inmueble['DIRECCION'].', municipio '.$inmueble['MUNICIPIO'].', matrícula inmobiliaria No. '.$inmueble['MATRICULA_INMUEBLE'].'. El inmueble cuenta además con los siguientes servicios públicos:
 
-Acueducto y alcantarillado si___ No___, Energía eléctrica si___ No___, Gas domiciliario si___ No___, Línea telefónica si___ No___, TV cable si___ No___, Administración si___ No___.
+Acueducto y alcantarillado: '.$agua.', Energía eléctrica: '.$luz.', Gas domiciliario: '.$gas.', Línea telefónica: '.$tel.', TV cable: '.$tv.', Administración: '.$adm.'.
 
 SEGUNDO: FACULTADES DEL ADMINISTRADOR- EL PROPIETARIO faculta AL ADMINISTRADOR, para que en su nombre y representación tramite y ejecute los asuntos que a continuación se enumeran así: a) Anunciar y promover por medios ordinarios e idóneos y bajo sus costas (Administrador), el arriendo del inmueble de que trata el presente contrato. b) Escoger a los arrendatarios, que a criterios de EL ADMINISTRADOR reúnan los requisitos exigidos por este, para calificar como arrendatario del inmueble. c) Celebrar los contratos de arrendamiento respectivos bajo las garantías que a juicio del ADMINISTRADOR sean oportunas. d) Recibir los Cánones y demás pagos a cargo de los arrendatarios. e) Arrendar el inmueble por el precio acordado con EL PROPIETARIO, teniendo en cuenta la calidad, ubicación del inmueble y las leyes vigentes en materia de arrendamiento, procurando el mejor beneficio para los propietarios. f) Otorgar autorizaciones a los arrendatarios para traslado o instalaciones de líneas de servicio telefónico, internet o de banda ancha al inmueble. g) Efectuar todas aquellas reparaciones locativas que legalmente correspondan a EL PROPIETARIO para la conservación del inmueble y faciliten su arrendamiento o las que estén encaminadas a satisfacer el goce pleno del inmueble, así como todas aquellas que sean ordenadas por las autoridades. h) Dar por terminado antes del vencimiento, por justa causa, el contrato de arriendo que se haya suscrito sobre el inmueble, e iniciar las acciones legales. i) Iniciar oportunamente, las acciones judiciales, administrativas y/o policivas de las que sea titular, tendiente a librar de perturbaciones a los arrendatarios. En el evento de que haya necesidad de promover procesos para obtener judicialmente la restitución del inmueble, los gastos del proceso serán aquellos que señale el correspondiente juzgado y los pagarán los arrendatarios. 
 j) Descontar inmediatamente de los correspondientes cánones de arrendamiento que reciba, el valor de la comisión y el I.V.A. causado, además de los gastos y costos en que incurra EL ADMINISTRADOR por causa de la gestión que adelante, exceptuando los de comercialización del inmueble, así como también a descontar fianza de arrendamiento, reparaciones locativas, acciones judiciales, administrativas y/o policivas y demás, que demande el inmueble y que EL ADMINISTRADOR haya asumido de manera directa por autorización de EL PROPIETARIO. l) Poder: otorgar poder a un abogado para que inicie cualquier proceso judicial, administrativo o extrajudicial relacionado con el inmueble, e incluso para que eleven derechos de petición y cualquier tipo de recurso, en aras de defender los intereses de EL PROPIETARIO y del bien.
@@ -106,7 +154,7 @@ j) Descontar inmediatamente de los correspondientes cánones de arrendamiento qu
 TERCERO: El término señado para el contrato es indefinido o hasta que se logre el fin perseguido, es decir, el arriendo del bien inmueble ubicado en '.$inmueble['DIRECCION'].', municipio '.$inmueble['MUNICIPIO'].', matrícula inmobiliaria No. '.$inmueble['MATRICULA_INMUEBLE'].'. a.- cuando una de las partes lo considere pertinente, podrá prescindir del presente contrato de administración a través de comunicación escrita, siempre y cuando avisaré con 5 días de anticipación su decisión. b.- EL PROPIETARIO exime a EL ADMINISTRADOR del pago de indemnizaciones por la cancelación del contrato. c.- En el evento de que el bien inmueble sea destruido o su estructura sea parcial o totalmente por fuerza mayor o caso fortuito, se podrá 
 Prescindir del contrato sin que hubiere lugar a indemnización. d.- En el evento que llegaré a ocurrir los hechos mencionados en el literal c, EL PROPIETARIO excluye de toda responsabilidad a EL ADMINISTRADOR. 
 
-CUARTO: FIJACIÓN DE CANON Y FORMA DE PAGO: El precio acordado con EL PROPIETARIO, por el cual se arrendará el inmueble será de '.$precio_inmueble['PRECIO_ARRIENDO'].' MIL PESOS m/c ($'.$precio_inmueble['PRECIO_ARRIENDO'].' y consignados a la cuenta de Ahorros No. 83400028896 Del banco Bancolombia. EL PROPIETARIO pagará al ADMINISTRADOR por sus servicios una comisión equivalente al diez por ciento (10%) del canon de arrendamiento más IVA. Más dos puntos, cinco por ciento (2.5%) de la fianza de arriendo.
+CUARTO: FIJACIÓN DE CANON Y FORMA DE PAGO: El precio acordado con EL PROPIETARIO, por el cual se arrendará el inmueble será de '.numeros_letras($inmueble['PRECIO_CANON']).' PESOS m/c ($'.$inmueble['PRECIO_CANON'].' y consignados a la cuenta de Ahorros No. 83400028896 Del banco Bancolombia. EL PROPIETARIO pagará al ADMINISTRADOR por sus servicios una comisión equivalente al diez por ciento (10%) del canon de arrendamiento más IVA. Más dos puntos, cinco por ciento (2.5%) de la fianza de arriendo.
 
 QUINTO: DEDUCCIÓN MENSUAL: EL PROPIETARIO autoriza en forma expresa al ADMINISTRADOR, deducir mensualmente del monto total de los arrendamientos, la comisión estipulada, así como el valor del IVA y de los gastos en que incurriere en el desempeño de este contrato.
 
@@ -132,7 +180,7 @@ DÉCIMO QUINTO: RESPONSABILIDAD DEL ADMINISTRADOR: EL ADMINISTRADOR: se hará re
 
 DÉCIMO SEXTO: DESOCUPACIÓN DEL BIEN: Si el inmueble fuere desocupado por los arrendatarios después de vencido el término inicial del contrato de arrendamiento, no habrá lugar a indemnización alguna. Si el inmueble es desocupado durante el término inicial del arrendamiento, el PROPIETARIO autoriza al ADMINISTRADOR (A), para que llegado el caso negocie con los arrendatarios el valor de la indemnización prevista por el incumplimiento en el contrato de arrendamiento o los exonere, y su pago solo se hará efectivo en el momento en que sea recibido por el ADMINISTRADOR (A) y únicamente por el monto recaudado, descontando la respectiva comisión del 10% que se aplicará sobre el total de la suma recibida. En caso del ADMINISTRADOR aplicar procesos de restitución de inmueble arrendado por incumplimiento del contrato, por ser un riesgo para el mismo de recaudar efectivamente el dinero a través de un proceso judicial, el PROPIETARIO renuncia a la cláusula penal establecida en el contrato, y la deja a criterio del ADMINISTRADOR, cobrarla o no. En caso de cobrar la misma, este dinero será de propiedad exclusiva del ADMINISTRADOR.
 
-DÉCIMO SÉPTIMO: En el caso de que se llegue a presentar abandono del inmueble por parte del inquilino en cualquier momento, la Inmobiliaria procederá inmediatamente a tomar posesión del inmueble, para lo cual se informará al propietario, bien sea para su devolución o para nuevamente colocarlo en arrendamiento. Hasta la fecha de recuperación del inmueble, se cancelará el valor del arrendamiento por $ '.$precio_inmueble['PRECIO_ARRIENDO'].', quedando suspendida por este hecho la responsabilidad de la Inmobiliaria en el pago acordado.
+DÉCIMO SÉPTIMO: En el caso de que se llegue a presentar abandono del inmueble por parte del inquilino en cualquier momento, la Inmobiliaria procederá inmediatamente a tomar posesión del inmueble, para lo cual se informará al propietario, bien sea para su devolución o para nuevamente colocarlo en arrendamiento. Hasta la fecha de recuperación del inmueble, se cancelará el valor del arrendamiento por $ '.$inmueble['PRECIO_CANON'].', quedando suspendida por este hecho la responsabilidad de la Inmobiliaria en el pago acordado.
 
 DÉCIMO OCTAVO:   VENTA DEL INMUEBLE: En caso de que él (los) inmueble (s) objeto de este contrato fuere comprado por el arrendatario o por cualquier otra persona, EL PROPIETARIO cancelará a EL ADMINISTRADOR el valor de la comisión de venta, según tarifas vigentes. El administrador gestionará los trámites de venta respectivos, si así lo pidiere EL PROPIETARIO.
 
@@ -157,11 +205,11 @@ VIGÉSIMO SEXTO: LAS PARTES acuerdan y aceptan que el presente contrato, junto c
 
 derechos estos a los que renuncia expresamente EL PROPIETARIO, así como cualquier otro que sea establecido en alguna norma de carácter procesal o sustancial. Otorgándole las partes, al contenido del presente contrato, los efectos de cosa juzgada material. 
 
-VIGÉSIMA SÉPTIMO: EL PROPIETARIO recibirá notificaciones en la dirección de residencia '.$propietario['DIRECCION'].', municipio '.$propietario['DIRECCION'].'. Correo electrónico '.$propietario['EMAIL'].', teléfono '.$propietario['TELEFONO'].', dirección de trabajo ______________________________ y EL ADMINISTRADOR recibirá notificaciones en la Carrera 9 No. 5-39 Barrio Centro de Villa del Rosario, correo electrónico Inmobiliarialaurarivera@gmail.com, teléfono 3043849768. 
+VIGÉSIMA SÉPTIMO: EL PROPIETARIO recibirá notificaciones en la dirección de residencia '.$propietario['DIRECCION'].', municipio '.$propietario['MUNICIPIO_CLI'].', departamento '.$propietario['DEPARTAMENTO_CLI'].'. Correo electrónico '.$propietario['EMAIL'].', teléfono '.$propietario['TELEFONO'].', dirección de trabajo '.$propietario['DIRECCION_LAB'].' y EL ADMINISTRADOR recibirá notificaciones en la Carrera 9 No. 5-39 Barrio Centro de Villa del Rosario, correo electrónico Inmobiliarialaurarivera@gmail.com, teléfono 3043849768. 
 
 
 
-En señal de conformidad, los contratantes suscriben este documento en dos ejemplares del mismo tenor y valor, a los ____________ ( ) días del mes de _____________ de _________ del municipio de Villa del Rosario.
+En señal de conformidad, los contratantes suscriben este documento en dos ejemplares del mismo tenor y valor, a los '.numeros_letras_min($dia).' ('.$dia.') días del mes de'.$mes.' de'.$anio.' del municipio de Villa del Rosario.
 
 
 ';
@@ -170,19 +218,34 @@ $pdf->SetFont('Arial','',10);
 $paragraphs = $pdf->MultiCell($col_width, 5, utf8_decode($text), 0, 'J');
 
 $col_width = 80;
-$text='EL ADMINISTRADOR ______________________________________ ROMAN GABRIEL APONTE FERRER REPRESENTANTE LEGAL CONSTRUCTORA INMOBILIARIA LAURA RIVERA SAS EL PROPIETARIO______________________________________ _________________________________ C.C. _________ TEL: ___________ E-mail: _____________
-';
-$pdf->SetFont('Arial', '', 10);
+$text1='EL ADMINISTRADOR
+
+
+
+______________________________________
+ROMAN GABRIEL APONTE FERRER
+REPRESENTANTE LEGAL
+CONSTRUCTORA INMOBILIARIA LAURA RIVERA SAS';
+$text2='EL PROPIETARIO
+
+
+
+______________________________________
+'.$propietario['NOMBRES'].' '.$propietario['APELLIDOS'].'
+C.C. '.$propietario['CEDULA'].'
+TEL: '.$propietario['TELEFONO'].'
+E-mail: '.$propietario['EMAIL'];
+$pdf->SetFont('Arial', '', 8);
 
 // Dividir el texto en dos partes
-$text_parts = explode("\n", wordwrap($text, $col_width, "\n"));
+/* $text_parts = explode("\n", wordwrap($text, $col_width, "\n"));
 
-// Guardar la posición actual del cursor
+ */// Guardar la posición actual del cursor
 $current_x = $pdf->GetX();
 $current_y = $pdf->GetY();
 
 // Mostrar la primera columna de texto
-$pdf->MultiCell($col_width, 5, utf8_decode($text_parts[0]), 0, 'J');
+$pdf->MultiCell($col_width, 5, utf8_decode($text1), 0, 'J');
 
 // Restaurar la posición del cursor
 $pdf->SetXY($current_x, $current_y);
@@ -192,11 +255,10 @@ $pdf->Cell($col_width + 20);
 $current_y = $pdf->GetY();
 
 // Mostrar la segunda columna de texto
-$pdf->MultiCell($col_width, 5, utf8_decode($text_parts[1]), 0, 'J');
+$pdf->MultiCell($col_width, 5, utf8_decode($text2), 0, 'J');
 
 // Restaurar la posición del cursor
 $pdf->SetXY($current_x, $current_y);
 
 // Guardar el PDF
 $pdf->Output();
-?>

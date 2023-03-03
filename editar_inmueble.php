@@ -530,6 +530,8 @@ require_once "vistas/nav.php";
             </div>
             <div class="form-group col-sm-12 col-md-6">
                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#Modal">Editar</button>
+                <a href="contrato_consignacion_arriendo.php?ID_INMUEBLE=<?php echo $row['ID_INMUEBLE']; ?>" target="_blank" class="btn btn-primary">Contrato de consignacion</a>
+
             </div>
         </div>
         <?php
