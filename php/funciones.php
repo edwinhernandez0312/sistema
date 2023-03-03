@@ -313,4 +313,16 @@ function matricula_existe_update($matricula){
         return false;
     }
 }
+function numeros_letras($numero){
+    $numero_entero = intval($numero);
+    $formatter = new NumberFormatter('es', NumberFormatter::SPELLOUT);
+    $numero_letras = $formatter->format($numero_entero);
+    return strtoupper($numero_letras);
+}
+function numeros_letras_min($numero){
+    $numero_entero = intval($numero);
+    $formatter = new NumberFormatter('es', NumberFormatter::SPELLOUT);
+    $numero_letras = $formatter->format($numero_entero);
+    return ($numero_letras);
+}
 ?>

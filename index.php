@@ -27,5 +27,5 @@ $tipo = nombre_tipo($_SESSION['TIPO_USUARIO']);
 
 require_once "vistas/nav.php" ?>
 
-<h1>PENSAR QUE COLOCAR</h1>
+<h1>COLOCAR NOTICIAS DE LA INMOBILIARIA Y ENLACES DIRECTOS A CORREOS Y REDES SOCIALES</h1>
 <?php require_once "vistas/footer.php" ?>
