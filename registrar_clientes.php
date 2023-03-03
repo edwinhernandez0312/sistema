@@ -42,7 +42,7 @@ require_once "vistas/nav.php";
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="telefono">Teléfono:</label>
-                    <input type="text" class="form-control" id="telefono" name="telefono" minlength="3" placeholder="Teléfono" maxlength="250" required pattern="^[0-9()+-]*$" title="Dijite el telefono">
+                    <input type="text" class="form-control" id="telefono" name="telefono" minlength="3" placeholder="Teléfono" maxlength="250" required pattern="^[0-9()+- ]*$" title="Dijite el telefono">
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="departamento">Departamento</label>
@@ -105,7 +105,7 @@ require_once "vistas/nav.php";
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="telefono_ref1">Teléfono Referencia 1:</label>
-                    <input type="tel" class="form-control" id="telefono_ref1" name="telefono_ref1" placeholder="Teléfono Referencia 1" minlength="3" maxlength="250" required pattern="^[0-9()+-]*$" title="Dijite el telefono">
+                    <input type="tel" class="form-control" id="telefono_ref1" name="telefono_ref1" placeholder="Teléfono Referencia 1" minlength="3" maxlength="250" required pattern="^[0-9()+- ]*$" title="Dijite el telefono">
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="nombres_ref2">Nombres Referencia 2:</label>
@@ -113,7 +113,7 @@ require_once "vistas/nav.php";
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="telefono_ref2">Teléfono Referencia 2:</label>
-                    <input type="tel" class="form-control" id="telefono_ref2" name="telefono_ref2" placeholder="Telefono Referencia 2" minlength="3" maxlength="250" required pattern="^[0-9()+-]*$" title="Dijite el telefono">
+                    <input type="tel" class="form-control" id="telefono_ref2" name="telefono_ref2" placeholder="Telefono Referencia 2" minlength="3" maxlength="250" required pattern="^[0-9()+- ]*$" title="Dijite el telefono">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="fecha_registro">Fecha Registro:</label>
