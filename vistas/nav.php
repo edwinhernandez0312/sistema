@@ -110,7 +110,7 @@ $nombre = $_SESSION['NOMBRE_USU'];
                         <?php
                         if ($_SESSION['TIPO_USUARIO'] == 1 || $_SESSION['TIPO_USUARIO'] == 2) {
                         ?>
-                            <a class="collapse-item" href="">Nuevo Legajo</a>
+                            <a class="collapse-item" href="crear_legajo.php">Nuevo Legajo</a>
                         <?php
                         }
                         ?>
