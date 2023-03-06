@@ -25,7 +25,7 @@ require_once "vistas/nav.php";
 ?>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Datos del inmueble</h6>
+        <h1 class="m-0 font-weight-bold text-primary">Datos del inmueble</h1>
     </div>
     <div class="card-body">
         <div class="row">
@@ -209,19 +209,19 @@ require_once "vistas/nav.php";
                         </div>
                     <?php
                     }
-                    $valor_agua = strpos($row['SERVICIOS'], "Agua");
+                    $valor_agua = strpos($row['SERVICIOS'], "Acueducto y alcantarillado");
                     if ($valor_agua !== false) {
                     ?>
                         <div class="form-group col-sm-12 col-md-4 form-check">
-                            <input type="checkbox" class="form-check-input" id="agua" name="servicios[]" value="Agua" checked readonly disabled>
-                            <label for="agua">Agua</label>
+                            <input type="checkbox" class="form-check-input" id="Acueducto y alcantarillado" name="servicios[]" value="Acueducto y alcantarillado" checked readonly disabled>
+                            <label for="Acueducto y alcantarillado">Acueducto y alcantarillado</label>
                         </div>
                     <?php
                     } else {
                     ?>
                         <div class="form-group col-sm-12 col-md-4 form-check">
-                            <input type="checkbox" class="form-check-input" id="agua" name="servicios[]" value="Agua" readonly disabled>
-                            <label for="agua">Agua</label>
+                            <input type="checkbox" class="form-check-input" id="Acueducto y alcantarillado" name="servicios[]" value="Acueducto y alcantarillado" readonly disabled>
+                            <label for="Acueducto y alcantarillado">Acueducto y alcantarillado</label>
                         </div>
                     <?php
                     }
@@ -241,19 +241,19 @@ require_once "vistas/nav.php";
                         </div>
                     <?php
                     }
-                    $valor_seg = strpos($row['SERVICIOS'], "Seguridad");
+                    $valor_seg = strpos($row['SERVICIOS'], "Administracion");
                     if ($valor_seg !== false) {
                     ?>
                         <div class="form-group col-sm-12 col-md-4 form-check">
-                            <input type="checkbox" class="form-check-input" id="seguridad" name="servicios[]" value="Seguridad" checked readonly disabled>
-                            <label for="seguridad">Seguridad</label>
+                            <input type="checkbox" class="form-check-input" id="Administracion" name="servicios[]" value="Administracion" checked readonly disabled>
+                            <label for="Administracion">Administracion</label>
                         </div>
                     <?php
                     } else {
                     ?>
                         <div class="form-group col-sm-12 col-md-4 form-check">
-                            <input type="checkbox" class="form-check-input" id="seguridad" name="servicios[]" value="Seguridad" readonly disabled>
-                            <label for="seguridad">Seguridad</label>
+                            <input type="checkbox" class="form-check-input" id="Administracion" name="servicios[]" value="Administracion" readonly disabled>
+                            <label for="Administracion">Administracion</label>
                         </div>
                     <?php
                     }
@@ -745,19 +745,19 @@ require_once "vistas/nav.php";
                                             </div>
                                         <?php
                                         }
-                                        $valor_agua = strpos($row['SERVICIOS'], "Agua");
+                                        $valor_agua = strpos($row['SERVICIOS'], "Acueducto y alcantarillado");
                                         if ($valor_agua !== false) {
                                         ?>
                                             <div class="form-group col-sm-12 col-md-4 form-check">
-                                                <input type="checkbox" class="form-check-input" id="agua" name="servicios[]" value="Agua" checked>
-                                                <label for="agua">Agua</label>
+                                                <input type="checkbox" class="form-check-input" id="Acueducto y alcantarillado" name="servicios[]" value="Acueducto y alcantarillado" checked>
+                                                <label for="Acueducto y alcantarillado">Acueducto y alcantarillado</label>
                                             </div>
                                         <?php
                                         } else {
                                         ?>
                                             <div class="form-group col-sm-12 col-md-4 form-check">
-                                                <input type="checkbox" class="form-check-input" id="agua" name="servicios[]" value="Agua">
-                                                <label for="agua">Agua</label>
+                                                <input type="checkbox" class="form-check-input" id="Acueducto y alcantarillado" name="servicios[]" value="Acueducto y alcantarillado">
+                                                <label for="Acueducto y alcantarillado">Acueducto y alcantarillado</label>
                                             </div>
                                         <?php
                                         }
@@ -777,19 +777,19 @@ require_once "vistas/nav.php";
                                             </div>
                                         <?php
                                         }
-                                        $valor_seg = strpos($row['SERVICIOS'], "Seguridad");
+                                        $valor_seg = strpos($row['SERVICIOS'], "Administracion");
                                         if ($valor_seg !== false) {
                                         ?>
                                             <div class="form-group col-sm-12 col-md-4 form-check">
-                                                <input type="checkbox" class="form-check-input" id="seguridad" name="servicios[]" value="Seguridad" checked>
-                                                <label for="seguridad">Seguridad</label>
+                                                <input type="checkbox" class="form-check-input" id="Administracion" name="servicios[]" value="Administracion" checked>
+                                                <label for="Administracion">Administracion</label>
                                             </div>
                                         <?php
                                         } else {
                                         ?>
                                             <div class="form-group col-sm-12 col-md-4 form-check">
-                                                <input type="checkbox" class="form-check-input" id="seguridad" name="servicios[]" value="Seguridad">
-                                                <label for="seguridad">Seguridad</label>
+                                                <input type="checkbox" class="form-check-input" id="Administracion" name="servicios[]" value="Administracion">
+                                                <label for="Administracion">Administracion</label>
                                             </div>
                                         <?php
                                         }

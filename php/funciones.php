@@ -51,7 +51,7 @@ function validar_datos($nombre, $apellidos, $correo, $pass1, $pass2)
 }
 function validar_texto($text)
 {
-    $pattern = "/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+[a-zA-ZáéíóúÁÉÍÓÚñÑ\s\/]*$/";
+    $pattern = "/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+[a-zA-ZáéíóúÁÉÍÓÚñÑ\s\/]*(\(.+\))?$/";
     if (preg_match($pattern, trim($text))) {
         return true;
     } else {

@@ -24,14 +24,22 @@ if (isset($_POST['enviar'])) {
     $mascotas=trim($_POST['mascotas']);
     $ingresos=trim($_POST['ingresos']);
     $vive_per=trim($_POST['vive_per']);
+    $departmento=trim($_POST['departamento']);
+    $municipio=trim($_POST['municipio']);
+    $direccion_lab=trim($_POST['direccion_lab']);
+    $lugar_exp=trim($_POST['lugar_exp']);
     if (
         strlen(trim($cedula)) >= 1 &&
         strlen(trim($fecha_expedicion)) >= 1 &&
+        strlen(trim($lugar_exp)) >= 1 &&
         strlen(trim($nombres)) >= 1 &&
         strlen(trim($apellidos)) >= 1 &&
         strlen(trim($fecha_modificacion)) >= 1 &&
         strlen(trim($telefono)) >= 1 &&
+        strlen(trim($departmento)) >= 1 &&
+        strlen(trim($municipio)) >= 1 &&
         strlen(trim($direccion)) >= 1 &&
+        strlen(trim($direccion_lab)) >= 1 &&
         strlen(trim($email)) >= 1 &&
         strlen(trim($estado_civil)) >= 1 &&
         strlen(trim($nombres_ref1)) >= 1 &&
@@ -49,7 +57,7 @@ if (isset($_POST['enviar'])) {
         if (fechasDiferentes($fecha_nacimiento, $fecha_expedicion)) {
             $errores[] = "la fecha de naciminiento no puede ser igual a la fecha de expedicion de la cedula";
         }
-        if (!validar_texto($nombres) || !validar_texto($apellidos) || !validar_texto($estado_civil) || !validar_texto($nombres_ref1) || !validar_texto($nombres_ref2)) {
+        if (!validar_texto($nombres) || !validar_texto($apellidos) || !validar_texto($estado_civil) || !validar_texto($nombres_ref1) || !validar_texto($nombres_ref2) || !validar_texto($lugar_exp)) {
             $errores[] = "Formato de caracteres incorrecto";
         }
         if (!validar_correo($email)) {
@@ -59,8 +67,10 @@ if (isset($_POST['enviar'])) {
             $errores[] = "El usuario con esta cedula ya existe";
         }
         if (empty($errores)) {
-            $sql = $conex->query("INSERT INTO `cliente`(`CEDULA`, `FECHA_EXPEDICION`, `NOMBRES`, `APELLIDOS`, `FECHA_NACIMIENTO_CLIENTE`, `TELEFONO`, `DIRECCION`, `EMAIL`, `ESTADO_CIVIL`,`MASCOTA`,`INGRESOS`,`VIVE_PERSONAS`, `NOMBRES_REF1`, `TELEFONO_REF1`, `NOMBRES_REF2`, `TELEFONO_REF2`,  `USUARIO_REGISTRO_CLIENTE`,`USUARIO_MODIFICACION_CLIENTE`) 
-            VALUES ('$cedula', '$fecha_expedicion', '$nombres','$apellidos','$fecha_nacimiento','$telefono', '$direccion', '$email', '$estado_civil','$mascotas','$ingresos','$vive_per','$nombres_ref1', '$telefono_ref1', '$nombres_ref2', '$telefono_ref2','$id','$id')");
+            $nombres_may=mb_strtoupper($nombres, "UTF-8");
+            $apellidos_may=mb_strtoupper($apellidos, "UTF-8");
+            $sql = $conex->query("INSERT INTO `cliente`(`CEDULA`, `FECHA_EXPEDICION`,`LUGAR_EXPEDICION`, `NOMBRES`, `APELLIDOS`, `FECHA_NACIMIENTO_CLIENTE`, `TELEFONO`,`DEPARTAMENTO_CLI`,`MUNICIPIO_CLI`, `DIRECCION`,`DIRECCION_LAB`, `EMAIL`, `ESTADO_CIVIL`,`MASCOTA`,`INGRESOS`,`VIVE_PERSONAS`, `NOMBRES_REF1`, `TELEFONO_REF1`, `NOMBRES_REF2`, `TELEFONO_REF2`,  `USUARIO_REGISTRO_CLIENTE`,`USUARIO_MODIFICACION_CLIENTE`) 
+            VALUES ('$cedula', '$fecha_expedicion','$lugar_exp', '$nombres_may','$apellidos_may','$fecha_nacimiento','$telefono','$departmento','$municipio', '$direccion','$direccion_lab', '$email', '$estado_civil','$mascotas','$ingresos','$vive_per','$nombres_ref1', '$telefono_ref1', '$nombres_ref2', '$telefono_ref2','$id','$id')");
             // Ejecutar la sentencia SQL
             if ($sql) {
                 // Si la inserción fue exitosa, mostrar un mensaje al usuario
