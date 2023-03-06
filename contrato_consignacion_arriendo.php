@@ -13,7 +13,7 @@ $usuario_actual = $_SESSION['ID_USUARIO'];
 if (isset($_GET['ID_INMUEBLE'])) {
     $ID_INMUEBLE = $_GET['ID_INMUEBLE'];
 } else {
-    die('Error: no se ha especificado el id del cliente');
+    header('Location: 404.php');
 }
 
 // Consulta SQL para obtener los datos del inmueble a mostrar
@@ -21,8 +21,8 @@ $sql = "SELECT * FROM inmueble WHERE ID_INMUEBLE = $ID_INMUEBLE";
 $resultado = mysqli_query($conex, $sql);
 
 // Comprobar si se encontró el inmueble
-if (mysqli_num_rows($resultado) == 0) {
-    die('Error: no se encontró el inmueble con id ' . $ID_INMUEBLE);
+if (mysqli_num_rows($resultado) == 0) {   
+     header('Location: 404.php');
 }
 
 // Obtener los datos del inmueble
@@ -148,11 +148,9 @@ PRIMERO: EL PROPIETARIO entrega al administrador para que éste administre en ar
 
 Acueducto y alcantarillado: '.$agua.', Energía eléctrica: '.$luz.', Gas domiciliario: '.$gas.', Línea telefónica: '.$tel.', TV cable: '.$tv.', Administración: '.$adm.'.
 
-SEGUNDO: FACULTADES DEL ADMINISTRADOR- EL PROPIETARIO faculta AL ADMINISTRADOR, para que en su nombre y representación tramite y ejecute los asuntos que a continuación se enumeran así: a) Anunciar y promover por medios ordinarios e idóneos y bajo sus costas (Administrador), el arriendo del inmueble de que trata el presente contrato. b) Escoger a los arrendatarios, que a criterios de EL ADMINISTRADOR reúnan los requisitos exigidos por este, para calificar como arrendatario del inmueble. c) Celebrar los contratos de arrendamiento respectivos bajo las garantías que a juicio del ADMINISTRADOR sean oportunas. d) Recibir los Cánones y demás pagos a cargo de los arrendatarios. e) Arrendar el inmueble por el precio acordado con EL PROPIETARIO, teniendo en cuenta la calidad, ubicación del inmueble y las leyes vigentes en materia de arrendamiento, procurando el mejor beneficio para los propietarios. f) Otorgar autorizaciones a los arrendatarios para traslado o instalaciones de líneas de servicio telefónico, internet o de banda ancha al inmueble. g) Efectuar todas aquellas reparaciones locativas que legalmente correspondan a EL PROPIETARIO para la conservación del inmueble y faciliten su arrendamiento o las que estén encaminadas a satisfacer el goce pleno del inmueble, así como todas aquellas que sean ordenadas por las autoridades. h) Dar por terminado antes del vencimiento, por justa causa, el contrato de arriendo que se haya suscrito sobre el inmueble, e iniciar las acciones legales. i) Iniciar oportunamente, las acciones judiciales, administrativas y/o policivas de las que sea titular, tendiente a librar de perturbaciones a los arrendatarios. En el evento de que haya necesidad de promover procesos para obtener judicialmente la restitución del inmueble, los gastos del proceso serán aquellos que señale el correspondiente juzgado y los pagarán los arrendatarios. 
-j) Descontar inmediatamente de los correspondientes cánones de arrendamiento que reciba, el valor de la comisión y el I.V.A. causado, además de los gastos y costos en que incurra EL ADMINISTRADOR por causa de la gestión que adelante, exceptuando los de comercialización del inmueble, así como también a descontar fianza de arrendamiento, reparaciones locativas, acciones judiciales, administrativas y/o policivas y demás, que demande el inmueble y que EL ADMINISTRADOR haya asumido de manera directa por autorización de EL PROPIETARIO. l) Poder: otorgar poder a un abogado para que inicie cualquier proceso judicial, administrativo o extrajudicial relacionado con el inmueble, e incluso para que eleven derechos de petición y cualquier tipo de recurso, en aras de defender los intereses de EL PROPIETARIO y del bien.
+SEGUNDO: FACULTADES DEL ADMINISTRADOR- EL PROPIETARIO faculta AL ADMINISTRADOR, para que en su nombre y representación tramite y ejecute los asuntos que a continuación se enumeran así: a) Anunciar y promover por medios ordinarios e idóneos y bajo sus costas (Administrador), el arriendo del inmueble de que trata el presente contrato. b) Escoger a los arrendatarios, que a criterios de EL ADMINISTRADOR reúnan los requisitos exigidos por este, para calificar como arrendatario del inmueble. c) Celebrar los contratos de arrendamiento respectivos bajo las garantías que a juicio del ADMINISTRADOR sean oportunas. d) Recibir los Cánones y demás pagos a cargo de los arrendatarios. e) Arrendar el inmueble por el precio acordado con EL PROPIETARIO, teniendo en cuenta la calidad, ubicación del inmueble y las leyes vigentes en materia de arrendamiento, procurando el mejor beneficio para los propietarios. f) Otorgar autorizaciones a los arrendatarios para traslado o instalaciones de líneas de servicio telefónico, internet o de banda ancha al inmueble. g) Efectuar todas aquellas reparaciones locativas que legalmente correspondan a EL PROPIETARIO para la conservación del inmueble y faciliten su arrendamiento o las que estén encaminadas a satisfacer el goce pleno del inmueble, así como todas aquellas que sean ordenadas por las autoridades. h) Dar por terminado antes del vencimiento, por justa causa, el contrato de arriendo que se haya suscrito sobre el inmueble, e iniciar las acciones legales. i) Iniciar oportunamente, las acciones judiciales, administrativas y/o policivas de las que sea titular, tendiente a librar de perturbaciones a los arrendatarios. En el evento de que haya necesidad de promover procesos para obtener judicialmente la restitución del inmueble, los gastos del proceso serán aquellos que señale el correspondiente juzgado y los pagarán los arrendatarios. j) Descontar inmediatamente de los correspondientes cánones de arrendamiento que reciba, el valor de la comisión y el I.V.A. causado, además de los gastos y costos en que incurra EL ADMINISTRADOR por causa de la gestión que adelante, exceptuando los de comercialización del inmueble, así como también a descontar fianza de arrendamiento, reparaciones locativas, acciones judiciales, administrativas y/o policivas y demás, que demande el inmueble y que EL ADMINISTRADOR haya asumido de manera directa por autorización de EL PROPIETARIO. l) Poder: otorgar poder a un abogado para que inicie cualquier proceso judicial, administrativo o extrajudicial relacionado con el inmueble, e incluso para que eleven derechos de petición y cualquier tipo de recurso, en aras de defender los intereses de EL PROPIETARIO y del bien.
 
-TERCERO: El término señado para el contrato es indefinido o hasta que se logre el fin perseguido, es decir, el arriendo del bien inmueble ubicado en '.$inmueble['DIRECCION'].', municipio '.$inmueble['MUNICIPIO'].', matrícula inmobiliaria No. '.$inmueble['MATRICULA_INMUEBLE'].'. a.- cuando una de las partes lo considere pertinente, podrá prescindir del presente contrato de administración a través de comunicación escrita, siempre y cuando avisaré con 5 días de anticipación su decisión. b.- EL PROPIETARIO exime a EL ADMINISTRADOR del pago de indemnizaciones por la cancelación del contrato. c.- En el evento de que el bien inmueble sea destruido o su estructura sea parcial o totalmente por fuerza mayor o caso fortuito, se podrá 
-Prescindir del contrato sin que hubiere lugar a indemnización. d.- En el evento que llegaré a ocurrir los hechos mencionados en el literal c, EL PROPIETARIO excluye de toda responsabilidad a EL ADMINISTRADOR. 
+TERCERO: El término señado para el contrato es indefinido o hasta que se logre el fin perseguido, es decir, el arriendo del bien inmueble ubicado en '.$inmueble['DIRECCION'].', municipio '.$inmueble['MUNICIPIO'].', matrícula inmobiliaria No. '.$inmueble['MATRICULA_INMUEBLE'].'. a.- cuando una de las partes lo considere pertinente, podrá prescindir del presente contrato de administración a través de comunicación escrita, siempre y cuando avisaré con 5 días de anticipación su decisión. b.- EL PROPIETARIO exime a EL ADMINISTRADOR del pago de indemnizaciones por la cancelación del contrato. c.- En el evento de que el bien inmueble sea destruido o su estructura sea parcial o totalmente por fuerza mayor o caso fortuito, se podrá prescindir del contrato sin que hubiere lugar a indemnización. d.- En el evento que llegaré a ocurrir los hechos mencionados en el literal c, EL PROPIETARIO excluye de toda responsabilidad a EL ADMINISTRADOR. 
 
 CUARTO: FIJACIÓN DE CANON Y FORMA DE PAGO: El precio acordado con EL PROPIETARIO, por el cual se arrendará el inmueble será de '.numeros_letras($inmueble['PRECIO_CANON']).' PESOS m/c ($'.$inmueble['PRECIO_CANON'].' y consignados a la cuenta de Ahorros No. 83400028896 Del banco Bancolombia. EL PROPIETARIO pagará al ADMINISTRADOR por sus servicios una comisión equivalente al diez por ciento (10%) del canon de arrendamiento más IVA. Más dos puntos, cinco por ciento (2.5%) de la fianza de arriendo.
 
@@ -166,10 +164,10 @@ OCTAVO: EL ADMINISTRADOR mantendrá informado a EL PROPIETARIO sobre ofertas y c
 
 NOVENO: EL ADMINISTRADOR se obliga a dar asesoría a EL PROPIETARIO y al ARRENDATARIO, en todas las gestiones y actuaciones relativas al arrendamiento del bien inmueble. Si EL PROPIETARIO optare por desechar estos servicios adicionales, la comisión se hará efectiva en su totalidad.
 
-DÉCIMO. EL ADMINISTRADOR se obliga a comunicar en forma confidencial a EL PROPIETARIO sobre las observaciones 
-Que los potenciales arrendatarios le hagan sobre el inmueble, su precio, etc. a efecto de que él tome las determinaciones que considere convenientes.
+DÉCIMO. EL ADMINISTRADOR se obliga a comunicar en forma confidencial a EL PROPIETARIO sobre las observaciones que los potenciales arrendatarios le hagan sobre el inmueble, su precio, etc. a efecto de que él tome las determinaciones que considere convenientes.
 
 DÉCIMO PRIMERO. EL ADMINISTRADOR ofrecerá el inmueble consignado, bajo las condiciones de pago autorizadas por EL PROPIETARIO.
+
 DÉCIMO SEGUNDO: GARANTÍA DE PAGO: El ADMINISTRADOR garantiza tanto el pago de arrendamientos, siempre y cuando el PROPIETARIO haya contratado a través del ADMINISTRADOR la fianza de arrendamiento.
 
 DÉCIMO TERCERO: PRÓRROGA DEL CONTRATO: Si en el desarrollo del presente contrato quedará algún mes un saldo a cargo del PROPIETARIO y a favor del ADMINISTRADOR (A) este contrato se considera prorrogado, aun cuando el PROPIETARIO haya manifestado su deseo de darlo por terminado, hasta tanto que dicho saldo a cargo del PROPIETARIO esté totalmente cubierto. Si fuere el ADMINISTRADOR (A) quien desearé terminar el contrato, una vez vencido el término de sesenta (60) días contados desde la fecha en que haya dado aviso a través de correo electrónico o por carta al PROPIETARIO, cesarán todas sus obligaciones y no podrá ser responsable por hecho alguno que ocurran después del plazo mencionado, y en ese evento, si por cualquier circunstancia resultaré algún saldo insoluto a favor del ADMINISTRADOR (A) por causa de su gestión, dicho valor será pagado por el PROPIETARIO al ADMINISTRADOR (A) o en su orden, a la presentación de la cuenta respectiva.
@@ -190,7 +188,6 @@ VIGÉSIMO: EL PROPIETARIO manifiesta que obra de buena fe, no existiendo en su c
 
 VIGÉSIMO PRIMERO: COMUNICACIONES: EL PROPIETARIO se obliga a comunicar única y exclusivamente a EL ADMINISTRADOR las observaciones, dudas o inconvenientes que surjan sobre el inmueble o sobre el potencial ARRENDATARIO. a.- Al tratarse EL ADMINISTRADOR de una persona jurídica cuyo objeto es la administración Inmobiliaria de bienes inmuebles para corretaje inmobiliario, EL PROPIETARIO acepta que solo podrá hacer responsable a EL ADMINISTRADOR de los hechos que el mismo comunique a este. b.- EL PROPIETARIO reconoce que su único canal exclusivo de comunicación con el ARRENDATARIO del inmueble es a través de EL ADMINISTRADOR.  c.- En el evento que EL PROPIETARIO por medios ajenos a EL ADMINISTRADOR se comunique con el ARRENDATARIO del bien inmueble y exponga o llegue a acuerdos con este sobre daños, problemas, arreglos generados con el inmueble, excluye de cualquier responsabilidad a El Administrador. 
 
-
 VIGÉSIMO SEGUNDO: Entre EL ADMINISTRADOR y EL PROPIETARIO no existirá relación laboral, toda vez que LA INMOBILIARIA actúa como contratista independiente. 
 
 VIGÉSIMO TERCERO: EL PROPIETARIO acepta y reconoce que le ha sido socializada la política de tratamiento de datos personales por parte de EL ADMINISTRADOR y que autoriza el uso de los datos personales que ha suministrado para el presente contrato, se anexa política de tratamiento de datos el cual hace parte integral del presente contrato. 
@@ -202,18 +199,15 @@ Público y que haga parte de la política de tratamiento de datos, que llegue a 
 
 VIGÉSIMO SEXTO: LAS PARTES acuerdan y aceptan que el presente contrato, junto con los documentos que forman parte integral del mismo, y a los que haya lugar de conformidad con la ley, por contener obligaciones claras, expresas y exigibles, presta MÉRITO EJECUTIVO para exigir el pago de las sumas estipuladas por concepto de comisiones, honorarios, intereses moratorios, gestiones de cobro, así como cualquier otra suma a cargo de EL PROPIETARIO. Cualquier suma derivada del presente contrato, será exigible por la vía ejecutiva sin necesidad de los requerimientos previos ni constitución en mora de que tratan los Arts. 1594 y 1595 del Código Civil, 
 
-
 derechos estos a los que renuncia expresamente EL PROPIETARIO, así como cualquier otro que sea establecido en alguna norma de carácter procesal o sustancial. Otorgándole las partes, al contenido del presente contrato, los efectos de cosa juzgada material. 
 
 VIGÉSIMA SÉPTIMO: EL PROPIETARIO recibirá notificaciones en la dirección de residencia '.$propietario['DIRECCION'].', municipio '.$propietario['MUNICIPIO_CLI'].', departamento '.$propietario['DEPARTAMENTO_CLI'].'. Correo electrónico '.$propietario['EMAIL'].', teléfono '.$propietario['TELEFONO'].', dirección de trabajo '.$propietario['DIRECCION_LAB'].' y EL ADMINISTRADOR recibirá notificaciones en la Carrera 9 No. 5-39 Barrio Centro de Villa del Rosario, correo electrónico Inmobiliarialaurarivera@gmail.com, teléfono 3043849768. 
-
-
 
 En señal de conformidad, los contratantes suscriben este documento en dos ejemplares del mismo tenor y valor, a los '.numeros_letras_min($dia).' ('.$dia.') días del mes de'.$mes.' de'.$anio.' del municipio de Villa del Rosario.
 
 
 ';
-$pdf->SetFont('Arial','',10);
+$pdf->SetFont('Arial','',9);
 // Justificar los párrafos
 $paragraphs = $pdf->MultiCell($col_width, 5, utf8_decode($text), 0, 'J');
 
@@ -261,4 +255,4 @@ $pdf->MultiCell($col_width, 5, utf8_decode($text2), 0, 'J');
 $pdf->SetXY($current_x, $current_y);
 
 // Guardar el PDF
-$pdf->Output();
+$pdf->Output('Consignacion_arriendo'.$adm.'.pdf', 'D');?>
