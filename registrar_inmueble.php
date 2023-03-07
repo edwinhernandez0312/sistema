@@ -54,20 +54,6 @@ require_once "vistas/nav.php";
                     <input type="text" class="form-control" id="direccion" name="direccion" minlength="3" maxlength="250" required title="Dijite la direccion">
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
-                    <label for="negocio">Tipo de negocio:</label>
-                    <select class="form-control" id="negocio" name="negocio" required title="Dijite el estado civil">
-                        <option value="">Selecciona una opción</option>
-                        <?php
-                        $consulta = $conex->query("SELECT * FROM `tipo_negocio`;");
-                        while ($row = $consulta->fetch_array()) {
-                        ?>
-                            <option value="<?php echo $row['ID_NEGOCIO'] ?>"><?php echo $row['TIPO_NEGOCIO'] ?></option>
-                        <?php
-                        }
-                        ?>
-                    </select>
-                </div>
-                <div class="form-group col-sm-12 col-md-6">
                     <label for="precio_ven">Precio de venta:</label>
                     <input type="text" class="form-control" id="precio_ven" name="precio_ven" minlength="3" maxlength="250" required pattern="^[0-9()+-.]*$" title="Precio de venta">
                 </div>
@@ -447,7 +433,6 @@ if (isset($_POST['enviar'])) {
     $barrio = trim($_POST['barrio']);
     $codigo_postal = trim($_POST['codigo-postal']);
     $direccion = trim($_POST['direccion']);
-    $tipo_negocios = trim($_POST['negocio']);
     $codigo_wasi = trim($_POST['wasi_inm']);
     $estrato = trim($_POST['Estrato']);
     if (isset($_POST['servicios'])) {
@@ -474,7 +459,6 @@ if (isset($_POST['enviar'])) {
         strlen($barrio) >= 1 &&
         strlen($codigo_postal) >= 1 &&
         strlen($direccion) >= 1 &&
-        strlen($tipo_negocios) >= 1 &&
         strlen($precio_venta) >= 1 &&
         strlen($precio_can) >= 1 &&
         strlen($precio_adm) >= 1 &&
@@ -497,8 +481,8 @@ if (isset($_POST['enviar'])) {
             $errores[] = "Ya existe un registro con el codigo de wasi o con esa matricula";
         }
         if (empty($errores)) {
-            $SQL = $conex->query("INSERT INTO `inmueble`( `PROPIETARIO`, `MATRICULA_INMUEBLE`, `DEPARTAMENTO`, `MUNICIPIO`, `BARRIO`, `CODIGO_POSTAL`, `DIRECCION`, `TIPO_NEGOCIO`,`PRECIO_VENTA`,`PRECIO_CANON`,`PRECIO_ADMINISTRACION`, `CODIGO_WASI_INMUEBLE`, `ESTRATO`, `SERVICIOS`, `HABITACIONES`, `BAÑOS`, `GARAJE`, `ACEPTAN_MASCOTAS`, `FECHA_CREACION_INMUEBLE`, `USUARIO_CREACION_INMUEBLE`, `FECHA_MODIFICACION_INMUEBLE`, `USUARIO_MODIFICACION_INMUEBLE`) 
-            VALUES ('$id_pro','$matricula','$departamento','$municipio','$barrio','$codigo_postal','$direccion','$tipo_negocios','$precio_venta','$precio_can','$precio_adm','$codigo_wasi','$estrato','$servicios_total','$habitaciones','$baños','$garaje','$mascotas','$fecha_registro','$usuario_registro','$fecha_modificacion','$usuario_modificacion');");
+            $SQL = $conex->query("INSERT INTO `inmueble`( `PROPIETARIO`, `MATRICULA_INMUEBLE`, `DEPARTAMENTO`, `MUNICIPIO`, `BARRIO`, `CODIGO_POSTAL`, `DIRECCION`, `PRECIO_VENTA`,`PRECIO_CANON`,`PRECIO_ADMINISTRACION`, `CODIGO_WASI_INMUEBLE`, `ESTRATO`, `SERVICIOS`, `HABITACIONES`, `BAÑOS`, `GARAJE`, `ACEPTAN_MASCOTAS`, `FECHA_CREACION_INMUEBLE`, `USUARIO_CREACION_INMUEBLE`, `FECHA_MODIFICACION_INMUEBLE`, `USUARIO_MODIFICACION_INMUEBLE`) 
+            VALUES ('$id_pro','$matricula','$departamento','$municipio','$barrio','$codigo_postal','$direccion','$precio_venta','$precio_can','$precio_adm','$codigo_wasi','$estrato','$servicios_total','$habitaciones','$baños','$garaje','$mascotas','$fecha_registro','$usuario_registro','$fecha_modificacion','$usuario_modificacion');");
             if ($SQL) {
                 echo "<script>
                 Swal.fire({

@@ -64,26 +64,6 @@ require_once "vistas/nav.php";
                 <input type="text" class="form-control" value="<?php echo $row['DIRECCION'] ?>" id="direccion" name="direccion" minlength="3" maxlength="250" title="Dijite la direccion" readonly disabled>
             </div>
             <div class="form-group col-sm-12 col-md-6">
-                <label for="negocio">Tipo de negocio:</label>
-                <select class="form-control" id="negocio" name="negocio" title="Dijite el estado civil" readonly disabled>
-                    <option value="">Selecciona una opción</option>
-                    <?php
-                    $consulta = $conex->query("SELECT * FROM `tipo_negocio`;");
-                    while ($row2 = $consulta->fetch_array()) {
-                        if ($row2['ID_NEGOCIO'] == $row['TIPO_NEGOCIO']) {
-                    ?>
-                            <option value="<?php echo $row2['ID_NEGOCIO'] ?>" selected><?php echo $row2['TIPO_NEGOCIO'] ?></option>
-                        <?php
-                        } else {
-                        ?>
-                            <option value="<?php echo $row2['ID_NEGOCIO'] ?>"><?php echo $row2['TIPO_NEGOCIO'] ?></option>
-                    <?php
-                        }
-                    }
-                    ?>
-                </select>
-            </div>
-            <div class="form-group col-sm-12 col-md-6">
                 <label for="precio_ven">Precio de venta:</label>
                 <input type="text" class="form-control" value="<?php echo $row['PRECIO_VENTA'] ?>" name="precio_ven" minlength="3" maxlength="250" required pattern="^[0-9()+-.]*$" readonly disabled>
             </div>
@@ -542,7 +522,7 @@ require_once "vistas/nav.php";
             </div>
             <div class="form-group col-sm-12 col-md-6">
                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#Modal">Editar</button>
-                <a href="contrato_consignacion_arriendo.php?ID_INMUEBLE=<?php echo $row['ID_INMUEBLE']; ?>" target="_blank" class="btn btn-primary"><i class="fas fa-download"></i> Consignacion arriendo</a>
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalToggle">Generar documentos</button>
 
             </div>
         </div>
@@ -598,26 +578,6 @@ require_once "vistas/nav.php";
                                 <div class="form-group col-sm-12 col-md-6">
                                     <label for="direccion">Dirección:</label>
                                     <input type="text" class="form-control" value="<?php echo $row['DIRECCION'] ?>" id="direccion" name="direccion" minlength="3" maxlength="250" required title="Dijite la direccion">
-                                </div>
-                                <div class="form-group col-sm-12 col-md-6">
-                                    <label for="negocio">Tipo de negocio:</label>
-                                    <select class="form-control" id="negocio" name="negocio" required title="Dijite el estado civil">
-                                        <option value="">Selecciona una opción</option>
-                                        <?php
-                                        $consulta = $conex->query("SELECT * FROM `tipo_negocio`;");
-                                        while ($row2 = $consulta->fetch_array()) {
-                                            if ($row2['ID_NEGOCIO'] == $row['TIPO_NEGOCIO']) {
-                                        ?>
-                                                <option value="<?php echo $row2['ID_NEGOCIO'] ?>" selected><?php echo $row2['TIPO_NEGOCIO'] ?></option>
-                                            <?php
-                                            } else {
-                                            ?>
-                                                <option value="<?php echo $row2['ID_NEGOCIO'] ?>"><?php echo $row2['TIPO_NEGOCIO'] ?></option>
-                                        <?php
-                                            }
-                                        }
-                                        ?>
-                                    </select>
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6">
                                     <label for="precio_ven">Precio de venta:</label>
@@ -1156,6 +1116,27 @@ require_once "vistas/nav.php";
             </div>
         </div>
     </div>
+
+
+    <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Contratos</h1>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <a href="contrato_consignacion_arriendo.php?ID_INMUEBLE=<?php echo $row['ID_INMUEBLE']; ?>" target="_blank" class="btn btn-primary"><i class="fas fa-download"></i> Consignacion arriendo</a>
+                    <a href="contrato_consignacion_venta.php?ID_INMUEBLE=<?php echo $row['ID_INMUEBLE']; ?>" target="_blank" class="btn btn-primary"><i class="fas fa-download"></i> Consignacion venta</a>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         $(document).on("click", ".btn-primary", function() {
             var nombre = $(this).data("nombre");
@@ -1321,7 +1302,6 @@ require_once "vistas/nav.php";
         $barrio = trim($_POST['barrio']);
         $codigo_postal = trim($_POST['codigo-postal']);
         $direccion = trim($_POST['direccion']);
-        $tipo_negocios = trim($_POST['negocio']);
         $codigo_wasi = trim($_POST['wasi_inm']);
         $estrato = trim($_POST['Estrato']);
         if (isset($_POST['servicios'])) {
@@ -1346,7 +1326,6 @@ require_once "vistas/nav.php";
             strlen($barrio) >= 1 &&
             strlen($codigo_postal) >= 1 &&
             strlen($direccion) >= 1 &&
-            strlen($tipo_negocios) >= 1 &&
             strlen($precio_venta) >= 1 &&
             strlen($precio_can) >= 1 &&
             strlen($precio_adm) >= 1 &&
@@ -1378,7 +1357,7 @@ require_once "vistas/nav.php";
             if (empty($errores)) {
                 $SQL = $conex->query("UPDATE `inmueble` SET `PROPIETARIO`='$id_pro',`MATRICULA_INMUEBLE`='$matricula',
     `DEPARTAMENTO`='$departamento',`MUNICIPIO`='$municipio',`BARRIO`='$barrio',`CODIGO_POSTAL`='$codigo_postal',`DIRECCION`='$direccion',
-    `TIPO_NEGOCIO`='$tipo_negocios',`PRECIO_VENTA`='$precio_venta',`PRECIO_CANON`='$precio_can',`PRECIO_ADMINISTRACION`='$precio_adm', `CODIGO_WASI_INMUEBLE`='$codigo_wasi',`ESTRATO`='$estrato',`SERVICIOS`='$servicios_total',
+    `PRECIO_VENTA`='$precio_venta',`PRECIO_CANON`='$precio_can',`PRECIO_ADMINISTRACION`='$precio_adm', `CODIGO_WASI_INMUEBLE`='$codigo_wasi',`ESTRATO`='$estrato',`SERVICIOS`='$servicios_total',
     `HABITACIONES`='$habitaciones',`BAÑOS`='$baños',`GARAJE`='$garaje',`ACEPTAN_MASCOTAS`='$mascotas',
     `FECHA_MODIFICACION_INMUEBLE`='$fecha_modificacion', `USUARIO_MODIFICACION_INMUEBLE`='$usuario_modificacion' WHERE ID_INMUEBLE='$id_inmueble';");
                 if ($SQL) {
