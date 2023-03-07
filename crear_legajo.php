@@ -42,7 +42,7 @@ require_once "vistas/nav.php";
                     <input type="text" class="form-control" id="propietario" name="propietario" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚÑ]+" title="Dijite el propietario" readonly disabled>
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
-                    <button type="submit" id="enviar" name="enviar" class="btn btn-info">Registrar</button>
+                    <button type="submit" id="enviar" name="enviar" class="btn btn-info">Continuar</button>
                 </div>
             </div>
         </form>

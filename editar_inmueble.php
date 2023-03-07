@@ -85,11 +85,11 @@ require_once "vistas/nav.php";
             </div>
             <div class="form-group col-sm-12 col-md-6">
                 <label for="precio_ven">Precio de venta:</label>
-                <input type="text" class="form-control" value="<?php echo $row['PRECIO_VENTA'] ?>"  name="precio_ven" minlength="3" maxlength="250" required pattern="^[0-9()+-.]*$" readonly disabled>
+                <input type="text" class="form-control" value="<?php echo $row['PRECIO_VENTA'] ?>" name="precio_ven" minlength="3" maxlength="250" required pattern="^[0-9()+-.]*$" readonly disabled>
             </div>
             <div class="form-group col-sm-12 col-md-6">
                 <label for="precio_can">Precio de canon de arriendo:</label>
-                <input type="text" class="form-control" value="<?php echo $row['PRECIO_CANON'] ?>"  name="precio_can" minlength="3" maxlength="250" required pattern="^[0-9()+-.]*$" readonly disabled>
+                <input type="text" class="form-control" value="<?php echo $row['PRECIO_CANON'] ?>" name="precio_can" minlength="3" maxlength="250" required pattern="^[0-9()+-.]*$" readonly disabled>
             </div>
             <div class="form-group col-sm-12 col-md-6">
                 <label for="wasi_inm">Codigo wasi del inmueble:</label>
@@ -358,7 +358,7 @@ require_once "vistas/nav.php";
             </div>
             <div class="form-group col-sm-12 col-md-6">
                 <label for="precio_adm">Precio administración:</label>
-                <input type="text" class="form-control" value="<?php echo $row['PRECIO_ADMINISTRACION'] ?> "  name="precio_adm" minlength="3" maxlength="250" required pattern="^[0-9()+-.]*$" readonly disabled>
+                <input type="text" class="form-control" value="<?php echo $row['PRECIO_ADMINISTRACION'] ?> " name="precio_adm" minlength="3" maxlength="250" required pattern="^[0-9()+-.]*$" readonly disabled>
             </div>
             <div class="form-group col-sm-12 col-md-6">
                 <label for="habitaciones">Habitaciones</label>
@@ -562,7 +562,7 @@ require_once "vistas/nav.php";
                         <form method="post" class="user needs-validation" novalidate>
                             <div class="row">
                                 <div class="form-group col-sm-12 col-md-6">
-                                    <input type="hidden" id="id_pro" name="id_pro" value="<?php echo $row['ID_INMUEBLE'] ?>">
+                                    <input type="hidden" id="id_pro" name="id_pro" value="<?php echo $row['PROPIETARIO'] ?>">
                                     <div class="row">
                                         <label for="cedula" class="col-sm-6">Propietario:</label>
                                         <h5 class="col-sm-6 d-flex justify-content-end m-0 font-weight-bold text-primary">
