@@ -136,7 +136,7 @@ $pdf->SetFont('Arial','B',10);
 $col_width = 190;
 
 // Agregar título del contrato
-$pdf->Cell(0, 10, utf8_decode('CONTRATO DE ADMINISTRACIÓN DE INMUEBLES EN ARRENDAMIENTO'), 0, 1, 'C');
+$pdf->Cell(0, 10, utf8_decode('CONTRATO DE CONSIGNACIÓN DE INMUEBLES VENTA'), 0, 1, 'C');
 
 // Ajustar posición del MultiCell para que comience debajo del título
 $pdf->Ln(10);
