@@ -19,19 +19,7 @@ require_once "vistas/nav.php";
     <div class="card-body">
         <form method="POST" class="user needs-validation" novalidate action="crear_legajo2.php">
             <div class="row">
-                <div class="form-group col-sm-12 col-md-6">
-                    <label for="num_legajo">Numero de legajo:</label>
-                    <input type="text" class="form-control" id="num_legajo" name="num_legajo" minlength="5" maxlength="250" required title="Dijite la matricula del inmueble">
-                </div>
-                <div class="form-group col-sm-12 col-md-6">
-                    <label for="estado">Estado</label>
-                    <select name="estado" id="estado" class="form-control" title="Estrato del inmueble" required>
-                        <option value="">Selecciona una opción</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                    </select>
-                </div>
-                <div class="form-group col-sm-12 col-md-6">
+                <div class="form-group col-sm-12 col-md-12">
                     <input type="hidden" id="id_pro" name="id_pro">
                     <div class="row">
                         <label for="cedula" class="col-sm-6">Propietario:</label>

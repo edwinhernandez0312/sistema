@@ -10,10 +10,8 @@ if ($_SESSION['TIPO_USUARIO'] != 1 && $_SESSION['TIPO_USUARIO'] != 2) {
     header("Location: login.php");
     exit;
 }
-if (isset($_POST['num_legajo']) && isset($_POST['estado']) && isset($_POST['id_pro'])) {
-    if(!empty($_POST['num_legajo'])
-    && !empty($_POST['estado'])
-    && !empty($_POST['id_pro'])
+if (isset($_POST['id_pro'])) {
+    if(!empty($_POST['id_pro'])
     ){
     }else{
         die("Datos imcompletos");
@@ -21,9 +19,15 @@ if (isset($_POST['num_legajo']) && isset($_POST['estado']) && isset($_POST['id_p
 }else{
     die("Datos incompletos");
 }
-$num_legajo = trim($_POST['num_legajo']);
-$estado=trim($_POST['estado']);
 $id_pro = trim($_POST['id_pro']);
+$consultar_legajo=$conex->query("SELECT * FROM `legajo` WHERE CLIENTE='$id_pro';");
+$num=mysqli_num_rows($consultar_legajo);
+if($num>0){
+$datos=mysqli_fetch_array($consultar_legajo);
+}else{
+    $datos="";
+}
+
 require_once "vistas/nav.php";
 ?>
 <div class="card shadow mb-4">
@@ -44,14 +48,6 @@ require_once "vistas/nav.php";
                     <input type="text" class="form-control" id="matricula" name="matricula" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚÑ]+" readonly disabled>
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
-                    <label for="afianzadora">Afianzadora</label>
-                    <select name="afianzadora" id="afianzadora" class="form-control" title="Afianzadora del inmueble" required>
-                        <option value="">Selecciona una opción</option>
-                        <option value="Fianza Ferrer">Fianza Ferrer</option>
-                        <option value="Fianly">Fianly</option>
-                    </select>
-                </div>
-                <div class="form-group col-sm-12 col-md-6">
                     <input type="hidden" id="id_cod" name="id_cod">
                     <div class="row">
                         <label for="codeudor" class="col-sm-6">Codeudor:</label>
@@ -62,20 +58,8 @@ require_once "vistas/nav.php";
                     <input type="text" class="form-control" id="codeudor" name="codeudor" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚÑ]+" readonly disabled>
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
-                    <label for="semillero">Semillero:</label>
-                    <input type="text" class="form-control" id="semillero" name="semillero" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚÑ]+" title="Dijite el barrio donde esta ubicado el inmueble">
-                </div>
-                <div class="form-group col-sm-12 col-md-6">
-                    <label for="fecha_registro">Fecha Incio de contrato:</label>
-                    <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio">
-                </div>
-                <div class="form-group col-sm-12 col-md-6">
-                    <label for="codigo-postal">Codigo postal:</label>
-                    <input type="text" class="form-control" id="codigo-postal" name="codigo-postal" minlength="3" maxlength="250" required pattern="^[0-9()+-]*$" title="Dijite el codigo postal">
-                </div>
-                <div class="form-group col-sm-12 col-md-6">
-                    <label for="direccion">Dirección:</label>
-                    <input type="text" class="form-control" id="direccion" name="direccion" minlength="3" maxlength="250" required title="Dijite la direccion">
+                    <label for="legajo">Legajo:</label>
+                    <input type="text" class="form-control" id="legajo" name="legajo" minlength="3" maxlength="250" required>
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="fecha_registro">Fecha Registro:</label>
@@ -103,10 +87,9 @@ require_once "vistas/nav.php";
 </div>
 
 <?php
-$resultado = $conex->query("SELECT NOMBRES,APELLIDOS, tipo_negocio.TIPO_NEGOCIO, inmueble.*
+$resultado = $conex->query("SELECT NOMBRES,APELLIDOS, inmueble.*
 FROM inmueble
 INNER JOIN cliente ON inmueble.PROPIETARIO = cliente.ID_CLIENTE
-INNER JOIN tipo_negocio ON inmueble.TIPO_NEGOCIO = tipo_negocio.ID_NEGOCIO
 WHERE inmueble.PROPIETARIO = '$id_pro';");
 ?>
 
