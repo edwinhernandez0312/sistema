@@ -19,7 +19,7 @@ if (isset($_POST['id_pro'])) {
     die("Datos incompletos");
 }
 $id_pro = trim($_POST['id_pro']);
-$USU=$_SESSION['ID_USUARIO'];
+$USU = $_SESSION['ID_USUARIO'];
 // Consulta para contar las filas con NULL en IDENTIFICADOR
 $sql = "SELECT COUNT(*) FROM legajo WHERE IDENTIFICADOR IS NULL";
 
@@ -29,33 +29,47 @@ $resultado = mysqli_query($conex, $sql);
 // Obtener resultado
 $legajos_libres = mysqli_fetch_array($resultado);
 
-if ($legajos_libres[0] == 0) {
-    $query = "SELECT * FROM legajo ORDER BY NUMERO_LEGAJO DESC LIMIT 1";
-    $result = mysqli_query($conex, $query);
-    $row = mysqli_fetch_assoc($result);
-    $caja_legajo = intval($row['CAJA_LEGAJO']);
-    $anio_legajo=intval($row['ANO_LEGAJO']);
-    $year = date("Y");
-        $caja_legajo=strval($caja_legajo+1);
-        $cajanueva=str_pad($caja_legajo, 3, "0", STR_PAD_LEFT);
-        if($anio_legajo == $year){
-            for ($i = 1; $i <= 15; $i++) {
-                $num = strval($i);
-                $num_str = str_pad($num, 3, "0", STR_PAD_LEFT);
-                $query="INSERT INTO `legajo`(`ANO_LEGAJO`, `CAJA_LEGAJO`, `NUMERO_LEGAJO`, `IDENTIFICADOR`, `USUARIO_CREACION_LEGAJO`) VALUES ('$year','$cajanueva','$num_str',NULL,'$USU')";
-                mysqli_query($conex, $query);
-            }
-        }else{
-            $caja_legajo=strval("1");
-            $cajanueva=str_pad($caja_legajo, 3, "0", STR_PAD_LEFT);
-            for ($i = 1; $i <= 15; $i++) {
-                $num = strval($i);
-                $num_str = str_pad($num, 3, "0", STR_PAD_LEFT);
-                $query="INSERT INTO `legajo`(`ANO_LEGAJO`, `CAJA_LEGAJO`, `NUMERO_LEGAJO`, `IDENTIFICADOR`, `USUARIO_CREACION_LEGAJO`) VALUES ('$year','$cajanueva','$num_str',NULL,'$USU')";
-                mysqli_query($conex, $query);        
-            }
+//consulta par obtener los datos de los legajos
+$query = "SELECT * FROM legajo ORDER BY ID_LEGAJO DESC LIMIT 1;";
+$result = mysqli_query($conex, $query);
+$row = mysqli_fetch_assoc($result);
+$anio_legajo = intval($row['ANO_LEGAJO']);
+//obtenemos el año actual
+$year = date("Y");
+
+if ($anio_legajo == $year) {
+
+    //verificar si no existen legajos con el identificador en NULL
+    if ($legajos_libres[0] == 0) {
+
+        $caja_legajo = intval($row['CAJA_LEGAJO']);
+        $caja_legajo = $caja_legajo + 1;
+        //actualiza el numero de caja
+        $caja_legajo = strval($caja_legajo);
+        $cajanueva = str_pad($caja_legajo, 3, "0", STR_PAD_LEFT);
+        //verifica que el año sea el mismo que el de la ultima caja
+        for ($i = 1; $i <= 15; $i++) {
+            $num = strval($i);
+            $num_str = str_pad($num, 3, "0", STR_PAD_LEFT);
+            $query = "INSERT INTO `legajo`(`ANO_LEGAJO`, `CAJA_LEGAJO`, `NUMERO_LEGAJO`, `IDENTIFICADOR`, `USUARIO_CREACION_LEGAJO`) VALUES ('$year','$cajanueva','$num_str',NULL,'$USU')";
+            mysqli_query($conex, $query);
+        }
+    }
+} else {
+    echo "entra al libre";
+    $new_identificator = "año pasado";
+    $query = "UPDATE `legajo` SET `IDENTIFICADOR`= '$new_identificator' WHERE `ANO_LEGAJO`= '$anio_legajo' AND IDENTIFICADOR IS NULL";
+    $sql = mysqli_query($conex, $query);
+    $caja_legajo = strval("1");
+    $cajanueva = str_pad($caja_legajo, 3, "0", STR_PAD_LEFT);
+    for ($i = 1; $i <= 15; $i++) {
+        $num = strval($i);
+        $num_str = str_pad($num, 3, "0", STR_PAD_LEFT);
+        $query = "INSERT INTO `legajo`(`ANO_LEGAJO`, `CAJA_LEGAJO`, `NUMERO_LEGAJO`, `IDENTIFICADOR`, `USUARIO_CREACION_LEGAJO`) VALUES ('$year','$cajanueva','$num_str',NULL,'$USU')";
+        mysqli_query($conex, $query);
     }
 }
+
 require_once "vistas/nav.php";
 
 ?>
