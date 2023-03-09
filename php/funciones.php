@@ -325,4 +325,30 @@ function numeros_letras_min($numero){
     $numero_letras = $formatter->format($numero_entero);
     return ($numero_letras);
 }
+// funcion para darle secuencia con las letras del alfabeto
+function letras_orden($letras_bd){
+    // aumentar una letra que me llegue esto es si solo es hasta la Z
+    $siguiente_identidicador = chr(ord($letras_bd) + 1);
+    if($letras_bd=="Z"){
+        // si la letra que llega ya es la Z quiere decir que se tiene que empezar de neuvo con AA
+        $siguiente_identidicador="AA";
+        // si lo que llega de la base de datos tiene 2 letras quiere decir que ya esta AA o otra de esta menera
+    } elseif(strlen($letras_bd) >=2){
+        // aca separalo cada letra dentro de un array
+        $letras = str_split($letras_bd);
+        // aca pregunto si la ultima posicion este casi la 1 tiene una Z 
+        if($letras[1]=="Z"){
+            // si la ultima letra es Z entonces la primera letra tiene que aumentar en 1 la seguna pasa hacer A
+            $letra_uno=chr(ord($letras[0]) +1);
+            $letra_dos="A";
+            $siguiente_identidicador=$letra_uno . $letra_dos;
+        }else{
+            // si no es la Z entonces solo aumenta la ultima letra en orden
+            $letra_uno=$letras[0];
+            $letra_dos=chr(ord($letras[1]) +1);
+            $siguiente_identidicador=$letra_uno . $letra_dos;
+        }
+    }
+    return $siguiente_identidicador;
+}
 ?>

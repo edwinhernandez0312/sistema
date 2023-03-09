@@ -14,15 +14,15 @@ require_once "vistas/nav.php";
 ?>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Crear legajo</h6>
+        <h1 class="m-0 font-weight-bold text-primary">Crear legajo</h1>
     </div>
     <div class="card-body">
-        <form method="POST" class="user needs-validation" novalidate action="crear_legajo2.php">
+        <form method="GET" class="user needs-validation" novalidate action="create_folder.php">
             <div class="row">
                 <div class="form-group col-sm-12 col-md-12">
                     <input type="hidden" id="id_pro" name="id_pro">
                     <div class="row">
-                        <label for="cedula" class="col-sm-6">Propietario:</label>
+                        <label for="propietario" class="col-sm-6">Propietario:</label>
                         <h5 class="col-sm-6 d-flex justify-content-end m-0 font-weight-bold text-primary">
                             <a type="button" class="nav-link fa fa-user-plus" data-toggle="modal" data-target="#exampleModal"></a>
                         </h5>
@@ -30,7 +30,7 @@ require_once "vistas/nav.php";
                     <input type="text" class="form-control" id="propietario" name="propietario" minlength="3" maxlength="250" required pattern="[a-zA-Z\sñáéíóúÁÉÍÓÚÑ]+" title="Dijite el propietario" readonly disabled>
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
-                    <button type="submit" id="enviar" name="enviar" class="btn btn-info">Continuar</button>
+                    <button type="submit" id="enviar"  class="btn btn-info">Continuar</button>
                 </div>
             </div>
         </form>
@@ -38,7 +38,9 @@ require_once "vistas/nav.php";
     </div>
 </div>
 <?php
-$resultado = $conex->query("SELECT * FROM cliente");
+$resultado = $conex->query("SELECT DISTINCT ID_CLIENTE,NOMBRES,APELLIDOS,CEDULA,TELEFONO,cliente.DIRECCION,EMAIL
+FROM cliente
+JOIN inmueble ON cliente.ID_CLIENTE = inmueble.PROPIETARIO;");
 ?>
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">

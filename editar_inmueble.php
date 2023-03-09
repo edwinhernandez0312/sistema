@@ -523,9 +523,10 @@ require_once "vistas/nav.php";
             <div class="form-group col-sm-12 col-md-6">
                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#Modal">Editar</button>
                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalToggle">Generar documentos</button>
-
             </div>
         </div>
+    </div>
+</div>
         <?php
         $resultado = $conex->query("SELECT * FROM cliente");
         ?>
@@ -649,6 +650,15 @@ require_once "vistas/nav.php";
                                             <option value="4">4</option>
                                             <option value="5">5</option>
                                             <option value="6" selected>6</option>
+                                        <?php
+                                        }else{
+                                            ?>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
                                         <?php
                                         }
                                         ?>
@@ -915,6 +925,15 @@ require_once "vistas/nav.php";
                                             <option value="5">5</option>
                                             <option value="6" selected>6</option>
                                         <?php
+                                        }else{
+                                            ?>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                        <?php
                                         }
                                         ?>
                                     </select>
@@ -978,6 +997,15 @@ require_once "vistas/nav.php";
                                             <option value="5">5</option>
                                             <option value="6" selected>6</option>
                                         <?php
+                                        }else{
+                                            ?>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                        <?php
                                         }
                                         ?>
                                     </select>
@@ -997,6 +1025,11 @@ require_once "vistas/nav.php";
                                             <option value="si">SI</option>
                                             <option value="no" selected>NO</option>
                                         <?php
+                                        }else{
+                                            ?>
+                                            <option value="si">SI</option>
+                                            <option value="no">NO</option>
+                                        <?php
                                         }
                                         ?>
                                     </select>
@@ -1015,6 +1048,11 @@ require_once "vistas/nav.php";
                                         ?>
                                             <option value="si">SI</option>
                                             <option value="no" selected>NO</option>
+                                        <?php
+                                        }else{
+                                            ?>
+                                            <option value="si">SI</option>
+                                            <option value="no">NO</option>
                                         <?php
                                         }
                                         ?>

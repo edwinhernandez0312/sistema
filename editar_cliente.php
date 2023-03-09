@@ -9,12 +9,10 @@ if (!isset($_SESSION['TIPO_USUARIO'])) {
 }
 $usuario_actual = $_SESSION['ID_USUARIO'];
 // Verificar si se envió el id del cliente a editar
-if (isset($_GET['id'])) {
-    $id_cliente = $_GET['id'];
-} else {
-    die('Error: no se ha especificado el id del cliente');
-}
-
+$id_cliente = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+if ($id_cliente === false) {
+    die('Datos inválidos');
+    }
 // Consulta SQL para obtener los datos del cliente a editar
 $sql = "SELECT * FROM cliente WHERE ID_CLIENTE = $id_cliente";
 $resultado = mysqli_query($conex, $sql);
