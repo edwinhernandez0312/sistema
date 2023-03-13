@@ -16,13 +16,21 @@ if ($id_pro === false) {
 }
 $USU = $_SESSION['ID_USUARIO'];
 // Consulta para contar las filas con NULL en IDENTIFICADOR
-$sql = "SELECT COUNT(*) FROM legajo WHERE IDENTIFICADOR IS NULL";
+$sql = "SELECT COUNT(*) FROM legajo WHERE IDENTIFICADOR IS NULL AND TIPO_LEGAJO = 'CA';";
 
 // Ejecutar consulta
 $resultado = mysqli_query($conex, $sql);
 
 // Obtener resultado
 $legajos_libres = mysqli_fetch_array($resultado);
+
+$sql2 = "SELECT COUNT(*) FROM legajo WHERE IDENTIFICADOR IS NULL AND TIPO_LEGAJO = 'CV';";
+
+// Ejecutar consulta
+$resultado2 = mysqli_query($conex, $sql2);
+
+// Obtener resultado
+$legajos_libres2 = mysqli_fetch_array($resultado2);
 
 //consulta par obtener los datos de los legajos
 $query = "SELECT * FROM legajo ORDER BY ID_LEGAJO DESC LIMIT 1;";
@@ -32,11 +40,10 @@ $anio_legajo = intval($row['ANO_LEGAJO']);
 //obtenemos el año actual
 $year = date("Y");
 
-if ($anio_legajo == $year) {
+if ($anio_legajo == $year || $anio_legajo =="") {
 
     //verificar si no existen legajos con el identificador en NULL
     if ($legajos_libres[0] == 0) {
-
         $caja_legajo = intval($row['CAJA_LEGAJO']);
         $caja_legajo = $caja_legajo + 1;
         //actualiza el numero de caja
@@ -46,8 +53,21 @@ if ($anio_legajo == $year) {
         for ($i = 1; $i <= 15; $i++) {
             $num = strval($i);
             $num_str = str_pad($num, 3, "0", STR_PAD_LEFT);
-            $query = "INSERT INTO `legajo`(`ANO_LEGAJO`, `CAJA_LEGAJO`, `NUMERO_LEGAJO`, `IDENTIFICADOR`, `USUARIO_CREACION_LEGAJO`) VALUES ('$year','$cajanueva','$num_str',NULL,'$USU')";
+            $query = "INSERT INTO `legajo`(`ANO_LEGAJO`, `CAJA_LEGAJO`, `NUMERO_LEGAJO`, `IDENTIFICADOR`,`TIPO_LEGAJO`, `USUARIO_CREACION_LEGAJO`) VALUES ('$year','$cajanueva','$num_str',NULL,'CA','$USU')";
             mysqli_query($conex, $query);
+        }
+    } if ($legajos_libres2[0] == 0) {
+        $caja_legajo2 = intval($row['CAJA_LEGAJO']);
+        $caja_legajo2 = $caja_legajo2 + 1;
+        //actualiza el numero de caja
+        $caja_legajo2 = strval($caja_legajo2);
+        $cajanueva2 = str_pad($caja_legajo2, 3, "0", STR_PAD_LEFT);
+        //verifica que el año sea el mismo que el de la ultima caja
+        for ($i2 = 1; $i2 <= 15; $i2++) {
+            $num2 = strval($i);
+            $num_str2 = str_pad($num, 3, "0", STR_PAD_LEFT);
+            $query2 = "INSERT INTO `legajo`(`ANO_LEGAJO`, `CAJA_LEGAJO`, `NUMERO_LEGAJO`, `IDENTIFICADOR`,`TIPO_LEGAJO`, `USUARIO_CREACION_LEGAJO`) VALUES ('$year','$cajanueva2','$num_str2',NULL,'CV','$USU')";
+            mysqli_query($conex, $query2);
         }
     }
 } else {
@@ -55,14 +75,25 @@ if ($anio_legajo == $year) {
     $new_identificator = "año pasado";
     $query = "UPDATE `legajo` SET `IDENTIFICADOR`= '$new_identificator' WHERE `ANO_LEGAJO`= '$anio_legajo' AND IDENTIFICADOR IS NULL";
     $sql = mysqli_query($conex, $query);
+    if($legajos_libres[0]==0){
     $caja_legajo = strval("1");
     $cajanueva = str_pad($caja_legajo, 3, "0", STR_PAD_LEFT);
     for ($i = 1; $i <= 15; $i++) {
         $num = strval($i);
         $num_str = str_pad($num, 3, "0", STR_PAD_LEFT);
-        $query = "INSERT INTO `legajo`(`ANO_LEGAJO`, `CAJA_LEGAJO`, `NUMERO_LEGAJO`, `IDENTIFICADOR`, `USUARIO_CREACION_LEGAJO`) VALUES ('$year','$cajanueva','$num_str',NULL,'$USU')";
+        $query = "INSERT INTO `legajo`(`ANO_LEGAJO`, `CAJA_LEGAJO`, `NUMERO_LEGAJO`, `IDENTIFICADOR`,`TIPO_LEGAJO`, `USUARIO_CREACION_LEGAJO`) VALUES ('$year','$cajanueva','$num_str',NULL,'CA','$USU')";
         mysqli_query($conex, $query);
     }
+}
+if($legajos_libres2[0]==0){
+    $cajanueva = str_pad($caja_legajo, 3, "0", STR_PAD_LEFT);
+    for ($i = 1; $i <= 15; $i++) {
+        $num = strval($i);
+        $num_str = str_pad($num, 3, "0", STR_PAD_LEFT);
+        $query = "INSERT INTO `legajo`(`ANO_LEGAJO`, `CAJA_LEGAJO`, `NUMERO_LEGAJO`, `IDENTIFICADOR`,`TIPO_LEGAJO`, `USUARIO_CREACION_LEGAJO`) VALUES ('$year','$cajanueva','$num_str',NULL,'CV','$USU')";
+        mysqli_query($conex, $query);
+    }
+}
 }
 
 //trarer los inmuebles que no esten registrados de un cliente
