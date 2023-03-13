@@ -51,7 +51,7 @@ if ($anio_legajo == $year) {
         }
     }
 } else {
-    echo "entra al libre";
+    // echo "entra al libre";
     $new_identificator = "año pasado";
     $query = "UPDATE `legajo` SET `IDENTIFICADOR`= '$new_identificator' WHERE `ANO_LEGAJO`= '$anio_legajo' AND IDENTIFICADOR IS NULL";
     $sql = mysqli_query($conex, $query);
@@ -78,7 +78,7 @@ require_once "vistas/nav.php";
         <h1 class="m-0 font-weight-bold text-primary">Crear legajo</h1>
     </div>
     <div class="card-body">
-        <form method="POST" class="user needs-validation">
+        <form method="POST" class="user needs-validation" novalidate>
             <div class="row">
                 <div class="form-group col-sm-12 col-md-6">
                     <input type="hidden" id="id_inm" name="id_inm">
@@ -96,7 +96,7 @@ require_once "vistas/nav.php";
                         <option value="">Selecciona una opción</option>
                         <?php
                         // veridicar si el cliente ya tiene legajo y que me lo traiga
-                        $cliente_existe = $conex->query("SELECT legajo.* FROM legajo WHERE EXISTS (SELECT 1 FROM cliente WHERE cliente.ID_CLIENTE = legajo.CLIENTE AND cliente.ID_CLIENTE = '$id_pro') AND legajo.ID_LEGAJO = (SELECT MAX(legajo.ID_LEGAJO) FROM legajo);");
+                        $cliente_existe = $conex->query("SELECT * FROM legajo WHERE ID_LEGAJO = (SELECT MAX(ID_LEGAJO) FROM legajo WHERE legajo.CLIENTE = '$id_pro');");
                         $num_clientes = mysqli_num_rows($cliente_existe);
                         if ($num_clientes > 0) {
                             $row_clientes = $cliente_existe->fetch_array();
@@ -109,7 +109,7 @@ require_once "vistas/nav.php";
                             if ($filas > 0) {
                                 while ($row = $num_legajo->fetch_array()) {
                             ?>
-                                    <option value="<?php echo $row_clientes['ANO_LEGAJO'] . "-" . $row_clientes['CAJA_LEGAJO'] . "-" . $row_clientes['NUMERO_LEGAJO'] ?>"><?php echo $row['ANO_LEGAJO'] . "-" . $row['CAJA_LEGAJO'] . "-" . $row['NUMERO_LEGAJO'] ?></option>
+                                    <option value="<?php echo $row['ID_LEGAJO'] . "-" . $row['ANO_LEGAJO'] . "-" . $row['CAJA_LEGAJO'] . "-" . $row['NUMERO_LEGAJO'] ?>"><?php echo $row['ANO_LEGAJO'] . "-" . $row['CAJA_LEGAJO'] . "-" . $row['NUMERO_LEGAJO'] ?></option>
                         <?php
                                 }
                             }
@@ -120,8 +120,12 @@ require_once "vistas/nav.php";
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="identificador">Identificador</label>
                     <?php
-                    $identificado_bd = $row_clientes['IDENTIFICADOR'];
-                    $siguiente_identidicador = letras_orden($identificado_bd);
+                    if ($num_clientes > 0) {
+                        $identificado_bd = $row_clientes['IDENTIFICADOR'];
+                        $siguiente_identidicador = letras_orden($identificado_bd);
+                    } else {
+                        $siguiente_identidicador = "A";
+                    }
                     ?>
                     <input type="text" class="form-control" value="<?php echo $siguiente_identidicador; ?>" id="identificador" name="identificador" readonly disabled>
                 </div>
@@ -146,6 +150,18 @@ require_once "vistas/nav.php";
                         <option value="Fianza Ferrer">Fianza Ferrer</option>
                         <option value="Fianly">Fianly</option>
                     </select>
+                </div>
+                <div class="form-group col-sm-12 col-md-6">
+                    <label for="estado">Estado</label>
+                    <select name="estado" id="estado" class="form-control" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="activo">Activo</option>
+                        <option value="inactivo">inactivo</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-12 col-md-6">
+                    <label for="prorroga">Prorroga</label>
+                    <input type="text" class="form-control" name="prorroga" id="prorroga" required>
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
                     <input type="hidden" id="id_cod" name="id_cod">
@@ -226,7 +242,7 @@ require_once "vistas/nav.php";
                                                 <td><?php echo $fila['BARRIO']; ?></td>
                                                 <td><?php echo $fila['CODIGO_POSTAL']; ?></td>
                                                 <td><?php echo $fila['DIRECCION']; ?></td>
-                                                <td><button type="button" name="Guardar" data-matricula="<?php echo $fila['MATRICULA_INMUEBLE'] ?>" data-id="<?php echo $fila['ID_INMUEBLE'] ?>" class="btn btn-primary">Seleccionar</button></td>
+                                                <td><button type="button" id="btn" name="Guardar" data-matricula="<?php echo $fila['MATRICULA_INMUEBLE'] ?>" data-id="<?php echo $fila['ID_INMUEBLE'] ?>" class="btn btn-primary">Seleccionar</button></td>
                                             </tr>
                                         <?php
                                         }
@@ -332,7 +348,7 @@ $codeudor = $conex->query("SELECT * FROM cliente WHERE ID_CLIENTE != '$id_pro';"
 </div>
 
 <script>
-    $(document).on("click", ".btn-primary", function() {
+    $(document).on("click", "#btn", function() {
         var matricula = $(this).data("matricula");
         var id = $(this).data("id");
         $("#inmueble").val(matricula);
@@ -351,30 +367,152 @@ $codeudor = $conex->query("SELECT * FROM cliente WHERE ID_CLIENTE != '$id_pro';"
         $("#exampleModal").modal("hide");
     });
 </script>
-<?php
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (() => {
+        'use strict'
 
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })()
+</script>
+<?php
+$errores=array();
 if (isset($_POST['enviar'])) {
     $id_inm = trim($_POST['id_inm']);
     $legajo = trim($_POST['num_legajo']);
     $semillero = trim($_POST['semillero']);
+    $afianzadora=trim($_POST['afianzadora']);
+    $estado = trim($_POST['estado']);
+    $prorroga=trim($_POST['prorroga']);
     $codeudor = trim($_POST['id_cod']);
     $inicio_contrato = trim($_POST['fecha_inicio_contrato']);
     $final_contrato = trim($_POST['fecha_finalizacion_contrato']);
     $usuario_registro = $_SESSION['ID_USUARIO'];
     $usuario_modificacion = $_SESSION['ID_USUARIO'];
     $fecha_modificacion = date('Y-m-d H:i:s');
-
     $legajo_separado = explode("-", $legajo);
-    $año_legajo = $legajo_separado[0];
-    $caja_legajo = $legajo_separado[1];
-    $numero_legajo = $legajo_separado[2];
 
-    $insertar = $conex->query("INSERT INTO `legajo`(`ANO_LEGAJO`, `CAJA_LEGAJO`, `NUMERO_LEGAJO`, `IDENTIFICADOR`, `ESTADO`, `INMUEBLE`,
-    `CLIENTE`, `AFIANZADORA`, `CODEUDOR`, `SEMILLERO`, `FECHA_INICIO_CONTRATO`, `FECHA_FINALIZACION_CONTRATO`, `TIEMPO_CONTRATO`,
-    `PRORROGA`, `FECHA_MODIFICACION`, `USUARIO_CREACION_LEGAJO`, `USUARIO_MODIFICACION_LEGAJO`) VALUES ('$año_legajo','$caja_legajo',
-    '$numero_legajo','$siguiente_identidicador','','$id_inm','$id_pro',null,'$codeudor','$semillero','$inicio_contrato','$final_contrato',
-    null,null,'$fecha_modificacion','$usuario_registro','$usuario_modificacion')");
+    $fecha1 = new DateTime("$inicio_contrato");
+    $fecha2 = new DateTime("$final_contrato");
+
+    // Calcular la diferencia con el método diff
+    $diferencia = $fecha1->diff($fecha2);
+
+    // Mostrar la diferencia en años, meses y días
+$fecha_total=array();
+    // Si los años son cero, no los mostramos
+    if ($diferencia->y > 0) {
+        $fecha_total[]= $diferencia->y . " años";
+        // Si hay meses o días, añadimos una coma
+        if ($diferencia->m > 0 || $diferencia->d > 0) {
+            // $fecha_total[]=" ,";
+        }
+    }
+
+    // Si los meses son cero, no los mostramos
+    if ($diferencia->m > 0) {
+        $fecha_total[]=$diferencia->m . " meses";
+        // Si hay días, añadimos una coma
+        if ($diferencia->d > 0) {
+            // $fecha_total[]=" ,";
+        }
+    }
+
+    // Si los días son cero, no los mostramos
+    if ($diferencia->d > 0) {
+        $fecha_total[]=$diferencia->d  . " días";
+    }
+    $fecha_subir=implode(",",$fecha_total);
+if(!validar_numero($id_inm) || !validar_texto($semillero) || !validar_texto($afianzadora)  || !validar_texto($estado)  || !validar_numero($codeudor)){
+    $errores[]="Error en el formato de datos que envias";
 }
-
+if($fecha1==$fecha2){
+    $errores[]="Las fechas no pueden ser iguales";
+}
+if($fecha1>$fecha2){
+    $errores[]="Las fecha de finalizacion de contrato no puede ser menor a la de inicio de contrato";
+}
+if(empty($errores)){
+    if ($num_clientes > 0) {
+        $año_legajo = $legajo_separado[0];
+        $caja_legajo = $legajo_separado[1];
+        $numero_legajo = $legajo_separado[2];
+        $insertar = $conex->query("INSERT INTO `legajo`(`ANO_LEGAJO`, `CAJA_LEGAJO`, `NUMERO_LEGAJO`, `IDENTIFICADOR`,
+    `ESTADO`, `INMUEBLE`, `CLIENTE`, `AFIANZADORA`, `CODEUDOR`, `SEMILLERO`, `FECHA_INICIO_CONTRATO`, `FECHA_FINALIZACION_CONTRATO`,
+    `TIEMPO_CONTRATO`, `PRORROGA`, `FECHA_MODIFICACION`, `USUARIO_CREACION_LEGAJO`, `USUARIO_MODIFICACION_LEGAJO`) 
+    VALUES ('$año_legajo','$caja_legajo','$numero_legajo','$siguiente_identidicador','$estado','$id_inm','$id_pro','$afianzadora','$codeudor',
+    '$semillero','$inicio_contrato','$final_contrato','$fecha_subir','$prorroga','$fecha_modificacion','$usuario_registro','$usuario_modificacion')");
+    if($insertar){
+        echo "<script>
+        Swal.fire({
+          title: '¡Éxito!',
+          text: 'La operación se realizó correctamente.',
+          icon: 'success',
+          confirmButtonText: 'Continuar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = 'crear_legajo.php';
+          }
+        })
+        </script>";
+    }else{
+        $errores[]="Error al guardar legajo ". mysqli_error($conex);
+    }
+    } else {
+        $id_legajo = $legajo_separado[0];
+        $año_legajo = $legajo_separado[1];
+        $caja_legajo = $legajo_separado[2];
+        $numero_legajo = $legajo_separado[3];
+        $insertar = $conex->query("UPDATE `legajo` SET `IDENTIFICADOR`='$siguiente_identidicador',`ESTADO`='$estado',`INMUEBLE`='$id_inm',`CLIENTE`='$id_pro',
+        `AFIANZADORA`='$afianzadora',`CODEUDOR`='$codeudor',`SEMILLERO`='$semillero',`FECHA_INICIO_CONTRATO`='$inicio_contrato',
+        `FECHA_FINALIZACION_CONTRATO`='$final_contrato',`TIEMPO_CONTRATO`='$fecha_subir',`PRORROGA`='$prorroga',
+        `FECHA_MODIFICACION`='$fecha_modificacion',`USUARIO_CREACION_LEGAJO`='$usuario_registro',`USUARIO_MODIFICACION_LEGAJO`='$usuario_modificacion' WHERE ID_LEGAJO='$id_legajo';");
+        if($insertar){
+            echo "<script>
+            Swal.fire({
+              title: '¡Éxito!',
+              text: 'La operación se realizó correctamente.',
+              icon: 'success',
+              confirmButtonText: 'Continuar'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                window.location.href = 'crear_legajo.php';
+              }
+            })
+            </script>";
+        }else{
+            $errores[]="Error al guardar legajo ". mysqli_error($conex);
+        }
+    }
+}
+if (!empty($errores)) {
+    $lista_errores = "<ul>";
+    foreach ($errores as $error) {
+        $lista_errores .= "<li>" . $error . "</li>";
+    }
+    $lista_errores .= "</ul>";
+    echo "<script>
+Swal.fire({
+icon: 'error',
+title: 'Error',
+html: '$lista_errores',
+confirmButtonText: 'Continuar'
+});
+</script>";
+}
+}
 require_once "vistas/footer.php";
 ?>
